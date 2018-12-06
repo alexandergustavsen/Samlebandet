@@ -1,2 +1,2 @@
-# SmidigProsjekt_Gruppe26
+# Samblebåndet
 Smidig Prosjekt - Høst 2018 - Gruppe 26
