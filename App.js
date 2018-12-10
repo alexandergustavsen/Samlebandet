@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import firebase from 'firebase';
+import Header from './src/components/header';
 
 
 export default class App extends React.Component {
@@ -17,8 +18,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+      <View>
+        <Header />
+        <Text style={styles.container}>Let's try to show a page, for once, please!</Text>
       </View>
     );
   }
@@ -26,9 +28,8 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  backgroundColor: '#fff',
+  textAlign: 'center',
+  top: 250,
   },
 });
