@@ -1,8 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { /*StyleSheet, Text, View*/ } from 'react-native';
 import firebase from 'firebase';
-import Header from './src/components/header';
+import { createStackNavigator } from 'react-navigation';
+//import Header from './src/components/header';
+import Home from './src/screens/home';
+import AddGroup from './src/screens/addGroup';
 
+const App = createStackNavigator({
+  Home: { screen: Home },
+  Profile: { screen: AddGroup },
+});
 
 export default class App extends React.Component {
   componentWillMount() {
@@ -15,21 +22,4 @@ export default class App extends React.Component {
       messagingSenderId: '693041379005'
     });
   }
-
-  render() {
-    return (
-      <View>
-        <Header />
-        <Text style={styles.container}>Let's try to show a page, for once, please!</Text>
-      </View>
-    );
-  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-  backgroundColor: '#fff',
-  textAlign: 'center',
-  top: 250,
-  },
-});
