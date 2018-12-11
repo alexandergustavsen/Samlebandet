@@ -14,7 +14,6 @@ const { textStyle, viewStyle } = styles;
 let title = 'Samlebåndet';
 
 const styles = {
-
   viewStyle: {
     backgroundColor: '#b7f588',
     justifyContent: 'center',
