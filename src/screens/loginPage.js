@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
 
-export default class LoginPage extends React.Component {
+export default class LoginPage extends Component {
 
     constructor(props) {
         super(props)
 
-    this.state = ({
+      this.state = ({
         email: '',
         password: ''
-    })
+      })
     }
 
     signUpUser = (email, password) => {
