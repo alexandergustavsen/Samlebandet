@@ -1,9 +1,12 @@
-import React, {Component} from 'react';
-import { StyleSheet, StatusBar, Text, View, ListView } from 'react-native';
-import { Container, Content, Header, Form, Input, Item, Button, Label, Icon, List, ListItem } from 'native-base';
-import MakeGroup from './src/screens/makeGroup';
+import { createSwitchNavigator, createAppContainer, createStackNavigator, createDrawerNavigator } from 'react-navigation'
+import AuthLoadingScreen from './src/screens/authLoadingScreen'
+import WelcomeScreen from './src/screens/welcomeScreen'
+import SignUpScreen from './src/screens/signUpScreen'
+import ListGroupScreen from './src/screens/listGroupScreen'
+import MakeGroup from './src/screens/makeGroup'
+import ChatScreen from './src/screens/chatScreen'
 
-import * as firebase from 'firebase';
+import * as firebase from 'firebase'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC472p6bon1WNU-l9uofXoeWp3sTppqJh0',
@@ -16,10 +19,25 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-export default class App extends Component {
-  render() {
-    return  (
-      <MakeGroup />
-    )
-  }
-}
+const appStackNavigator = createStackNavigator({
+  ListGroup: ListGroupScreen,
+  MakeGroup: MakeGroup,
+  Chat: ChatScreen,
+})
+
+const authStackNavigator = createStackNavigator({
+  Welcome: WelcomeScreen,
+  SignUp: SignUpScreen,
+})
+
+const switchNavigator = createSwitchNavigator({
+  AuthLoading: AuthLoadingScreen,
+  Auth: authStackNavigator,
+  App: appStackNavigator,
+})
+
+//Skal være slik:
+//export default createAppContainer(switchNavigator);
+
+//testing:
+export default createAppContainer(appStackNavigator);

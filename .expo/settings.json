@@ -1,5 +1,5 @@
 {
-  "hostType": "localhost",
+  "hostType": "lan",
   "lanType": "ip",
   "dev": false,
   "minify": true,

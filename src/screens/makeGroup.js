@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import { StyleSheet, StatusBar, Text, View, ListView } from 'react-native';
+import { StyleSheet, StatusBar, Text, View, ListView, TouchableOpacity, Picker } from 'react-native';
 import { Container, Content, Header, Form, Input, Item, Button, Label, Icon, List, ListItem } from 'native-base';
+
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 import * as firebase from 'firebase';
 
 var data = []
@@ -11,16 +14,39 @@ export default class MakeGroup extends Component {
 
     this.state = {
       listViewData: data,
-      groupTitle: "",
-      groupDesc: "",
-      groupTime: "",
-      groupPlace: "",
-      groupSize: "",
-      groupCate: ""
+      groupTitle: '',
+      groupDesc: '',
+      groupTime: '',
+      groupPlace: '',
+      groupSize: '',
+      groupCate: '',
+      isVisible: false,
+      isVisibleAntall: false,
+      PickerSize: '',
+      PickerCate: ''
     }
-}
+  }
 
-    addGroup(title, desc, time, place, size, cate){
+  handlePicker = (datetime) => {
+    this.setState({
+      isVisible: false,
+      groupTime: moment(datetime).format('MMMM, Do YYYY HH:mm')
+    })
+  }
+
+  showPicker = () => {
+    this.setState({
+      isVisible: true
+    })
+  }
+
+  hidePicker = () => {
+    this.setState({
+      isVisible: false
+    })
+  }
+
+  addGroup(title, desc, time, place, size, cate){
 
     var key = firebase.database().ref('/groups').push().key
     firebase.database().ref('/groups').child(key).set({ 
@@ -31,96 +57,105 @@ export default class MakeGroup extends Component {
       groupSize: size,
       groupCate: cate
     })
-
-  }
+  } 
 
   render() {
     return (
       <Container style={styles.container}>
-        <Header>
-          <Content>
-            <Item>
-              <Input 
-                onChangeText={(groupTitle) => this.setState({groupTitle})} 
-                placeholder="Tittel"
-              />
-            </Item>
-          </Content>
-        </Header>
-
-        <Header>
-          <Content>
-            <Item>
-              <Input 
-                onChangeText={(groupDesc) => this.setState({groupDesc})} 
-                placeholder="Beskrivelse"
-              />
-            </Item>
-          </Content>
-        </Header>
-
-        <Header>
-          <Content>
-            <Item>
-              <Input 
-                onChangeText={(groupTime) => this.setState({groupTime})} 
-                placeholder="Tidspunkt"
-              />
-            </Item>
-          </Content>
-        </Header>
-
-        <Header>
-          <Content>
-            <Item>
-              <Input 
-                onChangeText={(groupPlace) => this.setState({groupPlace})} 
-                placeholder="Sted"
-              />
-            </Item>
-          </Content>
-        </Header>
-
-        <Header>
-          <Content>
-            <Item>
-              <Input 
-                onChangeText={(groupSize) => this.setState({groupSize})} 
-                placeholder="Størrelse"
-              />
-            </Item>
-          </Content>
-        </Header>
-
-        <Header>
-          <Content>
-            <Item>
-              <Input 
-                onChangeText={(groupCate) => this.setState({groupCate})} 
-                placeholder="Kategori"
-              />
-            </Item>
-          </Content>
-        </Header>
-
-        <Header>
-          <Content>
-            <Item>
-              <Button onPress={() => this.addGroup(
-                  this.state.groupTitle, 
-                  this.state.groupDesc, 
-                  this.state.groupTime,
-                  this.state.groupPlace,
-                  this.state.groupSize,
-                  this.state.groupCate
-                )}>
-                <Icon name="add" />
-              </Button>
-            </Item>
-          </Content>
-        </Header>
+        <Content>
+          <Item>
+            <Input 
+              onChangeText={(groupTitle) => this.setState({groupTitle})} 
+              placeholder="Tittel"
+            />
+          </Item>
+        </Content>
+        <Content>
+          <Item>
+            <Input 
+              onChangeText={(groupDesc) => this.setState({groupDesc})} 
+              placeholder="Beskrivelse"
+            />
+          </Item>
+        </Content>
+        <Content>
+          <Item>
+            <TouchableOpacity style={styles.button} onPress={this.showPicker}>
+              <Text style={styles.text}>Show DatePicker</Text>
+            </TouchableOpacity>
+            <DateTimePicker 
+              cancelTextIOS={'Exit'}
+              confirmTextIOS={'OK'}
+              cancelTextStyle={{color: 'red', fontSize: 20}}
+              confirmTextStyle={{color: 'blue', fontSize: 20}}
+  
+              isVisible={this.state.isVisible}
+              onConfirm={this.handlePicker}
+              onCancel={this.hidePicker}
+              mode={'datetime'}
+              is24Hour={true}
+            />
+          </Item>
+        </Content>
+        <Content>
+          <Item>
+            <Input 
+              onChangeText={(groupPlace) => this.setState({groupPlace})} 
+              placeholder="Sted"
+            />
+          </Item>
+        </Content>
+        <Content>
+          <Item>
+            <Picker style={{width:'80%'}}
+            selectedValue={this.state.PickerSize}
+            onValueChange={(itemValue, itemIndex) => this.setState({PickerSize:itemValue, groupSize: itemValue})}
+            >
+              <Picker.Item label="Antall" value=""/>
+              <Picker.Item label="2" value="2" />
+              <Picker.Item label="3" value="3" />
+              <Picker.Item label="4" value="4" />
+              <Picker.Item label="5" value="5" />
+              <Picker.Item label="6" value="6" />
+              <Picker.Item label="7" value="7" />
+              <Picker.Item label="8" value="8" />
+            </Picker>
+          </Item>
+        </Content>
+        <Content>
+          <Item>
+            <Picker style={{width:'80%'}}
+            selectedValue={this.state.PickerCate}
+            onValueChange={(itemValue, itemIndex) => this.setState({PickerCate:itemValue, groupCate: itemValue})}
+            >
+              <Picker.Item label="Kategori" value=""/>
+              <Picker.Item label="Mat" value="mat" />
+              <Picker.Item label="Uteliv" value="uteliv" />
+              <Picker.Item label="Friluft" value="friluft" />
+              <Picker.Item label="Trening" value="trening" />
+              <Picker.Item label="Opplevelser" value="opplevelser" />
+              <Picker.Item label="Hobby" value="hobby" />
+              <Picker.Item label="Underholdning" value="underholdning" />
+              <Picker.Item label="Diverse" value="diverse" />
+            </Picker>
+          </Item>
+        </Content>
+        <Content>
+          <Item>
+            <Button onPress={() => this.addGroup(
+              this.state.groupTitle, 
+              this.state.groupDesc, 
+              this.state.groupTime,
+              this.state.groupPlace,
+              this.state.groupSize,
+              this.state.groupCate
+              )}>
+              <Icon name="add" />
+            </Button>
+          </Item>
+        </Content>
       </Container>
-    );
+    )
   }
 }
 
@@ -130,5 +165,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     padding: 10
+  },
+  button: {
+    width: 250,
+    height: 50,
+    backgroundColor: '#BF3000',
+    borderRadius: 30,
+    justifyContent: 'center',
+    marginTop: 15
+  },
+  text: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center'
   }
 });
