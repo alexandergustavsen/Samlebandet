@@ -3,5 +3,5 @@
   "lanType": "ip",
   "dev": false,
   "minify": true,
-  "urlRandomness": "pp-sum"
+  "urlRandomness": "sn-juc"
 }
