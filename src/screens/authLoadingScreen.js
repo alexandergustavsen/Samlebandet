@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { 
-    View,
-    Text,
-    StyleSheet,
-    ActivityIndicator,
-    AsyncStorage,
-} from 'react-native';
+import {View, Text, StyleSheet, ActivityIndicator, AsyncStorage } from 'react-native';
 
 export default class AuthLoadingScreen extends Component {
 
     constructor(){
-        super()
+        super();
         this.loadApp()
     }
 
@@ -19,7 +13,7 @@ export default class AuthLoadingScreen extends Component {
 
         this.props.navigation.navigate(userToken ? 'App' : 'Auth')
         //this.props.navigation.navigate('Auth')
-    }
+    };
 
     render() {
         return (
@@ -37,4 +31,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 
-})
+});

@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 export default class SignUpScreen extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = ({
         email: '',
@@ -17,7 +17,7 @@ export default class SignUpScreen extends Component {
     signUpUser = (email, password) => {
         try {
         if (this.state.password.length < 6) {
-            alert('Please enter atleast 6 characters');
+            alert('Please enter at least 6 characters');
         return;
         }
 
@@ -25,7 +25,7 @@ export default class SignUpScreen extends Component {
         } catch (error) {
         console.log(error.toString())
         }
-    }
+    };
 
     render() {
         return (

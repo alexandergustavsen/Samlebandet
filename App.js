@@ -23,18 +23,18 @@ const appStackNavigator = createStackNavigator({
   ListGroup: ListGroupScreen,
   MakeGroup: MakeGroup,
   Chat: ChatScreen,
-})
+});
 
 const authStackNavigator = createStackNavigator({
   Welcome: WelcomeScreen,
   SignUp: SignUpScreen,
-})
+});
 
 const switchNavigator = createSwitchNavigator({
   AuthLoading: AuthLoadingScreen,
   Auth: authStackNavigator,
   App: appStackNavigator,
-})
+});
 
 //Skal være slik:
 //export default createAppContainer(switchNavigator);

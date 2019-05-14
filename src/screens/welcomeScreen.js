@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 export default class SignInScreen extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
 
       this.state = ({
         email: '',
