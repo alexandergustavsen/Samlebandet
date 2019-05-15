@@ -1,10 +1,10 @@
-import { createSwitchNavigator, createAppContainer, createStackNavigator, createDrawerNavigator } from 'react-navigation'
-import AuthLoadingScreen from './src/screens/authLoadingScreen'
-import WelcomeScreen from './src/screens/welcomeScreen'
-import SignUpScreen from './src/screens/signUpScreen'
-import ListGroupScreen from './src/screens/listGroupScreen'
-import MakeGroup from './src/screens/makeGroup'
-import ChatScreen from './src/screens/chatScreen'
+import { createSwitchNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
+import AuthLoadingScreen from './src/screens/AuthLoadingScreen'
+import WelcomeScreen from './src/screens/WelcomeScreen'
+import SignUpScreen from './src/screens/SignUpScreen'
+import GroupList from './src/screens/GroupList'
+import MakeGroup from './src/screens/MakeGroup'
+import ChatScreen from './src/screens/ChatScreen'
 
 import * as firebase from 'firebase'
 
@@ -20,7 +20,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const appStackNavigator = createStackNavigator({
-  ListGroup: ListGroupScreen,
+  GroupList: GroupList,
   MakeGroup: MakeGroup,
   Chat: ChatScreen,
 });
