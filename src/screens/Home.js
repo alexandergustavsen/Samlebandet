@@ -16,7 +16,7 @@ export default class Home extends Component {
 
     componentDidMount() {
         const that = this;
-        firebase.database().ref('/groups').once('value', function(snapshot) {
+        firebase.database().ref('/groups').on('value', function(snapshot) {
             let returnArray = [];
 
             snapshot.forEach(function(snap) {
@@ -46,7 +46,7 @@ export default class Home extends Component {
                 <List>
                     <FlatList
                         data={this.state.dataArray}
-                        renderItem={({ item }) => (
+                        renderItem={({ item, index }) => (
                             <ListItem>
                                 <TouchableOpacity onPress={()=>{
                                     this.setState({

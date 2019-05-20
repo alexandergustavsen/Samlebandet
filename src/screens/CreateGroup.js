@@ -57,7 +57,7 @@ export default class CreateGroup extends Component {
       groupSize: size,
       groupCate: cate
     });
-    this.props.navigation.navigate('GroupList');
+    this.props.navigation.navigate('Home');
   } 
 
   render() {
