@@ -1,0 +1,13 @@
+{
+  "window.zoomLevel": 0,
+  "javascript.validate.enable": false,
+  "editor.tabSize": 2,
+  "files.trimTrailingWhitespace": true,
+  "workbench.statusBar.visible": true,
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.eslintIntegration": true,
+  "prettier.printWidth": 80,
+  "tslint.enable": true
+}

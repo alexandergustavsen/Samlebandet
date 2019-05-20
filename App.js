@@ -1,12 +1,16 @@
 import { createSwitchNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
-import AuthLoadingScreen from './src/screens/AuthLoadingScreen'
-import WelcomeScreen from './src/screens/WelcomeScreen'
-import SignUpScreen from './src/screens/SignUpScreen'
-import GroupList from './src/screens/GroupList'
-import MakeGroup from './src/screens/MakeGroup'
-import ChatScreen from './src/screens/ChatScreen'
+import AuthLoading from './src/screens/AuthLoading'
+import LogIn from './src/screens/LogIn'
+import SignUp from './src/screens/SignUp'
+import Home from './src/screens/Home'
+import CreateGroup from './src/screens/CreateGroup'
+import CreateProfile from './src/screens/CreateProfile'
+import Profile from './src/screens/Profile'
+import Tutorial from './src/screens/Tutorial'
+import Interests from './src/screens/Interests'
+import Chat from './src/screens/Chat'
 
-import * as firebase from 'firebase'
+/*import * as firebase from 'firebase'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyC472p6bon1WNU-l9uofXoeWp3sTppqJh0',
@@ -15,29 +19,33 @@ const firebaseConfig = {
   projectId: 'samlebandet',
   storageBucket: 'samlebandet.appspot.com',
   messagingSenderId: '693041379005'
-};
+};*/
 
 firebase.initializeApp(firebaseConfig);
 
 const appStackNavigator = createStackNavigator({
-  GroupList: GroupList,
-  MakeGroup: MakeGroup,
-  Chat: ChatScreen,
+    Chat: Chat,
+    Home: Home,
+  CreateGroup: CreateGroup,
+  Profile: Profile
 });
 
 const authStackNavigator = createStackNavigator({
-  Welcome: WelcomeScreen,
-  SignUp: SignUpScreen,
+  LogIn: LogIn,
+  SignUp: SignUp,
+  CreateProfile: CreateProfile,
+  Interests: Interests,
+  Tutorial: Tutorial,
 });
 
 const switchNavigator = createSwitchNavigator({
-  AuthLoading: AuthLoadingScreen,
+  AuthLoading: AuthLoading,
   Auth: authStackNavigator,
   App: appStackNavigator,
 });
 
 //Skal være slik:
-//export default createAppContainer(switchNavigator);
+export default createAppContainer(switchNavigator);
 
 //testing:
-export default createAppContainer(appStackNavigator);
+//export default createAppContainer(appStackNavigator);
