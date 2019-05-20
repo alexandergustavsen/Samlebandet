@@ -10,24 +10,11 @@ import Tutorial from './src/screens/Tutorial'
 import Interests from './src/screens/Interests'
 import Chat from './src/screens/Chat'
 
-/*import * as firebase from 'firebase'
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyC472p6bon1WNU-l9uofXoeWp3sTppqJh0',
-  authDomain: 'samlebandet.firebaseapp.com',
-  databaseURL: 'https://samlebandet.firebaseio.com',
-  projectId: 'samlebandet',
-  storageBucket: 'samlebandet.appspot.com',
-  messagingSenderId: '693041379005'
-};*/
-
-firebase.initializeApp(firebaseConfig);
-
 const appStackNavigator = createStackNavigator({
-    Chat: Chat,
-    Home: Home,
+  Home: Home,
   CreateGroup: CreateGroup,
-  Profile: Profile
+  Profile: Profile,
+  Chat: Chat
 });
 
 const authStackNavigator = createStackNavigator({

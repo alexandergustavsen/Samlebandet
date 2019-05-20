@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, FlatList, Modal, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, FlatList, Modal, View, TouchableOpacity } from 'react-native';
+import {Button, List, ListItem} from "native-base";
+
 import * as firebase from 'firebase'
-import {List, ListItem} from "native-base";
 
 export default class Home extends Component {
     constructor(){
@@ -9,7 +10,7 @@ export default class Home extends Component {
 
         this.state = {
             dataArray: null,
-            showMe:true
+            showMe:false
         }
     }
 
@@ -34,6 +35,14 @@ export default class Home extends Component {
     render() {
         return (
             <View>
+                <View>
+                    <Button onPress={() => this.props.navigation.navigate('Profile')}>
+                        <Text>Profil</Text>
+                    </Button>
+                    <Button onPress={() => this.props.navigation.navigate('CreateGroup')}>
+                        <Text>Opprett gruppe</Text>
+                    </Button>
+                </View>
                 <List>
                     <FlatList
                         data={this.state.dataArray}
