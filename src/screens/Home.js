@@ -10,7 +10,7 @@ export default class Home extends Component {
 
         this.state = {
             dataArray: null,
-            showMe:false
+            showMe: true
         }
     }
 
@@ -32,6 +32,49 @@ export default class Home extends Component {
         });
     }
 
+    selectItem = data => {
+        data.item.isSelect = !data.item.isSelect;
+        data.item.selectedClass = data.item.isSelect ?
+            styles.selected : styles.list;
+        const index = this.state.dataArray.findIndex(
+            item => data.item.id === item.id
+        );
+        this.state.dataArray[index] = data.item;
+        this.setState({
+            dataArray: this.state.dataArray,
+        });
+    };
+
+    modal = data =>
+        <Modal visible={this.state.showMe}
+               onRequestClose={() => console.warn("This is a close request.")}>
+            <View style={styles.modalView}>
+                <Text>Hey, {data.item.groupTitle} is open!</Text>
+                <TouchableOpacity onPress={()=>{
+                    this.setState({
+                        showMe:false
+                    })
+                }}>
+                    <Text>{}</Text>
+                    <Text style={styles.closeText}>Close Modal</Text>
+                </TouchableOpacity>
+            </View>
+        </Modal>
+
+    renderItem = data =>
+        <TouchableOpacity
+            style={[styles.list, data.item.selectedClass]}
+            onPress={() => this.modal(this.selectItem(data))}
+        >
+            <Text>{data.item.groupTitle}</Text>
+            <Text>{data.item.groupTime}</Text>
+            <Text>{data.item.groupDesc}</Text>
+            <Text>{data.item.groupSize}</Text>
+            <Text>{data.item.groupPlace}</Text>
+            <Text>{data.item.groupCate}</Text>
+            <Text>{data.item.key}</Text>
+        </TouchableOpacity>
+
     render() {
         return (
             <View>
@@ -46,41 +89,11 @@ export default class Home extends Component {
                 <List>
                     <FlatList
                         data={this.state.dataArray}
-                        renderItem={({ item, index }) => (
-                            <ListItem>
-                                <TouchableOpacity onPress={()=>{
-                                    this.setState({
-                                        showMe:true
-                                    });
-                                }}>
-                                    <Text>{item.groupTitle}</Text>
-                                    <Text>{item.groupTime}</Text>
-                                    <Text>{item.groupDesc}</Text>
-                                    <Text>{item.groupSize}</Text>
-                                    <Text>{item.groupPlace}</Text>
-                                    <Text>{item.groupCate}</Text>
-                                    <Text>{item.key}</Text>
-                                </TouchableOpacity>
-                            </ListItem>
-                        )}
+                        renderItem={item => this.renderItem(item)}
                         keyExtractor={item => item.key}
+                        extra={this.state}
                     />
                 </List>
-
-                <Modal visible={this.state.showMe}
-                    onRequestClose={() => console.warn("This is a close request.")}>
-                    <View style={styles.modalView}>
-                        <Text>Hey, modal is open!</Text>
-                        <TouchableOpacity onPress={()=>{
-                            this.setState({
-                                showMe:false
-                            })
-                        }}>
-                            <Text>{}</Text>
-                            <Text style={styles.closeText}>Close Modal</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
             </View>
         );
     }
@@ -123,5 +136,15 @@ const styles = StyleSheet.create({
         color: '#bbb',
         padding: 5,
         margin: 20
-    }
+    },
+    list: {
+        paddingVertical: 5,
+        margin: 3,
+        //flexDirection: "row",
+        backgroundColor: "#eeeeee",
+        //justifyContent: "flex-start",
+        //alignItems: "center",
+        zIndex: -1
+    },
+    selected: {backgroundColor: '#FA7B5F'}
 });
