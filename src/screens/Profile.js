@@ -73,22 +73,10 @@ export default class Profile extends Component {
                 lastName: this.state.lastName,
                 school: this.state.school,
                 retning: this.state.retning,
+                date: this.state.date,
                 Beskrivelse: this.state.beskrivelse,
             });
         }
-    }
-
-    addProfile(firstName, lastName, school, retning, date){
-        userId = firebase.auth().currentUser.uid;
-        firebase.database().ref('users/' + userId).set({
-            firstName: firstName,
-            lastName: lastName,
-            school: school,
-            retning: retning,
-            date: date,
-            Beskrivelse: 'Ingen beskrivelse',
-        });
-        this.props.navigation.navigate('Interests')
     }
 
     componentDidMount() {

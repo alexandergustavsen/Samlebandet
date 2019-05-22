@@ -10,7 +10,8 @@ export default class Home extends Component {
 
         this.state = {
             dataArray: null,
-            showMe: true
+            currentItem: null,
+            showMe: false
         }
     }
 
@@ -45,26 +46,58 @@ export default class Home extends Component {
         });
     };
 
-    modal = data =>
-        <Modal visible={this.state.showMe}
-               onRequestClose={() => console.warn("This is a close request.")}>
-            <View style={styles.modalView}>
-                <Text>Hey, {data.item.groupTitle} is open!</Text>
-                <TouchableOpacity onPress={()=>{
-                    this.setState({
-                        showMe:false
-                    })
-                }}>
-                    <Text>{}</Text>
-                    <Text style={styles.closeText}>Close Modal</Text>
-                </TouchableOpacity>
-            </View>
-        </Modal>
+    joinGroup = (key) => {
+        
+    }
+
+    modal = () => {
+        console.log(currentItem);
+        let currentItem = this.state.currentItem;
+        console.log(currentItem);
+        return(
+            <Modal visible={this.state.showMe}
+                onRequestClose={() => console.warn("This is a close request.")}>
+                <View style={styles.modalView}>
+                    <Text>{currentItem.item.groupTitle}</Text>
+                    <Text>{currentItem.item.groupTime}</Text>
+                    <Text>{currentItem.item.groupDesc}</Text>
+                    <Text>{currentItem.item.groupSize}</Text>
+                    <Text>{currentItem.item.groupPlace}</Text>
+                    <Text>{currentItem.item.groupCate}</Text>
+                    <Button
+                        style={{ marginTop: 10 }}
+                        full
+                        rounded
+                        primary
+                        onPress={() => this.joinGroup(currentItem.item.key)}
+                    >
+                        <Text style={{ color: 'white' }}>Bli med</Text>
+                    </Button>
+
+                    <TouchableOpacity onPress={()=>{
+                        this.setState({
+                            showMe:false
+                        })
+                    }}>
+                        <Text>{}</Text>
+                        <Text style={styles.closeText}>Close Modal</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
+        )
+    };
+
+    currentItemFunc = (data) => {
+        this.setState({
+            currentItem: data,
+            showMe: true,
+        })
+    }
 
     renderItem = data =>
         <TouchableOpacity
             style={[styles.list, data.item.selectedClass]}
-            onPress={() => this.modal(this.selectItem(data))}
+            onPress={() => this.currentItemFunc(data)}
         >
             <Text>{data.item.groupTitle}</Text>
             <Text>{data.item.groupTime}</Text>
@@ -94,6 +127,9 @@ export default class Home extends Component {
                         extra={this.state}
                     />
                 </List>
+                <View>
+                {this.state.showMe === true ? this.modal() : null}
+                </View>
             </View>
         );
     }
