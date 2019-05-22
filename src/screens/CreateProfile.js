@@ -79,6 +79,7 @@ export default class CreateProfile extends Component {
             school: school,
             retning: retning,
             date: date,
+            beskrivelse: 'Ingen beskrivelse',
         });
         this.props.navigation.navigate('Interests')
     }
