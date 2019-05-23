@@ -68,12 +68,9 @@ export default class Profile extends Component {
                 btnText: 'Edit profile',
             });
             userId = firebase.auth().currentUser.uid;
-            firebase.database().ref('users/' + userId).set({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
+            firebase.database().ref('users/' + userId).update({
                 school: this.state.school,
                 retning: this.state.retning,
-                date: this.state.date,
                 Beskrivelse: this.state.beskrivelse,
             });
         }

@@ -20,6 +20,8 @@ export default class Home extends Component {
         super();
 
         this.state = {
+            userGroups: null,
+            groupArray: null,
             dataArray: null,
             currentItem: null,
             showMe: false,
@@ -43,6 +45,7 @@ export default class Home extends Component {
 
     componentDidMount() {
         const that = this;
+        userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/groups').on('value', function(snapshot) {
             let returnArray = [];
 
@@ -57,8 +60,45 @@ export default class Home extends Component {
                 dataArray: returnArray
             })
         });
+
+        firebase.database().ref('/users/' + userId + '/groups/').on('value', function(snapshot) {
+            let returnObjects = [];
+            let returnIds = [];
+
+            snapshot.forEach(function(snap) {
+                let item = snap.val();
+                item.key = snap.key;
+
+                returnObjects.push(item);
+            });
+            for(i = 0; i < returnObjects.length; i++){
+                returnIds.push(returnObjects[i].groupId);
+            }
+            that.setState({
+                groupArray: returnIds
+            });
+        });
+        this.compareGroupIds();
     }
 
+    compareGroupIds(){
+        let dArray = this.state.dataArray;
+        let ids = ids.groupId;
+        console.log(ids);
+        let gArray = this.state.groupArray;
+        let groupTitles = [];
+        for(i = 0; i < dArray.length; i++) {
+            for(j = 0; j < gArray.length; j++){
+                if(dArray[i]._id === gArray[j]) {
+                    groupTitles.push(dArray[i].groupTitle)
+                }
+            }
+        }
+        this.setState({
+            userGroups: groupTitles
+        })
+        console.log(this.state.userGroups)
+    }
 
     joinGroup = (key) => {
         userId = firebase.auth().currentUser.uid;
