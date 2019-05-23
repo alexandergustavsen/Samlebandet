@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, FlatList, Modal, View, TouchableOpacity } from 'react-native';
-import {Button, List, ListItem} from "native-base";
+import {
+    StyleSheet,
+    Text,
+    FlatList,
+    Modal,
+    View,
+    TouchableOpacity,
+    SafeAreaView,
+    TouchableHighlight,
+    Image
+} from 'react-native';
+import Carousel from 'react-native-snap-carousel';
+import {Button, Header, List, ListItem} from "native-base";
 
 import * as firebase from 'firebase'
 
@@ -11,7 +22,22 @@ export default class Home extends Component {
         this.state = {
             dataArray: null,
             currentItem: null,
-            showMe: false
+            showMe: false,
+            activeIndex: 0,
+            carouselItems: [
+                {
+                    title: 'Item 1'
+                },
+                {
+                    title: 'Item 2'
+                },
+                {
+                    title: 'Item 3'
+                },
+                {
+                    title: 'Item 4'
+                }
+            ]
         }
     }
 
@@ -42,13 +68,19 @@ export default class Home extends Component {
     }
 
     modal = () => {
-        console.log(currentItem);
         let currentItem = this.state.currentItem;
-        console.log(currentItem);
         return(
             <Modal visible={this.state.showMe}
-                onRequestClose={() => console.warn("This is a close request.")}>
+                   onRequestClose={() => console.warn("This is a close request.")}
+                   position='center'
+            >
                 <View style={styles.modalView}>
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        marginTop: 40
+                    }}>Gruppe</Text>
                     <Text>{currentItem.item.groupTitle}</Text>
                     <Text>{currentItem.item.groupTime}</Text>
                     <Text>{currentItem.item.groupDesc}</Text>
@@ -70,7 +102,6 @@ export default class Home extends Component {
                             showMe:false
                         })
                     }}>
-                        <Text>{}</Text>
                         <Text style={styles.closeText}>Close Modal</Text>
                     </TouchableOpacity>
                 </View>
@@ -83,7 +114,7 @@ export default class Home extends Component {
             currentItem: data,
             showMe: true,
         })
-    }
+    };
 
     renderItem = data =>
         <TouchableOpacity
@@ -99,27 +130,69 @@ export default class Home extends Component {
             <Text>{data.item.key}</Text>
         </TouchableOpacity>
 
+    renderSlider({item, index}) {
+        return (
+            <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
+                <Text style={{color: '#fff'}}>{item.title}</Text>
+            </View>
+        )
+    }
+
     render() {
         return (
             <View>
                 <View>
-                    <Button onPress={() => this.props.navigation.navigate('Profile')}>
-                        <Text>Profil</Text>
-                    </Button>
-                    <Button onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                        <Text>Opprett gruppe</Text>
-                    </Button>
+                    <Header style={{ justifyContent: 'space-between' }}>
+                        <Button onPress={() => this.props.navigation.navigate('Profile')}>
+                            <Text>Profil</Text>
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('CreateGroup')}>
+                            <Text>Opprett gruppe</Text>
+                        </Button>
+                        <Button onPress={() => this.props.navigation.navigate('Chat')}>
+                            <Text>Chat</Text>
+                        </Button>
+                        <Button>
+                            <Text>Innstillinger</Text>
+                        </Button>
+                    </Header>
                 </View>
-                <List>
-                    <FlatList
-                        data={this.state.dataArray}
-                        renderItem={item => this.renderItem(item)}
-                        keyExtractor={item => item.key}
-                        extra={this.state}
-                    />
-                </List>
+
+                <SafeAreaView style={{flexDirection: 'row', backgroundColor: '#000000', height: 100}}>
+
+                    <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
+                        <Text style={{color: '#fff'}}>Previous</Text>
+                    </TouchableHighlight>
+
+                    <View>
+                        <Carousel
+                            ref = { ref => this.carousel = ref }
+                            data={ this.state.carouselItems }
+                            sliderWidth={250}
+                            itemWidth={250}
+                            renderItem={ this.renderSlider }
+                            onSnapToItem={index => this.setState({activeIndex:index})}
+                        />
+                    </View>
+
+                    <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
+                        <Text style={{color: '#fff'}}>Next</Text>
+                    </TouchableHighlight>
+
+                </SafeAreaView>
+
                 <View>
-                {this.state.showMe === true ? this.modal() : null}
+                    <List>
+                        <FlatList
+                            data={this.state.dataArray}
+                            renderItem={item => this.renderItem(item)}
+                            keyExtractor={item => item.key}
+                            extra={this.state}
+                        />
+                    </List>
+                </View>
+                <View>
+                    {this.state.showMe === true ? this.modal() : null}
                 </View>
             </View>
         );
@@ -143,15 +216,6 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         borderRadius: 2,
     },
-    modalView: {
-        backgroundColor: "#aaa",
-        height: 500,
-        width: 350,
-        marginTop: 175,
-        marginLeft: 32.5,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     closeText: {
         backgroundColor: '#333',
         color: '#bbb',
@@ -164,6 +228,15 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 20
     },
+    modalView: {
+        backgroundColor: "#aaa",
+        height: 500,
+        width: 350,
+        marginTop: 175,
+        marginLeft: 32.5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     list: {
         paddingVertical: 5,
         margin: 3,
@@ -172,6 +245,11 @@ const styles = StyleSheet.create({
         //justifyContent: "flex-start",
         //alignItems: "center",
         zIndex: -1
+    },
+    viewStyle: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     selected: {backgroundColor: '#FA7B5F'}
 });
