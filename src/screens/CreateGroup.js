@@ -47,16 +47,24 @@ export default class CreateGroup extends Component {
   };
 
   addGroup(title, desc, time, place, size, cate){
-
-    let key = firebase.database().ref('/groups').push().key;
-    firebase.database().ref('/groups').child(key).set({ 
+    userId = firebase.auth().currentUser.uid;
+    key = firebase.database().ref('/groups').push().key;
+    firebase.database().ref('/groups').child(key).set({
+      _id: key,
       groupTitle: title,
       groupDesc: desc,
       groupTime: time,
       groupPlace: place,
       groupSize: size,
-      groupCate: cate
+      groupCate: cate,
+      adminId: userId,
     });
+    firebase.database().ref('/groups').child(key + '/members').push({
+      _id: userId
+    });
+    firebase.database().ref('/users/' + userId + '/groups/').push({
+      groupId: key
+    })
     this.props.navigation.navigate('Home');
   } 
 

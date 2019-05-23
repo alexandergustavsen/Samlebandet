@@ -33,21 +33,12 @@ export default class Home extends Component {
         });
     }
 
-    selectItem = data => {
-        data.item.isSelect = !data.item.isSelect;
-        data.item.selectedClass = data.item.isSelect ?
-            styles.selected : styles.list;
-        const index = this.state.dataArray.findIndex(
-            item => data.item.id === item.id
-        );
-        this.state.dataArray[index] = data.item;
-        this.setState({
-            dataArray: this.state.dataArray,
-        });
-    };
 
     joinGroup = (key) => {
-        
+        userId = firebase.auth().currentUser.uid;
+        firebase.database().ref('/groups/' + key + '/members').push({
+            _id: userId
+        });
     }
 
     modal = () => {
