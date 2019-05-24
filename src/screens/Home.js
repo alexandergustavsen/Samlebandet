@@ -20,33 +20,34 @@ export default class Home extends Component {
         super();
 
         this.state = {
-            userGroups: null,
-            groupArray: null,
-            dataArray: null,
+            dataArray: [],
             currentItem: null,
             showMe: false,
             activeIndex: 0,
-            carouselItems: [
-                {
-                    title: 'Item 1'
-                },
-                {
-                    title: 'Item 2'
-                },
-                {
-                    title: 'Item 3'
-                },
-                {
-                    title: 'Item 4'
-                }
-            ]
+            carouselItems: [],
+            /*
+            {
+                title: 'Item 1'
+            },
+            {
+                title: 'Item 2'
+            },
+            {
+                title: 'Item 3'
+            },
+            {
+                title: 'Item 4'
+            }
+            */
         }
     }
 
     componentDidMount() {
         const that = this;
-        userId = firebase.auth().currentUser.uid;
+        const userId = firebase.auth().currentUser.uid;
+        //console.log(userId);
         firebase.database().ref('/groups').on('value', function(snapshot) {
+            //console.log(snapshot)
             let returnArray = [];
 
             snapshot.forEach(function(snap) {
@@ -55,49 +56,32 @@ export default class Home extends Component {
 
                 returnArray.push(item);
             });
-
+            //console.log(returnArray)
+            let groupsWithUser = returnArray.filter(group => {
+                const members = group.members //const { members } = group;  <- deconstruct
+                for (const key in members) {
+                    if  (!members.hasOwnProperty(key)) continue;
+                    const id = members[key]._id; // const { _id } = members[key] <- deconstruct
+                    if (id === userId) return true;
+                }
+                return false;
+            }) ;
+            //console.log(groupsWithUser);
+            
+            groupsWithUser = groupsWithUser.map(group => {
+                return {
+                    name: group.groupTitle,
+                    time: group.groupTime
+                }
+            })
+            console.log(groupsWithUser);
+            that.setState({
+                carouselItems: groupsWithUser
+            })
             that.setState({
                 dataArray: returnArray
             })
         });
-
-        firebase.database().ref('/users/' + userId + '/groups/').on('value', function(snapshot) {
-            let returnObjects = [];
-            let returnIds = [];
-
-            snapshot.forEach(function(snap) {
-                let item = snap.val();
-                item.key = snap.key;
-
-                returnObjects.push(item);
-            });
-            for(i = 0; i < returnObjects.length; i++){
-                returnIds.push(returnObjects[i].groupId);
-            }
-            that.setState({
-                groupArray: returnIds
-            });
-        });
-        this.compareGroupIds();
-    }
-
-    compareGroupIds(){
-        let dArray = this.state.dataArray;
-        let ids = ids.groupId;
-        console.log(ids);
-        let gArray = this.state.groupArray;
-        let groupTitles = [];
-        for(i = 0; i < dArray.length; i++) {
-            for(j = 0; j < gArray.length; j++){
-                if(dArray[i]._id === gArray[j]) {
-                    groupTitles.push(dArray[i].groupTitle)
-                }
-            }
-        }
-        this.setState({
-            userGroups: groupTitles
-        })
-        console.log(this.state.userGroups)
     }
 
     joinGroup = (key) => {
@@ -111,8 +95,8 @@ export default class Home extends Component {
         let currentItem = this.state.currentItem;
         return(
             <Modal visible={this.state.showMe}
-                   onRequestClose={() => console.warn("This is a close request.")}
-                   position='center'
+                onRequestClose={() => console.warn("This is a close request.")}
+                position='center'
             >
                 <View style={styles.modalView}>
                     <Text style={{
@@ -173,7 +157,8 @@ export default class Home extends Component {
     renderSlider({item, index}) {
         return (
             <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                <Text style={{color: '#fff'}}>{item.title}</Text>
+                <Text style={{color: '#fff'}}>{item.name}</Text>
+                <Text style={{color: '#fff'}}>{item.time}</Text>
             </View>
         )
     }
