@@ -24,21 +24,7 @@ export default class Home extends Component {
             currentItem: null,
             showMe: false,
             activeIndex: 0,
-            carouselItems: [],
-            /*
-            {
-                title: 'Item 1'
-            },
-            {
-                title: 'Item 2'
-            },
-            {
-                title: 'Item 3'
-            },
-            {
-                title: 'Item 4'
-            }
-            */
+            carouselItems: [{name: 'Du har ingen grupper'},],
         }
     }
 
@@ -75,9 +61,11 @@ export default class Home extends Component {
                 }
             })
             console.log(groupsWithUser);
-            that.setState({
-                carouselItems: groupsWithUser
-            })
+            if (!groupsWithUser.length == 0) {
+                that.setState({
+                    carouselItems: groupsWithUser
+                })
+            }
             that.setState({
                 dataArray: returnArray
             })
