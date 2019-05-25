@@ -6,6 +6,7 @@ import {
     Modal,
     View,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     SafeAreaView,
     TouchableHighlight,
     Image
@@ -26,6 +27,7 @@ export default class Home extends Component {
             activeIndex: 0,
             carouselItems: [{name: 'Du har ingen grupper'},],
         }
+        this.renderSlider = this.renderSlider.bind(this);
     }
 
     componentDidMount() {
@@ -152,7 +154,7 @@ export default class Home extends Component {
 
     renderSlider({item, index}) {
         return (
-            <TouchableHighlight onPress={() => this.props.navigation.navigate('SelectedGroup', {
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SelectedGroup', {
                     name: item.name,
                     time: item.time,
                     desc: item.desc,
@@ -166,7 +168,7 @@ export default class Home extends Component {
                     <Text style={{color: '#fff'}}>{item.name}</Text>
                     <Text style={{color: '#fff'}}>{item.time}</Text>
                 </View>
-            </TouchableHighlight>
+            </TouchableWithoutFeedback>
         )
     }
 

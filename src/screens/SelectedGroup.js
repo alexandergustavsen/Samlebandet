@@ -1,24 +1,59 @@
 import React, { Component } from 'react';
-import {Text, View} from "react-native";
+import {Text, View, StyleSheet, Button} from "react-native";
 
 export default class Profile extends Component {
     constructor(props) {
         super(props)
-
-
-
+        let prop = this.props.navigation.state.params
+        this.state = {
+            name: prop.name,
+            time: prop.time,
+            desc: prop.desc,
+            size: prop.size,
+            place: prop.place,
+            cate: prop.cate,
+        }
     }
 
     render() {
         return (
             <View>
-                <Text>{this.props.name}</Text>
-                <Text>{this.props.time}</Text>
-                <Text>{this.props.desc}</Text>
-                <Text>{this.props.size}</Text>
-                <Text>{this.props.place}</Text>
-                <Text>{this.props.cate}</Text>
+                <Text>{this.state.name}</Text>
+                <Text>{this.state.time}</Text>
+                <Text>{this.state.desc}</Text>
+                <Text>{this.state.size}</Text>
+                <Text>{this.state.place}</Text>
+                <Text>{this.state.cate}</Text>
+
+                <Button
+                style={{ marginTop: 10 }}
+                full
+                rounded
+                primary
+                onPress={() => this.props.navigation.navigate('Chat')}
+                title='Chat'
+                ></Button>
+
+                <Button
+                style={{ marginTop: 10 }}
+                full
+                rounded
+                primary
+                onPress={() => this.props.navigation.navigate('Home')}
+                title='Forlat gruppe'
+                ></Button>
+
             </View>
         );
     }
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    btnContainer: {
+        flex: 1,
+        flexDirection: 'column',
+    }
+});
