@@ -9,7 +9,7 @@ import {
     TouchableWithoutFeedback,
     SafeAreaView,
     TouchableHighlight,
-    Image
+    Image, TouchableWithoutFeedback, ScrollView
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {Button, Header, List, ListItem} from "native-base";
@@ -87,7 +87,7 @@ export default class Home extends Component {
         this.setState({
             showMe: false,
         })
-    }
+    };
 
     modal = () => {
         let currentItem = this.state.currentItem;
@@ -96,36 +96,38 @@ export default class Home extends Component {
                 onRequestClose={() => console.warn("This is a close request.")}
                 transparent={true}
             >
-                <View style={styles.modalView}>
-                    <Text style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        marginTop: 40
-                    }}>Gruppe</Text>
-                    <Text>{currentItem.item.groupTitle}</Text>
-                    <Text>{currentItem.item.groupTime}</Text>
-                    <Text>{currentItem.item.groupDesc}</Text>
-                    <Text>{currentItem.item.groupSize}</Text>
-                    <Text>{currentItem.item.groupPlace}</Text>
-                    <Text>{currentItem.item.groupCate}</Text>
-                    <Button
-                        style={{ marginTop: 10 }}
-                        full
-                        rounded
-                        primary
-                        onPress={() => this.joinGroup(currentItem.item.key)}
-                    >
-                        <Text style={{ color: 'white' }}>Bli med</Text>
-                    </Button>
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalView}>
+                        <Text style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            marginTop: 40
+                        }}>Gruppe</Text>
+                        <Text>{currentItem.item.groupTitle}</Text>
+                        <Text>{currentItem.item.groupTime}</Text>
+                        <Text>{currentItem.item.groupDesc}</Text>
+                        <Text>{currentItem.item.groupSize}</Text>
+                        <Text>{currentItem.item.groupPlace}</Text>
+                        <Text>{currentItem.item.groupCate}</Text>
+                        <Button
+                            style={{ marginTop: 10 }}
+                            full
+                            rounded
+                            primary
+                            onPress={() => this.joinGroup(currentItem.item.key)}
+                        >
+                            <Text style={{ color: 'white' }}>Bli med</Text>
+                        </Button>
 
-                    <TouchableOpacity onPress={()=>{
-                        this.setState({
-                            showMe:false
-                        })
-                    }}>
-                        <Text style={styles.closeText}>Close Modal</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                            this.setState({
+                                showMe:false
+                            })
+                        }}>
+                            <Text style={styles.closeText}>Close Modal</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Modal>
         )
@@ -140,16 +142,15 @@ export default class Home extends Component {
 
     renderItem = data =>
         <TouchableOpacity
-            style={[styles.list, data.item.selectedClass]}
+            style={styles.list}
             onPress={() => this.currentItemFunc(data)}
         >
-            <Text>{data.item.groupTitle}</Text>
-            <Text>{data.item.groupTime}</Text>
-            <Text>{data.item.groupDesc}</Text>
-            <Text>{data.item.groupSize}</Text>
-            <Text>{data.item.groupPlace}</Text>
-            <Text>{data.item.groupCate}</Text>
-            <Text>{data.item.key}</Text>
+            <Text>Tittel: {data.item.groupTitle}</Text>
+            <Text>Tidspunkt: {data.item.groupTime}</Text>
+            <Text>Beskrivelse: {data.item.groupDesc}</Text>
+            <Text>Størrelse: {data.item.groupSize}</Text>
+            <Text>Sted: {data.item.groupPlace}</Text>
+            <Text>Kategori: {data.item.groupCate}</Text>
         </TouchableOpacity>
 
     renderSlider({item, index}) {
@@ -192,8 +193,7 @@ export default class Home extends Component {
                     </Header>
                 </View>
 
-                <SafeAreaView style={{flexDirection: 'row', backgroundColor: '#000000', height: 100}}>
-
+                <View style={{flexDirection: 'row', backgroundColor: '#000000', height: 100}}>
                     <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
                         <Text style={{color: '#fff'}}>Previous</Text>
                     </TouchableHighlight>
@@ -212,18 +212,15 @@ export default class Home extends Component {
                     <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
                         <Text style={{color: '#fff'}}>Next</Text>
                     </TouchableHighlight>
-
-                </SafeAreaView>
+                </View>
 
                 <View>
-                    <List>
-                        <FlatList
-                            data={this.state.dataArray}
-                            renderItem={item => this.renderItem(item)}
-                            keyExtractor={item => item.key}
-                            extra={this.state}
-                        />
-                    </List>
+                    <FlatList
+                        data={this.state.dataArray}
+                        renderItem={item => this.renderItem(item)}
+                        keyExtractor={item => item.key}
+                        extra={this.state}
+                    />
                 </View>
                 <View style={styles.container}>
                     {this.state.showMe === true ? this.modal() : null}
@@ -235,7 +232,6 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         backgroundColor: '#000'
     },
@@ -263,21 +259,23 @@ const styles = StyleSheet.create({
         margin: 20
     },
     modalView: {
-        backgroundColor: "#aaa",
+        backgroundColor: "#fff",
         height: 500,
         width: 350,
-        //marginTop: 175,
-        //marginLeft: 32.5,
+        borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#00000080'
     },
     list: {
         paddingVertical: 5,
         margin: 3,
-        //flexDirection: "row",
         backgroundColor: "#eeeeee",
-        //justifyContent: "flex-start",
-        //alignItems: "center",
         zIndex: -1
     },
     viewStyle: {
