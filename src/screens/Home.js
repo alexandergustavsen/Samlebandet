@@ -6,12 +6,12 @@ import {
     Modal,
     View,
     TouchableOpacity,
-    TouchableWithoutFeedback,
     SafeAreaView,
     TouchableHighlight,
     Image, TouchableWithoutFeedback, ScrollView
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { Icon } from 'react-native-elements';
 import {Button, Header, List, ListItem} from "native-base";
 
 import * as firebase from 'firebase'
@@ -166,8 +166,8 @@ export default class Home extends Component {
             }
             >
                 <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                    <Text style={{color: '#fff'}}>{item.name}</Text>
-                    <Text style={{color: '#fff'}}>{item.time}</Text>
+                    <Text style={{color: '#000'}}>{item.name}</Text>
+                    <Text style={{color: '#000'}}>{item.time}</Text>
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -192,10 +192,9 @@ export default class Home extends Component {
                         </Button>
                     </Header>
                 </View>
-
-                <View style={{flexDirection: 'row', backgroundColor: '#000000', height: 100}}>
+                <View style={styles.carouselContainer}>
                     <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
-                        <Text style={{color: '#fff'}}>Previous</Text>
+                        <Icon name='chevron-left'/>
                     </TouchableHighlight>
 
                     <View>
@@ -210,18 +209,16 @@ export default class Home extends Component {
                     </View>
 
                     <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
-                        <Text style={{color: '#fff'}}>Next</Text>
+                        <Icon name='chevron-right'/>
                     </TouchableHighlight>
                 </View>
-
-                <View>
-                    <FlatList
-                        data={this.state.dataArray}
-                        renderItem={item => this.renderItem(item)}
-                        keyExtractor={item => item.key}
-                        extra={this.state}
-                    />
-                </View>
+                <FlatList
+                    data={this.state.dataArray}
+                    renderItem={item => this.renderItem(item)}
+                    keyExtractor={item => item.key}
+                    extra={this.state}
+                    contentContainerStyle={styles.contentContainer}
+                />
                 <View style={styles.container}>
                     {this.state.showMe === true ? this.modal() : null}
                 </View>
@@ -235,24 +232,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#000'
     },
-    h2text: {
-        marginTop: 10,
-        fontFamily: 'Helvetica',
-        fontSize: 36,
-        fontWeight: 'bold',
-    },
-    flatView: {
-        justifyContent: 'center',
-        paddingTop: 30,
-        borderRadius: 2,
-    },
     closeText: {
-        backgroundColor: '#333',
-        color: '#bbb',
-        padding: 5,
-        margin: 20
-    },
-    openText: {
         backgroundColor: '#333',
         color: '#bbb',
         padding: 5,
@@ -272,16 +252,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#00000080'
     },
+    contentContainer: {
+        margin: 5
+    },
     list: {
         paddingVertical: 5,
         margin: 3,
         backgroundColor: "#eeeeee",
-        zIndex: -1
+        zIndex: -1,
+        overflow: 'hidden',
+        borderRadius: 10
     },
-    viewStyle: {
-        flex: 1,
+    carouselContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    selected: {backgroundColor: '#FA7B5F'}
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#eee',
+        height: 100,
+        borderTopWidth: 0.5,
+        borderBottomWidth: 0.5
+    }
 });
