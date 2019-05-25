@@ -57,10 +57,15 @@ export default class Home extends Component {
             groupsWithUser = groupsWithUser.map(group => {
                 return {
                     name: group.groupTitle,
-                    time: group.groupTime
+                    time: group.groupTime,
+                    desc: group.groupDesc,
+                    size: group.groupSize,
+                    place: group.groupPlace,
+                    cate: group.groupCate
+
                 }
-            })
-            console.log(groupsWithUser);
+            });
+
             if (!groupsWithUser.length == 0) {
                 that.setState({
                     carouselItems: groupsWithUser
@@ -147,10 +152,21 @@ export default class Home extends Component {
 
     renderSlider({item, index}) {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                <Text style={{color: '#fff'}}>{item.name}</Text>
-                <Text style={{color: '#fff'}}>{item.time}</Text>
-            </View>
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('SelectedGroup', {
+                    name: item.name,
+                    time: item.time,
+                    desc: item.desc,
+                    size: item.size,
+                    place: item.place,
+                    cate: item.cate
+                })
+            }
+            >
+                <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
+                    <Text style={{color: '#fff'}}>{item.name}</Text>
+                    <Text style={{color: '#fff'}}>{item.time}</Text>
+                </View>
+            </TouchableHighlight>
         )
     }
 

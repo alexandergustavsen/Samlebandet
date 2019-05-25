@@ -9,11 +9,13 @@ import Profile from './src/screens/Profile'
 import Tutorial from './src/screens/Tutorial'
 import Interests from './src/screens/Interests'
 import Chat from './src/screens/Chat'
+import SelectedGroup from './src/screens/SelectedGroup'
 
 const appStackNavigator = createStackNavigator({
   Home: Home,
   CreateGroup: CreateGroup,
   Profile: Profile,
+  SelectedGroup: SelectedGroup,
   Chat: Chat
 });
 
