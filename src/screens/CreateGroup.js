@@ -138,14 +138,14 @@ export default class CreateGroup extends Component {
             onValueChange={(itemValue, itemIndex) => this.setState({PickerCate:itemValue, groupCate: itemValue})}
             >
               <Picker.Item label="Kategori" value=""/>
-              <Picker.Item label="Mat" value="mat" />
-              <Picker.Item label="Uteliv" value="uteliv" />
-              <Picker.Item label="Friluft" value="friluft" />
-              <Picker.Item label="Trening" value="trening" />
-              <Picker.Item label="Opplevelser" value="opplevelser" />
-              <Picker.Item label="Hobby" value="hobby" />
-              <Picker.Item label="Underholdning" value="underholdning" />
-              <Picker.Item label="Diverse" value="diverse" />
+              <Picker.Item label="Mat" value="Mat" />
+              <Picker.Item label="Uteliv" value="Uteliv" />
+              <Picker.Item label="Friluft" value="Friluft" />
+              <Picker.Item label="Trening" value="Trening" />
+              <Picker.Item label="Opplevelser" value="Opplevelser" />
+              <Picker.Item label="Hobby" value="Hobby" />
+              <Picker.Item label="Underholdning" value="Underholdning" />
+              <Picker.Item label="Diverse" value="Diverse" />
             </Picker>
           </Item>
         </Content>
