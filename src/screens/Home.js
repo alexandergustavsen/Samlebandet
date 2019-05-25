@@ -77,6 +77,9 @@ export default class Home extends Component {
         firebase.database().ref('/groups/' + key + '/members').push({
             _id: userId
         });
+        this.setState({
+            showMe: false,
+        })
     }
 
     modal = () => {
@@ -84,7 +87,7 @@ export default class Home extends Component {
         return(
             <Modal visible={this.state.showMe}
                 onRequestClose={() => console.warn("This is a close request.")}
-                position='center'
+                transparent={true}
             >
                 <View style={styles.modalView}>
                     <Text style={{
@@ -204,7 +207,7 @@ export default class Home extends Component {
                         />
                     </List>
                 </View>
-                <View>
+                <View style={styles.container}>
                     {this.state.showMe === true ? this.modal() : null}
                 </View>
             </View>
@@ -216,7 +219,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#ebebeb'
+        backgroundColor: '#000'
     },
     h2text: {
         marginTop: 10,
@@ -245,8 +248,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#aaa",
         height: 500,
         width: 350,
-        marginTop: 175,
-        marginLeft: 32.5,
+        //marginTop: 175,
+        //marginLeft: 32.5,
         justifyContent: 'center',
         alignItems: 'center'
     },
