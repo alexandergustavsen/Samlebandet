@@ -85,7 +85,7 @@ export default class Home extends Component {
 
     joinGroup = (key) => {
         userId = firebase.auth().currentUser.uid;
-        firebase.database().ref('/groups/' + key + '/members').set({
+        firebase.database().ref('/groups/' + key + '/members').push({
             _id: userId
         });
         this.setState({
@@ -180,27 +180,27 @@ export default class Home extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <View>
-                    <Header style={{ justifyContent: 'space-between' }}>
-                        <Button onPress={() => this.props.navigation.navigate('Profile')}>
-                            <Text>Profil</Text>
-                        </Button>
-                        <Button onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                            <Text>Opprett gruppe</Text>
-                        </Button>
-                        <Button onPress={() => this.props.navigation.navigate('Chat')}>
-                            <Text>Chat</Text>
-                        </Button>
-                        <Button>
-                            <Text>Innstillinger</Text>
-                        </Button>
+                    <Header style={{
+                        flexOrientation: 'row',
+                        justifyContent: 'space-between',
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        backgroundColor: '#40E0D0',
+                    }}>
+                        <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
+                            <Icon name='person' size={35}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{flex: 2}}>
+                            <Icon name='settings' size={30}/>
+                        </TouchableOpacity>
                     </Header>
                 </View>
                 <View style={styles.carouselContainer}>
-                    <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
+                    <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
                         <Icon name='chevron-left'/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     <View>
                         <Carousel
@@ -213,17 +213,60 @@ export default class Home extends Component {
                         />
                     </View>
 
-                    <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
+                    <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
                         <Icon name='chevron-right'/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
-                <FlatList
-                    data={this.state.dataArray}
-                    renderItem={item => this.renderItem(item)}
-                    keyExtractor={item => item.key}
-                    extra={this.state}
-                    contentContainerStyle={styles.contentContainer}
-                />
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'center'
+                    }}>
+                    <View style={{
+                        backgroundColor: '#40E0D0',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: 150,
+                        height: 90
+                    }}>
+                        <TouchableOpacity
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                            onPress={() => this.props.navigation.navigate('CreateGroup')
+                            }>
+                            <Text>Opprett gruppe</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{
+                        backgroundColor: '#40E0D0',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: 150,
+                        height: 90
+                    }}>
+                        <TouchableOpacity
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                        }}
+                            onPress={() => this.props.navigation.navigate('Chat')
+                            }>
+                            <Text>Chat</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{flex: 4}}>
+                    <FlatList
+                        data={this.state.dataArray}
+                        renderItem={item => this.renderItem(item)}
+                        keyExtractor={item => item.key}
+                        extra={this.state}
+                        contentContainerStyle={styles.contentContainer}
+                    />
+                </View>
                 <View style={styles.container}>
                     {this.state.showMe === true ? this.modal() : null}
                 </View>
