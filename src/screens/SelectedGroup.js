@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {Text, View, StyleSheet, Button} from "react-native";
+import * as firebase from 'firebase'
 
 export default class SelectedGroup extends Component {
     constructor(props) {
         super(props)
-        let prop = this.props.navigation.state.params
+        let prop = this.props.navigation.state.params;
         this.state = {
             name: prop.name,
             time: prop.time,
@@ -12,7 +13,27 @@ export default class SelectedGroup extends Component {
             size: prop.size,
             place: prop.place,
             cate: prop.cate,
+            id: prop.id,
         }
+    }
+
+    leaveGroup(){
+        that = this
+        https://samlebandet.firebaseio.com/groups/-Lfd2AAaRyRaVEUzG5HB/members
+        userId = firebase.auth().currentUser.uid;
+        firebase.database().ref('/groups/' + this.state.id + '/members')
+            .orderByChild("_id")
+            .equalTo(userId)
+            .once("value", function(snapshot) {
+                var key;
+                snapshot.forEach(function (childSnapshot) {
+                    key = childSnapshot.key;
+                    return true; // Cancel further enumeration.
+                });
+                console.log(key)
+            firebase.database().ref('/groups/' + that.state.id + '/members/' + key).remove()
+        });
+        this.props.navigation.navigate('Home');
     }
 
     render() {
@@ -39,7 +60,7 @@ export default class SelectedGroup extends Component {
                 full
                 rounded
                 primary
-                onPress={() => this.props.navigation.navigate('Home')}
+                onPress={() => this.leaveGroup()}
                 title='Forlat gruppe'
                 ></Button>
 

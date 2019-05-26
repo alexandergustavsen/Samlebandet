@@ -6,7 +6,6 @@ import {
     Modal,
     View,
     TouchableOpacity,
-    TouchableWithoutFeedback,
     SafeAreaView,
     TouchableHighlight,
     Image, TouchableWithoutFeedback, ScrollView
@@ -19,6 +18,8 @@ import * as firebase from 'firebase'
 export default class Home extends Component {
     constructor(){
         super();
+
+        let tempKey
 
         this.state = {
             dataArray: [],
@@ -50,7 +51,9 @@ export default class Home extends Component {
                 for (const key in members) {
                     if  (!members.hasOwnProperty(key)) continue;
                     const id = members[key]._id; // const { _id } = members[key] <- deconstruct
-                    if (id === userId) return true;
+                    if (id === userId){
+                        return true;
+                    }
                 }
                 return false;
             }) ;
@@ -63,11 +66,11 @@ export default class Home extends Component {
                     desc: group.groupDesc,
                     size: group.groupSize,
                     place: group.groupPlace,
-                    cate: group.groupCate
-
+                    cate: group.groupCate,
+                    id: group._id,
                 }
             });
-
+            //console.log(groupsWithUser)
             if (!groupsWithUser.length == 0) {
                 that.setState({
                     carouselItems: groupsWithUser
@@ -81,7 +84,7 @@ export default class Home extends Component {
 
     joinGroup = (key) => {
         userId = firebase.auth().currentUser.uid;
-        firebase.database().ref('/groups/' + key + '/members').push({
+        firebase.database().ref('/groups/' + key + '/members').set({
             _id: userId
         });
         this.setState({
@@ -161,7 +164,8 @@ export default class Home extends Component {
                     desc: item.desc,
                     size: item.size,
                     place: item.place,
-                    cate: item.cate
+                    cate: item.cate,
+                    id: item.id,
                 })
             }
             >
