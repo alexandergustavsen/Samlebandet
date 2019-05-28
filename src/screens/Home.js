@@ -18,6 +18,20 @@ import {Button, Header, List, ListItem} from "native-base";
 import * as firebase from 'firebase'
 
 export default class Home extends Component {
+
+    constructor(){
+        super();
+
+        this.state = {
+            dataArray: [],
+            currentItem: null,
+            showMe: false,
+            activeIndex: 0,
+            carouselItems: [{name: 'Du har ingen grupper'},],
+        };
+        this.renderSlider = this.renderSlider.bind(this);
+    }
+
     static navigationOptions = {
         headerLeft: (
             <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
@@ -37,19 +51,6 @@ export default class Home extends Component {
             borderBottomWidth: 0
         })
     };
-
-    constructor(){
-        super();
-
-        this.state = {
-            dataArray: [],
-            currentItem: null,
-            showMe: false,
-            activeIndex: 0,
-            carouselItems: [{name: 'Du har ingen grupper'},],
-        };
-        this.renderSlider = this.renderSlider.bind(this);
-    }
 
     componentDidMount() {
         const that = this;
@@ -178,13 +179,41 @@ export default class Home extends Component {
             <View style={{
                 flex: 1,
                 flexDirection: 'row'}}>
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text>BILDE HER</Text>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'left', marginLeft: 20}}>
+                    <Image
+                        style={{
+                            width: 120,
+                            height: 100,
+                            borderRadius: 5
+                        }}
+                        source={require('../../assets/images/fest.png')}
+                    />
                 </View>
-                <View style={{flex: 1}}>
+                <View style={{flex: 2, justifyContent: 'left', alignItems: 'left', marginLeft: 20, marginRight: 10}}>
                     <Text style={{fontSize: 15, fontWeight: 'bold'}}>{data.item.groupTitle}</Text>
-                    <Text style={{fontSize: 15}}>{data.item.groupPlace}  {data.item.groupTime}</Text>
-                    <Text>{data.item.groupSize}</Text>
+                    <Text style={{fontSize: 15}}>{data.item.groupPlace}</Text>
+                    <Text style={{fontSize: 15}}>{data.item.groupTime}</Text>
+                    {/*<Text>{data.item.groupSize}</Text>*/}
+                    <View style={{flex: 1, flexDirection: 'row', marginTop: 7}}>
+                        <View style={{marginRight: 7}}>
+                            <Image
+                                style={{width: 25, height: 25}}
+                                source={require('../../assets/images/person1.png')}
+                            />
+                        </View>
+                        <View style={{marginRight: 7}}>
+                            <Image
+                                style={{width: 25, height: 25}}
+                                source={require('../../assets/images/person2.png')}
+                            />
+                        </View>
+                        <View style={{marginRight: 7}}>
+                            <Image
+                                style={{width: 25, height: 25}}
+                                source={require('../../assets/images/person3.png')}
+                            />
+                        </View>
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -202,9 +231,21 @@ export default class Home extends Component {
                 })
             }
             >
-                <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                    <Text style={{fontWeight: 'bold', color: '#000'}}>{item.name}</Text>
-                    <Text style={{color: '#000'}}>{item.time}</Text>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
+                        <Image
+                            style={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: 25
+                            }}
+                            source={require('../../assets/images/friluft.png')}
+                        />
+                    </View>
+                    <View style={{flex: 1.25, justifyContent: 'center', alignItems:'left', marginLeft: 10}}>
+                        <Text style={{fontWeight: 'bold', color: '#000'}}>{item.name}</Text>
+                        <Text style={{color: '#000'}}>{item.time}</Text>
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -254,7 +295,16 @@ export default class Home extends Component {
                             }}
                             onPress={() => this.props.navigation.navigate('CreateGroup')
                             }>
-                            <Text>Opprett gruppe</Text>
+                            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                <Image
+                                    style={{
+                                        width: 50,
+                                        height: 50
+                                    }}
+                                    source={require('../../assets/images/group_white.png')}
+                                />
+                                <Text style={{color: '#383838'}}>Opprett gruppe</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -271,7 +321,16 @@ export default class Home extends Component {
                         }}
                             onPress={() => this.props.navigation.navigate('Chat')
                             }>
-                            <Text>Chat</Text>
+                            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                <Image
+                                    style={{
+                                        width: 50,
+                                        height: 50
+                                    }}
+                                    source={require('../../assets/images/chat_white.png')}
+                                />
+                                <Text style={{color: '#383838'}}>Chat</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>
