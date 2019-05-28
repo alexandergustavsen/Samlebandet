@@ -18,10 +18,28 @@ import {Button, Header, List, ListItem} from "native-base";
 import * as firebase from 'firebase'
 
 export default class Home extends Component {
+    static navigationOptions = {
+        headerLeft: (
+            <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
+                <Icon name='person' size={35}/>
+            </TouchableOpacity>
+        ),
+        headerRight: (
+            <TouchableOpacity>
+                <Icon name='settings' size={30}/>
+            </TouchableOpacity>
+        ),
+        headerStyle: ({
+            backgroundColor: '#00EDD6',
+            marginLeft: 15,
+            marginRight: 15,
+            marginBottom: 5,
+            borderBottomWidth: 0
+        })
+    };
+
     constructor(){
         super();
-
-        let tempKey
 
         this.state = {
             dataArray: [],
@@ -29,7 +47,7 @@ export default class Home extends Component {
             showMe: false,
             activeIndex: 0,
             carouselItems: [{name: 'Du har ingen grupper'},],
-        }
+        };
         this.renderSlider = this.renderSlider.bind(this);
     }
 
@@ -195,25 +213,9 @@ export default class Home extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <View>
-                    <View style={{
-                        flexOrientation: 'row',
-                        justifyContent: 'space-between',
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        backgroundColor: '#40E0D0',
-                    }}>
-                        <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
-                            <Icon name='person' size={35}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{flex: 2}}>
-                            <Icon name='settings' size={30}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
                 <View style={styles.carouselContainer}>
                     <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
-                        <Icon name='chevron-left'/>
+                        <Icon name='chevron-left' color={'#00000033'}/>
                     </TouchableOpacity>
 
                     <View>
@@ -228,17 +230,18 @@ export default class Home extends Component {
                     </View>
 
                     <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
-                        <Icon name='chevron-right'/>
+                        <Icon name='chevron-right' color={'#00000033'}/>
                     </TouchableOpacity>
                 </View>
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'space-around',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    margin: 20
                     }}>
                     <View style={{
-                        backgroundColor: '#40E0D0',
+                        backgroundColor: '#00EDD6',
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 150,
@@ -255,7 +258,7 @@ export default class Home extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={{
-                        backgroundColor: '#40E0D0',
+                        backgroundColor: '#00EDD6',
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 150,
@@ -270,6 +273,19 @@ export default class Home extends Component {
                             }>
                             <Text>Chat</Text>
                         </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <View style={{marginLeft: 20}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold', color: '#383838'}}>Finn en gruppe</Text>
+                    </View>
+                    <View style={{flexDirection: 'row', marginRight: 20}}>
+                        {/*HER TRENGER VI ET IKON*/}
+                        <Text style={{color: '#383838'}}>Filtrer</Text>
                     </View>
                 </View>
                 <View style={{
@@ -335,9 +351,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#eee',
+        backgroundColor: '#fff',
         height: 100,
-        borderTopWidth: 0.5,
-        borderBottomWidth: 0.5
+        borderBottomWidth: 1
     }
 });
