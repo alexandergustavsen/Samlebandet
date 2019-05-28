@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     SafeAreaView,
     TouchableHighlight,
-    Image, TouchableWithoutFeedback, ScrollView
+    Image, TouchableWithoutFeedback, ScrollView,
+    Alert,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Icon } from 'react-native-elements';
@@ -38,16 +39,16 @@ export default class Home extends Component {
         //console.log(userId);
         firebase.database().ref('/groups').on('value', function(snapshot) {
             //console.log(snapshot)
-            let returnArray = [];
+            let groupArray = [];
 
             snapshot.forEach(function(snap) {
                 let item = snap.val();
                 item.key = snap.key;
 
-                returnArray.push(item);
+                groupArray.push(item);
             });
-            //console.log(returnArray)
-            let groupsWithUser = returnArray.filter(group => {
+            //console.log(groupArray)
+            let groupsWithUser = groupArray.filter(group => {
                 const members = group.members //const { members } = group;  <- deconstruct
                 for (const key in members) {
                     if  (!members.hasOwnProperty(key)) continue;
@@ -78,16 +79,23 @@ export default class Home extends Component {
                 })
             }
             that.setState({
-                dataArray: returnArray
+                dataArray: groupArray
             })
         });
     }
 
     joinGroup = (key) => {
+        //that = this;
         userId = firebase.auth().currentUser.uid;
-        firebase.database().ref('/groups/' + key + '/members').push({
-            _id: userId
-        });
+        firebase.database().ref('/groups/' + key).child('members').orderByChild('_id').equalTo(userId).once('value', snapshot => {
+            if (snapshot.exists()){
+                Alert.alert('Du er allerede medlem av denne gruppen')
+            } else {
+                firebase.database().ref('/groups/' + key + '/members').push({
+                    _id: userId
+                });
+            }
+        })
         this.setState({
             showMe: false,
         })
