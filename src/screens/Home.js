@@ -188,7 +188,7 @@ export default class Home extends Component {
         return (
             <View style={{flex: 1}}>
                 <View>
-                    <Header style={{
+                    <View style={{
                         flexOrientation: 'row',
                         justifyContent: 'space-between',
                         paddingLeft: 10,
@@ -201,7 +201,7 @@ export default class Home extends Component {
                         <TouchableOpacity style={{flex: 2}}>
                             <Icon name='settings' size={30}/>
                         </TouchableOpacity>
-                    </Header>
+                    </View>
                 </View>
                 <View style={styles.carouselContainer}>
                     <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
