@@ -16,7 +16,11 @@ export default class LogIn extends Component {
   
     loginUser = (email, password) => {
         if(email == '' && password == ''){
-          firebase.auth().signInWithEmailAndPassword('alejandro@gmail.com', 'alejandro');
+<<<<<<< HEAD
+          firebase.auth().signInWithEmailAndPassword('martin@martin.no', 'martin123');
+=======
+          firebase.auth().signInWithEmailAndPassword('alex@gmail.com', 'alex6666');
+>>>>>>> 9e52592607f1264475339cda96b925fae344c904
           this.props.navigation.navigate('App')
         } else {
           try {

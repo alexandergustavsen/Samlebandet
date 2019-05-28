@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     SafeAreaView,
     TouchableHighlight,
-    Image, TouchableWithoutFeedback, ScrollView
+    Image, TouchableWithoutFeedback, ScrollView,
+    Alert,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Icon } from 'react-native-elements';
@@ -38,16 +39,16 @@ export default class Home extends Component {
         //console.log(userId);
         firebase.database().ref('/groups').on('value', function(snapshot) {
             //console.log(snapshot)
-            let returnArray = [];
+            let groupArray = [];
 
             snapshot.forEach(function(snap) {
                 let item = snap.val();
                 item.key = snap.key;
 
-                returnArray.push(item);
+                groupArray.push(item);
             });
-            //console.log(returnArray)
-            let groupsWithUser = returnArray.filter(group => {
+            //console.log(groupArray)
+            let groupsWithUser = groupArray.filter(group => {
                 const members = group.members //const { members } = group;  <- deconstruct
                 for (const key in members) {
                     if  (!members.hasOwnProperty(key)) continue;
@@ -78,16 +79,23 @@ export default class Home extends Component {
                 })
             }
             that.setState({
-                dataArray: returnArray
+                dataArray: groupArray
             })
         });
     }
 
     joinGroup = (key) => {
+        //that = this;
         userId = firebase.auth().currentUser.uid;
-        firebase.database().ref('/groups/' + key + '/members').set({
-            _id: userId
-        });
+        firebase.database().ref('/groups/' + key).child('members').orderByChild('_id').equalTo(userId).once('value', snapshot => {
+            if (snapshot.exists()){
+                Alert.alert('Du er allerede medlem av denne gruppen')
+            } else {
+                firebase.database().ref('/groups/' + key + '/members').push({
+                    _id: userId
+                });
+            }
+        })
         this.setState({
             showMe: false,
         })
@@ -149,12 +157,18 @@ export default class Home extends Component {
             style={styles.list}
             onPress={() => this.currentItemFunc(data)}
         >
-            <Text>Tittel: {data.item.groupTitle}</Text>
-            <Text>Tidspunkt: {data.item.groupTime}</Text>
-            <Text>Beskrivelse: {data.item.groupDesc}</Text>
-            <Text>Størrelse: {data.item.groupSize}</Text>
-            <Text>Sted: {data.item.groupPlace}</Text>
-            <Text>Kategori: {data.item.groupCate}</Text>
+            <View style={{
+                flex: 1,
+                flexDirection: 'row'}}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text>BILDE HER</Text>
+                </View>
+                <View style={{flex: 1}}>
+                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>{data.item.groupTitle}</Text>
+                    <Text style={{fontSize: 15}}>{data.item.groupPlace}  {data.item.groupTime}</Text>
+                    <Text>{data.item.groupSize}</Text>
+                </View>
+            </View>
         </TouchableOpacity>
 
     renderSlider({item, index}) {
@@ -171,7 +185,7 @@ export default class Home extends Component {
             }
             >
                 <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                    <Text style={{color: '#000'}}>{item.name}</Text>
+                    <Text style={{fontWeight: 'bold', color: '#000'}}>{item.name}</Text>
                     <Text style={{color: '#000'}}>{item.time}</Text>
                 </View>
             </TouchableWithoutFeedback>
@@ -180,27 +194,27 @@ export default class Home extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <View>
-                    <Header style={{ justifyContent: 'space-between' }}>
-                        <Button onPress={() => this.props.navigation.navigate('Profile')}>
-                            <Text>Profil</Text>
-                        </Button>
-                        <Button onPress={() => this.props.navigation.navigate('CreateGroup')}>
-                            <Text>Opprett gruppe</Text>
-                        </Button>
-                        <Button onPress={() => this.props.navigation.navigate('Chat')}>
-                            <Text>Chat</Text>
-                        </Button>
-                        <Button>
-                            <Text>Innstillinger</Text>
-                        </Button>
+                    <Header style={{
+                        flexOrientation: 'row',
+                        justifyContent: 'space-between',
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        backgroundColor: '#40E0D0',
+                    }}>
+                        <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
+                            <Icon name='person' size={35}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{flex: 2}}>
+                            <Icon name='settings' size={30}/>
+                        </TouchableOpacity>
                     </Header>
                 </View>
                 <View style={styles.carouselContainer}>
-                    <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
+                    <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
                         <Icon name='chevron-left'/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     <View>
                         <Carousel
@@ -213,17 +227,66 @@ export default class Home extends Component {
                         />
                     </View>
 
-                    <TouchableHighlight onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
+                    <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
                         <Icon name='chevron-right'/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
-                <FlatList
-                    data={this.state.dataArray}
-                    renderItem={item => this.renderItem(item)}
-                    keyExtractor={item => item.key}
-                    extra={this.state}
-                    contentContainerStyle={styles.contentContainer}
-                />
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'center'
+                    }}>
+                    <View style={{
+                        backgroundColor: '#40E0D0',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: 150,
+                        height: 90
+                    }}>
+                        <TouchableOpacity
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                            onPress={() => this.props.navigation.navigate('CreateGroup')
+                            }>
+                            <Text>Opprett gruppe</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{
+                        backgroundColor: '#40E0D0',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: 150,
+                        height: 90
+                    }}>
+                        <TouchableOpacity
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                        }}
+                            onPress={() => this.props.navigation.navigate('Chat')
+                            }>
+                            <Text>Chat</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{
+                    flex: 4,
+                    shadowColor: "#000",
+                    shadowOffset: {width: 0, height: 2},
+                    shadowOpacity: 0.1,
+                    shadowRadius: 3.84,
+                    elevation: 5
+                }}>
+                    <FlatList
+                        data={this.state.dataArray}
+                        renderItem={item => this.renderItem(item)}
+                        keyExtractor={item => item.key}
+                        extra={this.state}
+                    />
+                </View>
                 <View style={styles.container}>
                     {this.state.showMe === true ? this.modal() : null}
                 </View>
@@ -261,12 +324,12 @@ const styles = StyleSheet.create({
         margin: 5
     },
     list: {
-        paddingVertical: 5,
-        margin: 3,
-        backgroundColor: "#eeeeee",
+        paddingVertical: 20,
+        margin: 15,
+        backgroundColor: "#fff",
         zIndex: -1,
         overflow: 'hidden',
-        borderRadius: 10
+        borderRadius: 5
     },
     carouselContainer: {
         flexDirection: 'row',
