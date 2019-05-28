@@ -149,12 +149,18 @@ export default class Home extends Component {
             style={styles.list}
             onPress={() => this.currentItemFunc(data)}
         >
-            <Text>Tittel: {data.item.groupTitle}</Text>
-            <Text>Tidspunkt: {data.item.groupTime}</Text>
-            <Text>Beskrivelse: {data.item.groupDesc}</Text>
-            <Text>Størrelse: {data.item.groupSize}</Text>
-            <Text>Sted: {data.item.groupPlace}</Text>
-            <Text>Kategori: {data.item.groupCate}</Text>
+            <View style={{
+                flex: 1,
+                flexDirection: 'row'}}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text>BILDE HER</Text>
+                </View>
+                <View style={{flex: 1}}>
+                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>{data.item.groupTitle}</Text>
+                    <Text style={{fontSize: 15}}>{data.item.groupPlace}  {data.item.groupTime}</Text>
+                    <Text>{data.item.groupSize}</Text>
+                </View>
+            </View>
         </TouchableOpacity>
 
     renderSlider({item, index}) {
@@ -171,7 +177,7 @@ export default class Home extends Component {
             }
             >
                 <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                    <Text style={{color: '#000'}}>{item.name}</Text>
+                    <Text style={{fontWeight: 'bold', color: '#000'}}>{item.name}</Text>
                     <Text style={{color: '#000'}}>{item.time}</Text>
                 </View>
             </TouchableWithoutFeedback>
@@ -258,13 +264,19 @@ export default class Home extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{flex: 4}}>
+                <View style={{
+                    flex: 4,
+                    shadowColor: "#000",
+                    shadowOffset: {width: 0, height: 2},
+                    shadowOpacity: 0.1,
+                    shadowRadius: 3.84,
+                    elevation: 5
+                }}>
                     <FlatList
                         data={this.state.dataArray}
                         renderItem={item => this.renderItem(item)}
                         keyExtractor={item => item.key}
                         extra={this.state}
-                        contentContainerStyle={styles.contentContainer}
                     />
                 </View>
                 <View style={styles.container}>
@@ -304,12 +316,12 @@ const styles = StyleSheet.create({
         margin: 5
     },
     list: {
-        paddingVertical: 5,
-        margin: 3,
-        backgroundColor: "#eeeeee",
+        paddingVertical: 20,
+        margin: 15,
+        backgroundColor: "#fff",
         zIndex: -1,
         overflow: 'hidden',
-        borderRadius: 10
+        borderRadius: 5
     },
     carouselContainer: {
         flexDirection: 'row',
