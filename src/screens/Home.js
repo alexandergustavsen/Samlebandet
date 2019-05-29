@@ -14,6 +14,7 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import { Icon } from 'react-native-elements';
 import {Button, Header, List, ListItem} from "native-base";
+import FlashMessage from "react-native-flash-message";
 
 import * as firebase from 'firebase'
 
@@ -85,19 +86,25 @@ export default class Home extends Component {
     }
 
     joinGroup = (key) => {
-        //that = this;
         userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/groups/' + key).child('members').orderByChild('_id').equalTo(userId).once('value', snapshot => {
             if (snapshot.exists()){
-                Alert.alert('Du er allerede medlem av denne gruppen')
+                this.setState({
+                    showMe: false
+                })
+                this.refs.modalFlash.showMessage({
+                    message: "Du er allerede medlem av denne gruppen",
+                    type: "danger",
+                });
             } else {
                 firebase.database().ref('/groups/' + key + '/members').push({
                     _id: userId
                 });
+                this.setState({
+                    activeIndex: this.state.activeIndex+1
+                })
+
             }
-        })
-        this.setState({
-            showMe: false,
         })
     };
 
@@ -290,6 +297,7 @@ export default class Home extends Component {
                 <View style={styles.container}>
                     {this.state.showMe === true ? this.modal() : null}
                 </View>
+                <FlashMessage ref="modalFlash" position="bottom"/>
             </View>
         );
     }
