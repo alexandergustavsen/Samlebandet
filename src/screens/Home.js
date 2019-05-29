@@ -386,12 +386,12 @@ export default class Home extends Component {
                 </View>
                 <View style={{flex: 0.5, flexDirection: 'row', marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
                     <View style={{marginRight: 10}}>
-                        <Button onPress={()=>{this.setState({todaySelected: true})}} style={{backgroundColor: '#00EDD6', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                        <Button onPress={()=>{this.setState({todaySelected: true})}} style={this.state.todaySelected === true ? styles.highlighted : styles.unHighlighted}>
                             <Text style={{color: '#383838', fontSize: 15}}>I dag</Text>
                         </Button>
                     </View>
                     <View style={{marginLeft: 10}}>
-                        <Button onPress={()=>{this.setState({todaySelected: false})}} style={{borderWidth: 2 , borderColor: '#00EDD6', backgroundColor: '#fff', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                        <Button onPress={()=>{this.setState({todaySelected: false})}} style={this.state.todaySelected === false ? styles.highlighted : styles.unHighlighted}>
                             <Text style={{color: '#383838', fontSize: 15}}>I morgen</Text>
                         </Button>
                     </View>
@@ -464,5 +464,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 100,
         borderBottomWidth: 1
+    },
+    unHighlighted: {
+        borderWidth: 2,
+        borderColor: '#00EDD6',
+        backgroundColor: '#fff',
+        width: 170,
+        height: 35,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    highlighted: {
+        backgroundColor: '#00EDD6',
+        width: 170,
+        height: 35,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
