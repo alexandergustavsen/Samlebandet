@@ -38,11 +38,6 @@ export default class Home extends Component {
                 <Icon name='person' size={35}/>
             </TouchableOpacity>
         ),
-        headerRight: (
-            <TouchableOpacity>
-                <Icon name='settings' size={30}/>
-            </TouchableOpacity>
-        ),
         headerStyle: ({
             backgroundColor: '#00EDD6',
             marginLeft: 15,
@@ -114,7 +109,7 @@ export default class Home extends Component {
                     _id: userId
                 });
             }
-        })
+        });
         this.setState({
             showMe: false,
         })
@@ -337,14 +332,32 @@ export default class Home extends Component {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    borderBottomWidth: 2,
+                    borderColor: '#ccc',
+                    paddingBottom: 15,
+                    marginLeft: 20,
+                    marginRight: 20
+
                 }}>
-                    <View style={{marginLeft: 20}}>
+                    <View style={{marginLeft: 18}}>
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: '#383838'}}>Finn en gruppe</Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginRight: 20}}>
+                    <View style={{flexDirection: 'row', marginRight: 18}}>
                         {/*HER TRENGER VI ET IKON*/}
                         <Text style={{color: '#383838'}}>Filtrer</Text>
+                    </View>
+                </View>
+                <View style={{flex: 0.5, flexDirection: 'row', marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{marginRight: 10}}>
+                        <Button style={{backgroundColor: '#00EDD6', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{color: '#383838', fontSize: 15}}>I dag</Text>
+                        </Button>
+                    </View>
+                    <View style={{marginLeft: 10}}>
+                        <Button style={{borderWidth: 2 , borderColor: '#00EDD6', backgroundColor: '#fff', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{color: '#383838', fontSize: 15}}>I morgen</Text>
+                        </Button>
                     </View>
                 </View>
                 <View style={{

@@ -27,6 +27,22 @@ export default class CreateGroup extends Component {
     }
   }
 
+    static navigationOptions = {
+        title: 'Opprett gruppe',
+        headerTitleStyle: ({
+            color: '#383838',
+            fontWeight: 'regular',
+            fontSize: 20
+        }),
+        headerStyle: ({
+            backgroundColor: '#00EDD6',
+            marginLeft: 15,
+            marginRight: 15,
+            marginBottom: 5,
+            borderBottomWidth: 0
+        })
+    };
+
   handlePicker = (datetime) => {
     this.setState({
       isVisible: false,
@@ -72,6 +88,9 @@ export default class CreateGroup extends Component {
     return (
       <Container style={styles.container}>
         <View style = {styles.image}>
+          <Icon
+            
+          />
           <Text>Legg til et bilde</Text>
         </View>
         <View style={styles.input}>
