@@ -20,11 +20,11 @@ const appStackNavigator = createStackNavigator({
 });
 
 const authStackNavigator = createStackNavigator({
-  Tutorial: Tutorial,
   LogIn: LogIn,
   SignUp: SignUp,
   CreateProfile: CreateProfile,
   Interests: Interests,
+  Tutorial: Tutorial,
 });
 
 const switchNavigator = createSwitchNavigator({
