@@ -176,7 +176,7 @@ export default class CreateGroup extends Component {
                   <Text style={{color: '#383838', fontWeight: 'bold'}}>Maks Antall</Text>
               </View>
               <View style={{flex: 2}}>
-                  <Text style={{marginLeft: 4, color: '#747475', fontSize: 15}}>{}</Text>
+                  <Text style={{marginLeft: 4, color: '#747475', fontSize: 15}}>Velg gruppestørrelse</Text>
 
                   {/*<ActionSheet
                       ref={o => this.ActionSheet = o}
@@ -200,7 +200,7 @@ export default class CreateGroup extends Component {
                   <Text style={{color: '#383838', fontWeight: 'bold'}}>Kategori</Text>
               </View>
               <View style={{flex: 2}}>
-                  <Text style={{marginLeft: 4, color: '#747475', fontSize: 15}} onPress={this.showActionSheet2}>{}</Text>
+                  <Text style={{marginLeft: 4, color: '#747475', fontSize: 15}}>Velg en interesse</Text>
                   {/*<ActionSheet
                     ref={o => this.ActionSheet2 = o}
                     title={'Velg en interesse'}
