@@ -19,10 +19,9 @@ import FlashMessage from "react-native-flash-message";
 import * as firebase from 'firebase'
 
 export default class Home extends Component {
+
     constructor(){
         super();
-
-        let tempKey
 
         this.state = {
             dataArray: [],
@@ -30,9 +29,24 @@ export default class Home extends Component {
             showMe: false,
             activeIndex: 0,
             carouselItems: [{name: 'Du har ingen grupper'},],
-        }
+        };
         this.renderSlider = this.renderSlider.bind(this);
     }
+
+    static navigationOptions = {
+        headerLeft: (
+            <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
+                <Icon name='person' size={35}/>
+            </TouchableOpacity>
+        ),
+        headerStyle: ({
+            backgroundColor: '#00EDD6',
+            marginLeft: 15,
+            marginRight: 15,
+            marginBottom: 5,
+            borderBottomWidth: 0
+        })
+    };
 
     componentDidMount() {
         const that = this;
@@ -167,13 +181,41 @@ export default class Home extends Component {
             <View style={{
                 flex: 1,
                 flexDirection: 'row'}}>
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text>BILDE HER</Text>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'left', marginLeft: 20}}>
+                    <Image
+                        style={{
+                            width: 120,
+                            height: 100,
+                            borderRadius: 5
+                        }}
+                        source={require('../../assets/images/fest.png')}
+                    />
                 </View>
-                <View style={{flex: 1}}>
+                <View style={{flex: 2, justifyContent: 'left', alignItems: 'left', marginLeft: 20, marginRight: 10}}>
                     <Text style={{fontSize: 15, fontWeight: 'bold'}}>{data.item.groupTitle}</Text>
-                    <Text style={{fontSize: 15}}>{data.item.groupPlace}  {data.item.groupTime}</Text>
-                    <Text>{data.item.groupSize}</Text>
+                    <Text style={{fontSize: 15}}>{data.item.groupPlace}</Text>
+                    <Text style={{fontSize: 15}}>{data.item.groupTime}</Text>
+                    {/*<Text>{data.item.groupSize}</Text>*/}
+                    <View style={{flex: 1, flexDirection: 'row', marginTop: 7}}>
+                        <View style={{marginRight: 7}}>
+                            <Image
+                                style={{width: 25, height: 25}}
+                                source={require('../../assets/images/person1.png')}
+                            />
+                        </View>
+                        <View style={{marginRight: 7}}>
+                            <Image
+                                style={{width: 25, height: 25}}
+                                source={require('../../assets/images/person2.png')}
+                            />
+                        </View>
+                        <View style={{marginRight: 7}}>
+                            <Image
+                                style={{width: 25, height: 25}}
+                                source={require('../../assets/images/person3.png')}
+                            />
+                        </View>
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -191,9 +233,21 @@ export default class Home extends Component {
                 })
             }
             >
-                <View style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                    <Text style={{fontWeight: 'bold', color: '#000'}}>{item.name}</Text>
-                    <Text style={{color: '#000'}}>{item.time}</Text>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
+                        <Image
+                            style={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: 25
+                            }}
+                            source={require('../../assets/images/friluft.png')}
+                        />
+                    </View>
+                    <View style={{flex: 1.25, justifyContent: 'center', alignItems:'left', marginLeft: 10}}>
+                        <Text style={{fontWeight: 'bold', color: '#000'}}>{item.name}</Text>
+                        <Text style={{color: '#000'}}>{item.time}</Text>
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -202,25 +256,9 @@ export default class Home extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <View>
-                    <View style={{
-                        flexOrientation: 'row',
-                        justifyContent: 'space-between',
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        backgroundColor: '#40E0D0',
-                    }}>
-                        <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
-                            <Icon name='person' size={35}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{flex: 2}}>
-                            <Icon name='settings' size={30}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
                 <View style={styles.carouselContainer}>
                     <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex-1)}>
-                        <Icon name='chevron-left'/>
+                        <Icon name='chevron-left' color={'#00000033'}/>
                     </TouchableOpacity>
 
                     <View>
@@ -235,17 +273,18 @@ export default class Home extends Component {
                     </View>
 
                     <TouchableOpacity onPress={() => this.carousel._snapToItem(this.state.activeIndex+1)}>
-                        <Icon name='chevron-right'/>
+                        <Icon name='chevron-right' color={'#00000033'}/>
                     </TouchableOpacity>
                 </View>
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'space-around',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    margin: 20
                     }}>
                     <View style={{
-                        backgroundColor: '#40E0D0',
+                        backgroundColor: '#00EDD6',
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 150,
@@ -258,11 +297,20 @@ export default class Home extends Component {
                             }}
                             onPress={() => this.props.navigation.navigate('CreateGroup')
                             }>
-                            <Text>Opprett gruppe</Text>
+                            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                <Image
+                                    style={{
+                                        width: 50,
+                                        height: 50
+                                    }}
+                                    source={require('../../assets/images/group_white.png')}
+                                />
+                                <Text style={{color: '#383838'}}>Opprett gruppe</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                     <View style={{
-                        backgroundColor: '#40E0D0',
+                        backgroundColor: '#00EDD6',
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 150,
@@ -275,8 +323,48 @@ export default class Home extends Component {
                         }}
                             onPress={() => this.props.navigation.navigate('Chat')
                             }>
-                            <Text>Chat</Text>
+                            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                <Image
+                                    style={{
+                                        width: 50,
+                                        height: 50
+                                    }}
+                                    source={require('../../assets/images/chat_white.png')}
+                                />
+                                <Text style={{color: '#383838'}}>Chat</Text>
+                            </View>
                         </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderBottomWidth: 2,
+                    borderColor: '#ccc',
+                    paddingBottom: 15,
+                    marginLeft: 20,
+                    marginRight: 20
+
+                }}>
+                    <View style={{marginLeft: 18}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold', color: '#383838'}}>Finn en gruppe</Text>
+                    </View>
+                    <View style={{flexDirection: 'row', marginRight: 18}}>
+                        {/*HER TRENGER VI ET IKON*/}
+                        <Text style={{color: '#383838'}}>Filtrer</Text>
+                    </View>
+                </View>
+                <View style={{flex: 0.5, flexDirection: 'row', marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{marginRight: 10}}>
+                        <Button style={{backgroundColor: '#00EDD6', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{color: '#383838', fontSize: 15}}>I dag</Text>
+                        </Button>
+                    </View>
+                    <View style={{marginLeft: 10}}>
+                        <Button style={{borderWidth: 2 , borderColor: '#00EDD6', backgroundColor: '#fff', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{color: '#383838', fontSize: 15}}>I morgen</Text>
+                        </Button>
                     </View>
                 </View>
                 <View style={{
@@ -343,9 +431,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#eee',
+        backgroundColor: '#fff',
         height: 100,
-        borderTopWidth: 0.5,
-        borderBottomWidth: 0.5
+        borderBottomWidth: 1
     }
 });
