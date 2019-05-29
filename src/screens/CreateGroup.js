@@ -163,6 +163,8 @@ export default class CreateGroup extends Component {
                       cancelTextStyle={{color: 'red', fontSize: 20}}
                       confirmTextStyle={{color: 'blue', fontSize: 20}}
 
+                      minimumDate={new Date()}
+                      maximumDate={new Date(new Date().setDate(new Date().getDate() + 1))}
                       isVisible={this.state.isVisible}
                       onConfirm={this.handlePicker}
                       onCancel={this.hidePicker}

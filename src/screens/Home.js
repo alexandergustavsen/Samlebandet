@@ -15,27 +15,14 @@ import Carousel from 'react-native-snap-carousel';
 import { Icon } from 'react-native-elements';
 import {Button, Header, List, ListItem} from "native-base";
 import FlashMessage from "react-native-flash-message";
+import moment from 'moment';
 
 import * as firebase from 'firebase'
 
 export default class Home extends Component {
-
-    constructor(){
-        super();
-
-        this.state = {
-            dataArray: [],
-            currentItem: null,
-            showMe: false,
-            activeIndex: 0,
-            carouselItems: [{name: 'Du har ingen grupper'},],
-        };
-        this.renderSlider = this.renderSlider.bind(this);
-    }
-
-    static navigationOptions = {
+    static navigationOptions = ({navigation}) => ({
         headerLeft: (
-            <TouchableOpacity style={{flex: 2}} onPress={() => this.props.navigation.navigate('Profile')}>
+            <TouchableOpacity style={{flex: 2}} onPress={() => navigation.navigate('Profile')}>
                 <Icon name='person' size={35}/>
             </TouchableOpacity>
         ),
@@ -46,7 +33,24 @@ export default class Home extends Component {
             marginBottom: 5,
             borderBottomWidth: 0
         })
-    };
+    });
+
+    constructor(){
+        super();
+
+        this.state = {
+            todaySelected: true,
+            showMe: false,
+            activeIndex: 0,
+            todayGroups: [],
+            tomorrowGroups: [],
+            carouselItems: [{name: 'Du har ingen grupper'},],
+            currentItem: null,
+        };
+        this.renderSlider = this.renderSlider.bind(this);
+    }
+
+    
 
     componentDidMount() {
         const that = this;
@@ -55,14 +59,30 @@ export default class Home extends Component {
         firebase.database().ref('/groups').on('value', function(snapshot) {
             //console.log(snapshot)
             let groupArray = [];
-
+            let todayGroups = [];
+            let tomorrowGroups = [];
+            let date = new Date();
             snapshot.forEach(function(snap) {
                 let item = snap.val();
                 item.key = snap.key;
-
                 groupArray.push(item);
+
+                let groupDate = item.groupTime.substring(0, item.groupTime.lastIndexOf(" "));
+                let todaysDate = moment(date).format('MMMM, Do YYYY HH:mm');
+                let tomorrowsDate = moment(date).add(1, 'days').format('MMMM, Do YYYY HH:mm');
+                todaysDate = todaysDate.substring(0, todaysDate.lastIndexOf(" "));
+                tomorrowsDate = tomorrowsDate.substring(0, tomorrowsDate.lastIndexOf(" "));
+                //console.log('todaysDate: ' + todaysDate)
+                //console.log('tomorrowsDate: ' + tomorrowsDate)
+                //console.log('groupDate: ' + groupDate)
+
+                if(groupDate === todaysDate) todayGroups.push(item)
+                if(groupDate === tomorrowsDate) tomorrowGroups.push(item)
             });
-            //console.log(groupArray)
+
+            console.log(todayGroups)
+            console.log(tomorrowGroups)
+
             let groupsWithUser = groupArray.filter(group => {
                 const members = group.members //const { members } = group;  <- deconstruct
                 for (const key in members) {
@@ -74,8 +94,6 @@ export default class Home extends Component {
                 }
                 return false;
             }) ;
-            //console.log(groupsWithUser);
-            
             groupsWithUser = groupsWithUser.map(group => {
                 return {
                     name: group.groupTitle,
@@ -87,14 +105,14 @@ export default class Home extends Component {
                     id: group._id,
                 }
             });
-            //console.log(groupsWithUser)
             if (!groupsWithUser.length == 0) {
                 that.setState({
                     carouselItems: groupsWithUser
                 })
             }
             that.setState({
-                dataArray: groupArray
+                todayGroups: todayGroups,
+                tomorrowGroups: tomorrowGroups
             })
         });
     }
@@ -172,6 +190,15 @@ export default class Home extends Component {
             showMe: true,
         })
     };
+
+    todayTomorrow(){
+        //this.state.todaySelected === true ? return this.state.todayGroups : return this.state.tomorrowGroups
+        if(this.state.todaySelected){
+            return this.state.todayGroups
+        } else {
+            return this.state.tomorrowGroups
+        }
+    }
 
     renderItem = data =>
         <TouchableOpacity
@@ -288,7 +315,8 @@ export default class Home extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 150,
-                        height: 90
+                        height: 90,
+                        borderRadius: 5
                     }}>
                         <TouchableOpacity
                             style={{
@@ -314,7 +342,8 @@ export default class Home extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 150,
-                        height: 90
+                        height: 90,
+                        borderRadius: 5
                     }}>
                         <TouchableOpacity
                             style={{
@@ -357,12 +386,12 @@ export default class Home extends Component {
                 </View>
                 <View style={{flex: 0.5, flexDirection: 'row', marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
                     <View style={{marginRight: 10}}>
-                        <Button style={{backgroundColor: '#00EDD6', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                        <Button onPress={()=>{this.setState({todaySelected: true})}} style={{backgroundColor: '#00EDD6', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={{color: '#383838', fontSize: 15}}>I dag</Text>
                         </Button>
                     </View>
                     <View style={{marginLeft: 10}}>
-                        <Button style={{borderWidth: 2 , borderColor: '#00EDD6', backgroundColor: '#fff', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                        <Button onPress={()=>{this.setState({todaySelected: false})}} style={{borderWidth: 2 , borderColor: '#00EDD6', backgroundColor: '#fff', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={{color: '#383838', fontSize: 15}}>I morgen</Text>
                         </Button>
                     </View>
@@ -376,7 +405,7 @@ export default class Home extends Component {
                     elevation: 5
                 }}>
                     <FlatList
-                        data={this.state.dataArray}
+                        data={this.todayTomorrow()}
                         renderItem={item => this.renderItem(item)}
                         keyExtractor={item => item.key}
                         extra={this.state}
@@ -390,6 +419,7 @@ export default class Home extends Component {
         );
     }
 }
+//onPress={this.setState({todaySelected: true})}
 
 const styles = StyleSheet.create({
     container: {
