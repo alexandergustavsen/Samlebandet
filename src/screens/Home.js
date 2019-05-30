@@ -326,13 +326,15 @@ export default class Home extends Component {
                             onPress={() => this.props.navigation.navigate('CreateGroup')
                             }>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                                <Image
-                                    style={{
-                                        width: 50,
-                                        height: 50
-                                    }}
-                                    source={require('../../assets/images/group_white.png')}
-                                />
+                                <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 50, width: 60, height: 60}}>
+                                    <Image
+                                        style={{
+                                            width: 37,
+                                            height: 30
+                                        }}
+                                        source={require('../../assets/images/gruppe.png')}
+                                    />
+                                </View>
                                 <Text style={{color: '#383838'}}>Opprett gruppe</Text>
                             </View>
                         </TouchableOpacity>
@@ -353,13 +355,15 @@ export default class Home extends Component {
                             onPress={() => this.props.navigation.navigate('Chat')
                             }>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 50, width: 60, height: 60}}>
                                 <Image
                                     style={{
-                                        width: 50,
-                                        height: 50
+                                        width: 42,
+                                        height: 28
                                     }}
-                                    source={require('../../assets/images/chat_white.png')}
+                                    source={require('../../assets/images/chat.png')}
                                 />
+                                </View>
                                 <Text style={{color: '#383838'}}>Chat</Text>
                             </View>
                         </TouchableOpacity>
