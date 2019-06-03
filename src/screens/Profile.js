@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, View, ListView, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import {StyleSheet, StatusBar, View, ListView, TouchableOpacity, FlatList, TextInput, Image} from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Item, Input } from 'native-base';
 import * as firebase from 'firebase'
 
-export default class Profile extends Component {
+export default class EditProfile extends Component {
     constructor(){
         super();
 
         this.state = {
-            selected: 'viewProfile',
-            btnText: 'editProfile',
-
             firstName: '',
             lastName: '',
             school: '',
@@ -20,61 +17,21 @@ export default class Profile extends Component {
         }
     }
 
-    viewProfile = () => {
-        return (
-            <View>
-                <Text>{this.state.firstName}</Text>
-                <Text>{this.state.lastName}</Text>
-                <Text>{this.state.school}</Text>
-                <Text>{this.state.retning}</Text>
-                <Text>{this.state.date}</Text>
-                <Text>{this.state.beskrivelse}</Text>
-            </View>
-        )
-    }
-
-    editProfile = () => {
-        return (
-            <View>
-                <Text>Now editing profile my man</Text>
-                <TextInput
-                    style={{height: 40}}
-                    placeholder="Skole"
-                    onChangeText={(school) => this.setState({school: school})}
-                />
-                <TextInput
-                    style={{height: 40}}
-                    placeholder="Studieretning"
-                    onChangeText={(retning) => this.setState({retning: retning})}
-                />
-                <TextInput
-                    style={{height: 40}}
-                    placeholder="Beskrivelse"
-                    onChangeText={(beskrivelse) => this.setState({beskrivelse: beskrivelse})}
-                />
-            </View>
-        )
-    }
-
-    changeData = () => {
-        if(this.state.selected == 'viewProfile'){
-            this.setState({ 
-                selected: 'editProfile',
-                btnText: 'Ferdig',
-            });
-        } else {
-            this.setState({
-                selected: 'viewProfile',
-                btnText: 'Edit profile',
-            });
-            userId = firebase.auth().currentUser.uid;
-            firebase.database().ref('users/' + userId).update({
-                school: this.state.school,
-                retning: this.state.retning,
-                Beskrivelse: this.state.beskrivelse,
-            });
-        }
-    }
+    static navigationOptions = {
+        title: 'Profil',
+        headerTitleStyle: ({
+            color: '#383838',
+            fontWeight: 'normal',
+            fontSize: 20
+        }),
+        headerStyle: ({
+            backgroundColor: '#00EDD6',
+            marginLeft: 15,
+            marginRight: 15,
+            marginBottom: 5,
+            borderBottomWidth: 0
+        })
+    };
 
     componentDidMount() {
         const that = this;
@@ -94,60 +51,65 @@ export default class Profile extends Component {
 
     render() {
         return (
+            <View style={{flex: 1}}>
+                <View>
+                    <View>
+                        <Image
 
-            <Container>
-                <Content>
-                    {this.state.selected === 'viewProfile' ? this.viewProfile() : this.editProfile()}
-                    <Button
-                        style={{ marginTop: 10 }}
-                        full
-                        rounded
-                        primary
-                        onPress={() => this.changeData()}>
-                        <Text style={{ color: 'white' }}>{this.state.btnText}</Text>
-                    </Button>
-                </Content>
-                <Footer>
-                    <FooterTab>
-                        <Button full>
-                            <Text>Footer</Text>
+                        />
+                    </View>
+                    <View>
+                        <Text>{this.state.firstName} {this.state.lastName}</Text>
+                    </View>
+                    <View>
+                        <Text>{this.state.beskrivelse}</Text>
+                    </View>
+                    <View>
+                        <Button style={styles.button}>
+                            <Text style={{fontSize: 15, color: '#383838'}}>Rediger Profil</Text>
                         </Button>
-                    </FooterTab>
-                </Footer>
-            </Container>
-        );
+                    </View>
+                </View>
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <View>
+                            <Image
+                                
+                            />
+                        </View>
+                        <View style={{flex: 1, flexDirection: 'column'}}>
+                            <View>
+                                <Text>Fødselsdag:</Text>
+                            </View>
+                            <View>
+                                <Text>{this.state.date}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View>
+
+                    </View>
+                    <View>
+
+                    </View>
+                </View>
+                <View>
+
+                </View>
+            </View>
+        )
     }
 }
 
-const styles2 = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
-})
-
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    button: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-
-    buttonContainer: {
-        backgroundColor: '#2980b9',
-        paddingVertical: 15,
-    },
-
-    buttonText: {
-        textAlign: 'center',
-        color: '#FFFFFF',
-        fontWeight: '700',
-    },
+        backgroundColor: '#fff',
+        borderColor: '#000',
+        borderWidth: 1.5,
+        borderRadius: 30,
+        width: 170,
+        height: 35
+    }
 });

@@ -23,7 +23,12 @@ export default class Home extends Component {
     static navigationOptions = ({navigation}) => ({
         headerLeft: (
             <TouchableOpacity style={{flex: 2}} onPress={() => navigation.navigate('Profile')}>
-                <Icon name='person' size={35}/>
+                <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 50, width: 35, height: 35}}>
+                    <Image
+                        style={{width: 20, height: 26}}
+                        source={require('../../assets/images/profil.png')}
+                    />
+                </View>
             </TouchableOpacity>
         ),
         headerStyle: ({

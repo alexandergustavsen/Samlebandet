@@ -6,32 +6,39 @@ import Home from './src/screens/Home'
 import CreateGroup from './src/screens/CreateGroup'
 import CreateProfile from './src/screens/CreateProfile'
 import Profile from './src/screens/Profile'
+import EditProfile from './src/screens/EditProfile'
 import Tutorial from './src/screens/Tutorial'
 import Interests from './src/screens/Interests'
 import Chat from './src/screens/Chat'
 import SelectedGroup from './src/screens/SelectedGroup'
+import FirstPage from './src/screens/FirstPage'
 
 const appStackNavigator = createStackNavigator({
-  Home: Home,
-  CreateGroup: CreateGroup,
-  Profile: Profile,
-  SelectedGroup: SelectedGroup,
-  Chat: Chat
+    Home: Home,
+    Profile: Profile,
+    EditProfile: EditProfile,
+    CreateGroup: CreateGroup,
+    SelectedGroup: SelectedGroup,
+    Chat: Chat
+
 });
 
 const authStackNavigator = createStackNavigator({
-  LogIn: LogIn,
-  SignUp: SignUp,
-  CreateProfile: CreateProfile,
-  Interests: Interests,
-  Tutorial: Tutorial,
+    LogIn: LogIn,
+    FirstPage: FirstPage,
+    SignUp: SignUp,
+    CreateProfile: CreateProfile,
+    Interests: Interests,
+    Tutorial: Tutorial,
 });
 
 const switchNavigator = createSwitchNavigator({
-  AuthLoading: AuthLoading,
-  Auth: authStackNavigator,
-  App: appStackNavigator,
+    AuthLoading: AuthLoading,
+    Auth: authStackNavigator,
+    App: appStackNavigator,
 });
+
+
 
 //Skal være slik:
 export default createAppContainer(switchNavigator);

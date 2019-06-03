@@ -45,8 +45,6 @@ export default class Tutorial extends Component {
     renderItem = props => (
         <View
             style={[styles.mainContent, {
-                // paddingTop: props.topSpacer,
-                // paddingBottom: props.bottomSpacer,
                 width: props.width,
                 height: props.height,
             }]}>
