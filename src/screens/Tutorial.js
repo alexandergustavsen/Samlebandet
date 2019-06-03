@@ -43,17 +43,17 @@ export default class Tutorial extends Component {
     }
 
     renderItem = props => (
-        <View
-            style={[styles.mainContent, {
-                width: props.width,
-                height: props.height,
-            }]}>
-            <View style={{backgroundColor: props.backgroundColor}}>
-                <View style={styles.slide}>
-                    <Image style={styles.image} source={props.image} />
-                    <Text style={styles.title}>{props.title}</Text>
-                    <Text style={styles.text}>{props.text}</Text>
+        <View style={{flex: 1}}>
+            <View style={styles.mainContent}>
+                <View style={{backgroundColor: props.backgroundColor}}>
+                    <View style={styles.slide}>
+                        <Image style={styles.image} source={props.image} />
+                        <Text style={styles.title}>{props.title}</Text>
+                        <Text style={styles.text}>{props.text}</Text>
+                    </View>
                 </View>
+            </View>
+            <View style={{flex: 1, backgroundColor: '#0EEDD6'}}>
             </View>
         </View>
     );
@@ -64,16 +64,20 @@ onDone = () => {
 
     renderNextButton = () => {
         return (
-            <View style={styles.buttonCircle}>
-                <Text style={styles.btnText}>Next</Text>
+            <View style={{flex: 1}}>
+                <View style={styles.buttonCircle}>
+                    <Text style={styles.btnText}>Next</Text>
+                </View>
             </View>
         );
     };
 
     renderDoneButton = () => {
         return (
-            <View style={styles.buttonCircle}>
-               <Text style={styles.btnText}>Done</Text>
+            <View style={{flex: 1}}>
+                <View style={styles.buttonCircle}>
+                   <Text style={styles.btnText}>Done</Text>
+                </View>
             </View>
         );
     };
@@ -94,18 +98,18 @@ onDone = () => {
 
 const styles = StyleSheet.create({
     mainContent: {
-        flex: 1,
+        flex: 2,
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         backgroundColor: '#0EEDD6',
-        paddingBottom: 300,
     },
+    
     text: {
         color: 'black',
         backgroundColor: 'transparent',
         textAlign: 'center',
-        paddingHorizontal: 16,
     },
+
     title: {
         fontSize: 22,
         fontWeight: 'bold',
@@ -122,6 +126,7 @@ const styles = StyleSheet.create({
     },
 
     buttonCircle: {
+        flex: 1,
         height: 40,
         backgroundColor: 'white',
         borderColor: 'black',
@@ -129,14 +134,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10,
-        marginLeft: 60,
-        marginRight: 60,
-        marginBottom: 200,
+        marginBottom: 50
     },
 
     slide: {
-        flex: 1,
+        flex: 2,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -144,7 +146,6 @@ const styles = StyleSheet.create({
     image: {
         width: 170,
         height: 170,
-        marginBottom: 10
     }
 
 });
