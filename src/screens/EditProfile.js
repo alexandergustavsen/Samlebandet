@@ -208,7 +208,7 @@ export default class EditProfile extends Component {
                 Beskrivelse: this.state.beskrivelse,
             });
         }
-    }
+    };
 
     componentDidMount() {
         const that = this;

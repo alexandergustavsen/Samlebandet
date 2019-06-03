@@ -25,7 +25,8 @@
     "react-native-snap-carousel": "^3.8.0",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.0.7",
-    "scheduler": "^0.14.0"
+    "scheduler": "^0.14.0",
+    "react-native-actionsheet": "latest"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",

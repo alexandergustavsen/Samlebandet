@@ -15,6 +15,22 @@ export default class SignUp extends Component {
         })
     }
 
+    static navigationOptions = {
+        title: 'Profil',
+        headerTitleStyle: ({
+            color: '#383838',
+            fontWeight: 'normal',
+            fontSize: 20
+        }),
+        headerStyle: ({
+            backgroundColor: '#00EDD6',
+            marginLeft: 15,
+            marginRight: 15,
+            marginBottom: 5,
+            borderBottomWidth: 0
+        })
+    };
+
     signUpUser = (email, password) => {
         try {
             if (this.state.password.length < 8) {
