@@ -4,13 +4,10 @@ import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Rig
 import * as firebase from 'firebase'
 
 export default class EditProfile extends Component {
-    constructor() {
+    constructor(){
         super();
 
         this.state = {
-            selected: 'viewProfile',
-            btnText: 'Rediger Profil',
-
             firstName: '',
             lastName: '',
             school: '',
@@ -116,4 +113,3 @@ const styles = StyleSheet.create({
         height: 35
     }
 });
-
