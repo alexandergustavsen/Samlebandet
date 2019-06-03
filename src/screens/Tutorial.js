@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-// import { Ionicons } from '@expo/vector-icons';
-// import {Icon} from "react-native-elements";
 
 const slides = [
     {
