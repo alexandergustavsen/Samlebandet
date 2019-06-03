@@ -22,8 +22,13 @@ import * as firebase from 'firebase'
 export default class Home extends Component {
     static navigationOptions = ({navigation}) => ({
         headerLeft: (
-            <TouchableOpacity style={{flex: 2}} onPress={() => navigation.navigate('Profile')}>
-                <Icon name='person' size={35}/>
+            <TouchableOpacity style={{flex: 2}} onPress={() => navigation.navigate('EditProfile')}>
+                <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 50, width: 35, height: 35}}>
+                    <Image
+                        style={{width: 20, height: 26}}
+                        source={require('../../assets/images/profil.png')}
+                    />
+                </View>
             </TouchableOpacity>
         ),
         headerStyle: ({
@@ -326,13 +331,15 @@ export default class Home extends Component {
                             onPress={() => this.props.navigation.navigate('CreateGroup')
                             }>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                                <Image
-                                    style={{
-                                        width: 50,
-                                        height: 50
-                                    }}
-                                    source={require('../../assets/images/group_white.png')}
-                                />
+                                <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 50, width: 60, height: 60}}>
+                                    <Image
+                                        style={{
+                                            width: 37,
+                                            height: 30
+                                        }}
+                                        source={require('../../assets/images/gruppe.png')}
+                                    />
+                                </View>
                                 <Text style={{color: '#383838'}}>Opprett gruppe</Text>
                             </View>
                         </TouchableOpacity>
@@ -353,13 +360,15 @@ export default class Home extends Component {
                             onPress={() => this.props.navigation.navigate('Chat')
                             }>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 50, width: 60, height: 60}}>
                                 <Image
                                     style={{
-                                        width: 50,
-                                        height: 50
+                                        width: 42,
+                                        height: 28
                                     }}
-                                    source={require('../../assets/images/chat_white.png')}
+                                    source={require('../../assets/images/chat.png')}
                                 />
+                                </View>
                                 <Text style={{color: '#383838'}}>Chat</Text>
                             </View>
                         </TouchableOpacity>
@@ -386,12 +395,12 @@ export default class Home extends Component {
                 </View>
                 <View style={{flex: 0.5, flexDirection: 'row', marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
                     <View style={{marginRight: 10}}>
-                        <Button onPress={()=>{this.setState({todaySelected: true})}} style={{backgroundColor: '#00EDD6', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                        <Button onPress={()=>{this.setState({todaySelected: true})}} style={this.state.todaySelected === true ? styles.highlighted : styles.unHighlighted}>
                             <Text style={{color: '#383838', fontSize: 15}}>I dag</Text>
                         </Button>
                     </View>
                     <View style={{marginLeft: 10}}>
-                        <Button onPress={()=>{this.setState({todaySelected: false})}} style={{borderWidth: 2 , borderColor: '#00EDD6', backgroundColor: '#fff', width: 170, height: 35, borderRadius: 50, justifyContent: 'center', alignItems: 'center'}}>
+                        <Button onPress={()=>{this.setState({todaySelected: false})}} style={this.state.todaySelected === false ? styles.highlighted : styles.unHighlighted}>
                             <Text style={{color: '#383838', fontSize: 15}}>I morgen</Text>
                         </Button>
                     </View>
@@ -464,5 +473,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 100,
         borderBottomWidth: 1
+    },
+    unHighlighted: {
+        borderWidth: 2,
+        borderColor: '#00EDD6',
+        backgroundColor: '#fff',
+        width: 170,
+        height: 35,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    highlighted: {
+        backgroundColor: '#00EDD6',
+        width: 170,
+        height: 35,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

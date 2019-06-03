@@ -3,7 +3,8 @@ import { StyleSheet, StatusBar, Text, View, ListView, TouchableOpacity, Picker, 
 import { Container, Content, Header, Form, Input, Item, Button, Label, Icon, List, ListItem } from 'native-base';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import simplePicker from 'react-native-simple-modal-picker';
+import ActionSheet from 'react-native-actionsheet';
+import ActionSheet2 from 'react-native-actionsheet';
 import moment from 'moment';
 import * as firebase from 'firebase';
 
@@ -14,18 +15,19 @@ export default class CreateGroup extends Component {
     super(props);
 
     this.state = {
-      listViewData: data,
-      groupTitle: '',
-      groupDesc: '',
-      groupTime: '',
-      groupPlace: '',
-      groupSize: '',
-      groupCate: '',
-      isVisible: false,
-      isVisibleAntall: false,
-      PickerSize: '',
-      PickerSize2: '',
-      PickerCate: ''
+        listViewData: data,
+        groupTitle: '',
+        groupDesc: '',
+        groupTime: '',
+        groupPlace: '',
+        groupSize: '',
+        groupCate: '',
+        isVisible: false,
+        isVisibleAntall: false,
+        PickerSize: '',
+        PickerSize2: '',
+        PickerCate: '',
+        CateOptions: ['Mat', 'Uteliv', 'Friluft', 'Trening', 'Opplevelser', 'Hobby', 'Underholdning', 'Diverse', 'Cancel']
     }
   }
 
@@ -87,11 +89,11 @@ export default class CreateGroup extends Component {
   } 
 
   showActionSheet = () => {
-    this.ActionSheet.show()
+    this.ActionSheet.show();
   };
 
   showActionSheet2 = () => {
-    this.ActionSheet2.show()
+    this.ActionSheet2.show();
   };
 
   render() {
@@ -155,7 +157,9 @@ export default class CreateGroup extends Component {
               </View>
               <View style={{flex: 2}}>
                   <TouchableOpacity style={{marginLeft: 4}} onPress={this.showPicker}>
-                      <Text style={{color: '#747475', fontSize: 15}}>Når begynner det?</Text>
+                      <Text style={{color: '#747475', fontSize: 15}}>
+                          {this.state.groupTime === '' ? 'Når begynner det?' : this.state.groupTime}
+                      </Text>
                   </TouchableOpacity>
                   <DateTimePicker
                       cancelTextIOS={'Exit'}
@@ -179,16 +183,17 @@ export default class CreateGroup extends Component {
                   <Text style={{color: '#383838', fontWeight: 'bold'}}>Maks Antall</Text>
               </View>
               <View style={{flex: 2}}>
-                  <Text style={{marginLeft: 4, color: '#747475', fontSize: 15}}>{}</Text>
-
-                  {/*<ActionSheet
+                  <Text onPress={this.showActionSheet} style={{marginLeft: 4, color: '#747475', fontSize: 15}}>
+                      {this.state.PickerSize === '' ? 'Velg gruppestørrelse' : this.state.groupSize}
+                  </Text>
+                  <ActionSheet
                       ref={o => this.ActionSheet = o}
                       title={'Velg gruppestørrelse'}
-                      options={[2, 3, 4, 5, 6, 7, 8,'Cancel']}
-                      cancelButtonIndex={8}
-                      destructiveButtonIndex={8}
+                      options={['2', '3', '4', '5', '6', '7', '8', 'Cancel']}
+                      cancelButtonIndex={7}
+                      destructiveButtonIndex={7}
                       onPress={(index) => {this.setState({PickerSize: index, groupSize: index+2})
-                      }}/>*/}
+                  }}/>
               </View>
           </View>
           <View style={{
@@ -203,15 +208,17 @@ export default class CreateGroup extends Component {
                   <Text style={{color: '#383838', fontWeight: 'bold'}}>Kategori</Text>
               </View>
               <View style={{flex: 2}}>
-                  <Text style={{marginLeft: 4, color: '#747475', fontSize: 15}} onPress={this.showActionSheet2}>{}</Text>
-                  {/*<ActionSheet
+                  <Text onPress={this.showActionSheet2} style={{marginLeft: 4, color: '#747475', fontSize: 15}}>
+                      {this.state.PickerSize2 === '' ? 'Velg en interesse' : this.state.groupCate}
+                  </Text>
+                  <ActionSheet
                     ref={o => this.ActionSheet2 = o}
                     title={'Velg en interesse'}
                     options={['Mat', 'Uteliv', 'Friluft', 'Trening', 'Opplevelser', 'Hobby', 'Underholdning', 'Diverse', 'Cancel']}
                     cancelButtonIndex={8}
                     destructiveButtonIndex={8}
-                    onPress={(index) => {this.setState({PickerSize2: index, groupCate: index})
-                    }}/>*/}
+                    onPress={(index) => {this.setState({PickerSize2: index, groupCate: this.state.CateOptions[index]})
+                }}/>
               </View>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 60}}>
