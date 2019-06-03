@@ -13,8 +13,8 @@ import SelectedGroup from './src/screens/SelectedGroup'
 
 const appStackNavigator = createStackNavigator({
   Home: Home,
-  CreateGroup: CreateGroup,
   Profile: Profile,
+  CreateGroup: CreateGroup,
   SelectedGroup: SelectedGroup,
   Chat: Chat
 });

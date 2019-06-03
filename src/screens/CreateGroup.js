@@ -164,6 +164,7 @@ export default class CreateGroup extends Component {
                       confirmTextStyle={{color: 'blue', fontSize: 20}}
 
                       minimumDate={new Date()}
+                      //maximumDate setter limiten til 24 timer senere, ikke hele neste dag. Finne bedre løsning
                       maximumDate={new Date(new Date().setDate(new Date().getDate() + 1))}
                       isVisible={this.state.isVisible}
                       onConfirm={this.handlePicker}

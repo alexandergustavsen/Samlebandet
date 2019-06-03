@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, View, ListView, TouchableOpacity, FlatList, TextInput } from 'react-native';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Item, Input } from 'native-base';
+import { StyleSheet, Text, Button, StatusBar, View, ListView, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import * as firebase from 'firebase'
 
 export default class Profile extends Component {
@@ -71,7 +70,7 @@ export default class Profile extends Component {
             firebase.database().ref('users/' + userId).update({
                 school: this.state.school,
                 retning: this.state.retning,
-                Beskrivelse: this.state.beskrivelse,
+                beskrivelse: this.state.beskrivelse,
             });
         }
     }
@@ -94,42 +93,21 @@ export default class Profile extends Component {
 
     render() {
         return (
-
-            <Container>
-                <Content>
-                    {this.state.selected === 'viewProfile' ? this.viewProfile() : this.editProfile()}
-                    <Button
-                        style={{ marginTop: 10 }}
-                        full
-                        rounded
-                        primary
-                        onPress={() => this.changeData()}>
-                        <Text style={{ color: 'white' }}>{this.state.btnText}</Text>
-                    </Button>
-                </Content>
-                <Footer>
-                    <FooterTab>
-                        <Button full>
-                            <Text>Footer</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
-            </Container>
+            <View>
+                {this.state.selected === 'viewProfile' ? this.viewProfile() : this.editProfile()}
+                <Button
+                    style={{ marginTop: 10 }}
+                    full
+                    rounded
+                    primary
+                    onPress={() => this.changeData()}
+                    title={this.state.btnText}
+                    >
+                </Button>
+            </View>
         );
     }
 }
-
-const styles2 = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
-})
 
 
 const styles = StyleSheet.create({
