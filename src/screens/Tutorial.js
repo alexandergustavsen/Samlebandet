@@ -1,89 +1,98 @@
 import React, {Component} from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import {StyleSheet, View, Text, Image} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { Ionicons } from '@expo/vector-icons';
+// import { Ionicons } from '@expo/vector-icons';
+// import {Icon} from "react-native-elements";
 
 const slides = [
     {
         key: 'somethun',
-        title: 'Title 1',
-        text: 'Description.\nSay something cool',
-        image: require('../../assets/images/group.png'),
-        backgroundColor: '#59b2ab',
+        title: 'Meld deg inn i eller\nopprett grupper',
+        text: 'Host eller delta på eventer\nsammen med andre studenter',
+        image: require('../../assets/images/gruppe_sirkel.png'),
     },
     {
         key: 'somethun-dos',
-        title: 'Title 2',
-        text: 'Other cool stuff',
-        image: require('../../assets/images/chat.png'),
-        backgroundColor: '#febe29',
+        title: 'Avtal tid og sted',
+        text: 'Snakk ed gruppemedlemmene\ni en felles chat',
+        image: require('../../assets/images/chat_sirkel.png'),
     },
     {
         key: 'somethun1',
-        title: 'Rocket guy',
-        text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
-        image: require('../../assets/images/activities.png'),
-        backgroundColor: '#22bcb5',
+        title: 'Møt gruppen',
+        text: 'Introduser deg online,\nbli kjent offline',
+        image: require('../../assets/images/aktiviteter_sirkel.png'),
     }
 ];
 
 export default class Tutorial extends Component {
+
+    static navigationOptions = ({navigation}) => ({
+        headerRight: (
+            <Text onPress={() => navigation.navigate('Home')} style={{color: '#fff', fontSize: 20}}>Skip</Text>
+        ),
+        headerStyle: ({
+            backgroundColor: '#00EDD6',
+            marginLeft: 15,
+            marginRight: 15,
+            marginBottom: 5,
+            borderBottomWidth: 0
+        })
+    });
+
     constructor(props) {
         super(props);
     }
-    
-    renderItem = (item) => {
-        return (
-            <View style={{backgroundColor: item.backgroundColor}}>
+
+    renderItem = props => (
+        <View
+            style={[styles.mainContent, {
+                // paddingTop: props.topSpacer,
+                // paddingBottom: props.bottomSpacer,
+                width: props.width,
+                height: props.height,
+            }]}>
+            <View style={{backgroundColor: props.backgroundColor}}>
                 <View style={styles.slide}>
-                    <Image style={styles.image} source={item.image} />
-                    <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.text}>{item.text}</Text>
+                    <Image style={styles.image} source={props.image} />
+                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.text}>{props.text}</Text>
                 </View>
             </View>
-        );
-    }
-    onDone = () => {
+        </View>
+    );
+
+onDone = () => {
         this.props.navigation.navigate('Home')
-    }
+    };
 
     renderNextButton = () => {
         return (
             <View style={styles.buttonCircle}>
-                <Ionicons
-                    name='md-arrow-round-forward'
-                    color='rgba(255, 255, 255, .9)'
-                    size={24}
-                    style={{ backgroundColor: 'transparent' }}
-                />
+                <Text style={styles.btnText}>Next</Text>
             </View>
         );
-    }
+    };
+
     renderDoneButton = () => {
         return (
             <View style={styles.buttonCircle}>
-                <Ionicons
-                    name="md-checkmark"
-                    color="rgba(255, 255, 255, .9)"
-                    size={24}
-                    style={{ backgroundColor: 'transparent' }}
-                />
+               <Text style={styles.btnText}>Done</Text>
             </View>
         );
-    }
+    };
 
     render() {
         return(
             <AppIntroSlider 
-            renderItem={this.renderItem} 
-            slides={slides} 
-            onDone={this.onDone}
-            renderDoneButton={this.renderDoneButton}
-            renderNextButton={this.renderNextButton}
-            showSkipButton={true}
+                renderItem={this.renderItem}
+                slides={slides}
+                onDone={this.onDone}
+                renderDoneButton={this.renderDoneButton}
+                renderNextButton={this.renderNextButton}
+                bottomButton
             />
         )
-
     }
 }
 
@@ -92,10 +101,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-    },
-    image: {
-        width: 160,
-        height: 160,
+        backgroundColor: '#0EEDD6',
+        paddingBottom: 300,
     },
     text: {
         color: 'black',
@@ -105,17 +112,43 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
+        fontWeight: 'bold',
         color: 'black',
         backgroundColor: 'transparent',
         textAlign: 'center',
+        marginTop: 25,
         marginBottom: 16,
     },
+
+    btnText: {
+      fontSize: 15,
+      color: 'black'
+    },
+
     buttonCircle: {
-        width: 40,
         height: 40,
-        backgroundColor: 'rgba(0, 0, 0, .2)',
+        backgroundColor: 'white',
+        borderColor: 'black',
+        borderWidth: 1,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 10,
+        marginLeft: 60,
+        marginRight: 60,
+        marginBottom: 200,
     },
+
+    slide: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    image: {
+        width: 170,
+        height: 170,
+        marginBottom: 10
+    }
+
 });
