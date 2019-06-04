@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
+import {Text, StyleSheet, View, Image} from 'react-native';
+import { Container, Content, Header, Form, Input, Item, Button, Label, AsyncStorage } from 'native-base';
 import * as firebase from 'firebase';
+import LogoHeader from "../component/LogoHeader";
 
 export default class SignUp extends Component {
 
@@ -16,12 +17,6 @@ export default class SignUp extends Component {
     }
 
     static navigationOptions = {
-        title: 'Profil',
-        headerTitleStyle: ({
-            color: '#383838',
-            fontWeight: 'normal',
-            fontSize: 20
-        }),
         headerStyle: ({
             backgroundColor: '#00EDD6',
             marginLeft: 15,
@@ -66,50 +61,95 @@ export default class SignUp extends Component {
 
     render() {
         return (
-            <Container style={styles.container}>
-                <Form>
 
-                    <Item floatingLabel>
-                        <Label>Epost</Label>
-                        <Input
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            onChangeText={(email) => this.setState({ email })}
-                        />
-                    </Item>
-
-                    <Item floatingLabel>
-                        <Label>Passord</Label>
-                        <Input
-                            secureTextEntry
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            onChangeText={(password) => this.setState({ password })}
-                        />
-                    </Item>
-
-                    <Item floatingLabel>
-                        <Label>Gjenta passord</Label>
-                        <Input
-                            secureTextEntry
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            onChangeText={(rePassword) => this.setState({ rePassword })}
-                        />
-                    </Item>
-
-                    <Button
-                        style={{ marginTop: 10 }}
-                        full
-                        rounded
-                        primary
-                        onPress={() => this.signUpUser(this.state.email, this.state.password)}
-                    >
-                        <Text style={{ color: 'white' }}>Registrer deg</Text>
-                    </Button>
-
-                </Form>
-            </Container>
+            <View style={styles.container}>
+                <LogoHeader title='Registrer deg'/>
+                <View style={{flex: 3, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '85%'}}>
+                        <View style={{flex: 0.15, flexDirection: 'row', color: '#353535'}}>
+                            <View style={{marginRight: 10, justifyContent: 'center', alignItems: 'flex-end'}}>
+                                <Image
+                                    style={{width: 32, height: 22}}
+                                    source={require('../../assets/images/melding.png')}
+                                />
+                            </View>
+                            <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc', justifyContent: 'flex-end'}}>
+                                <Input
+                                    autoCorrect={false}
+                                    autoCapitalize="none"
+                                    onChangeText={(email) => this.setState({ email })}
+                                />
+                            </View>
+                        </View>
+                        <View style={{flex: 0.15, flexDirection: 'row', color: '#353535'}}>
+                            <View style={{marginRight: 10, justifyContent: 'center', alignItems: 'flex-end'}}>
+                                <Image
+                                    style={{width: 33, height: 34}}
+                                    source={require('../../assets/images/passord_oblique.png')}
+                                />
+                            </View>
+                            <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc', color: '#353535'}}>
+                                <View style={{flex: 1, flexDirection: 'row'}}>
+                                    <Input
+                                        secureTextEntry
+                                        autoCorrect={false}
+                                        autoCapitalize="none"
+                                        onChangeText={(password) => this.setState({ password })}
+                                    />
+                                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end', marginTop: 15}}>
+                                        <Image
+                                            style={{width: 27, height: 16}}
+                                            source={require('../../assets/images/show.png')}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{flex: 0.15, flexDirection: 'row', color: '#353535'}}>
+                            <View style={{marginRight: 10, justifyContent: 'center', alignItems: 'flex-end'}}>
+                                <Image
+                                    style={{width: 33, height: 34}}
+                                    source={require('../../assets/images/passord_oblique.png')}
+                                />
+                            </View>
+                            <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc', color: '#353535'}}>
+                                <View style={{flex: 1, flexDirection: 'row'}}>
+                                    <Input
+                                        secureTextEntry
+                                        autoCorrect={false}
+                                        autoCapitalize="none"
+                                        onChangeText={(rePassword) => this.setState({ rePassword })}
+                                    />
+                                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end', marginTop: 15}}>
+                                        <Image
+                                            style={{width: 27, height: 16}}
+                                            source={require('../../assets/images/show.png')}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+                        <View>
+                            <Button
+                                style={styles.button}
+                                onPress={() => this.signUpUser(this.state.email, this.state.password)}
+                            >
+                                <Text style={{fontSize: 20}}>Neste</Text>
+                            </Button>
+                        </View>
+                        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
+                            <View>
+                                <Text>Har du allerede en konto?</Text>
+                            </View>
+                            <View style={{marginLeft: 5}}>
+                                <Text onPress={() => this.props.navigation.navigate('LogIn')} style={{color: '#0000ff', textDecorationLine: 'underline'}}>Logg inn her</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
         );
     }
 }
@@ -117,8 +157,17 @@ export default class SignUp extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         justifyContent: 'center',
-        padding: 10
+        alignItems: 'center'
     },
+    button: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor: '#000',
+        borderWidth: 1.5,
+        borderRadius: 30,
+        width: 250,
+        height: 50
+    }
 });
