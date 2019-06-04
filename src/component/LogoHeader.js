@@ -7,15 +7,14 @@ export default class LogoHeader extends Component {
         return(
             <View style={{flex: 1,
                 flexDirection: 'column',
-                justifyContent: 'center',
+                justifyContent: 'space-around',
                 alignItems: 'center',
                 backgroundColor: '#00EDD6',
-                paddingBottom: 80,
                 borderBottomLeftRadius: 2000,
                 borderBottomRightRadius: 2000,
-                width: 535
+                width: 500,
             }}>
-                <View style={{marginBottom: 30}}>
+                <View>
                     <Image
                         style={{width: 90, height: 80}}
                         source={require('../../assets/images/pictogram_logo.png')}

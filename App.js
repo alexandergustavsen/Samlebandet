@@ -14,8 +14,8 @@ import SelectedGroup from './src/screens/SelectedGroup'
 import FirstPage from './src/screens/FirstPage'
 
 const appStackNavigator = createStackNavigator({
-    Home: Home,
     Profile: Profile,
+    Home: Home,
     EditProfile: EditProfile,
     CreateGroup: CreateGroup,
     SelectedGroup: SelectedGroup,
@@ -24,9 +24,9 @@ const appStackNavigator = createStackNavigator({
 });
 
 const authStackNavigator = createStackNavigator({
+    SignUp: SignUp,
     LogIn: LogIn,
     FirstPage: FirstPage,
-    SignUp: SignUp,
     CreateProfile: CreateProfile,
     Interests: Interests,
     Tutorial: Tutorial,
