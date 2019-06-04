@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
 import { Container, Content, Header, Form, Input, Item, Button, Label, AsyncStorage } from 'native-base';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as firebase from 'firebase';
 import LogoHeader from "../component/LogoHeader";
 
@@ -43,16 +44,16 @@ export default class LogIn extends Component {
       return (
         <View style={styles.container}>
             <LogoHeader title='Logg inn'/>
-           <View style={{flex: 3, justifyContent: 'center'}}>
-              <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', width: '100%'}}>
-                  <View style={{flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', color: '#353535', marginTop: 60, marginBottom: 30}}>
-                      <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
+           <View style={{flex: 3, justifyContent: 'space-around'}}>
+              <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'flex-start', width: wp('85%')}}>
+                  <View style={{flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', color: '#353535', paddingTop: 30}}>
+                      <View style={{justifyContent: 'center', alignItems: 'flex-end'}}>
                           <Image
-                              style={{width: 32, height: 22}}
+                              style={{width: 25, height: 18}}
                               source={require('../../assets/images/melding.png')}
                           />
                       </View>
-                      <View style={{flex: 4, justifyContent: 'flex-start', alignItems: 'flex-start', borderBottomWidth: 1, borderColor: '#ccc', marginLeft: 5, marginRight: 30}}>
+                      <View style={{flex: 4, justifyContent: 'space-around', alignItems: 'flex-start', borderBottomWidth: 1, borderColor: '#ccc'}}>
                           <Input
                               placeholder='E-post'
                               autoCorrect={false}
@@ -61,14 +62,15 @@ export default class LogIn extends Component {
                           />
                       </View>
                   </View>
-                  <View style={{flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', color: '#353535'}}>
-                      <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
+                  <View style={{flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                      <View style={{justifyContent: 'center', alignItems: 'flex-end'}}>
                           <Image
-                              style={{width: 33, height: 34}}
+                              style={{width: 25, height: 25}}
                               source={require('../../assets/images/passord_oblique.png')}
                           />
                       </View>
-                      <View style={{flex: 4, justifyContent: 'flex-start', alignItems: 'flex-start', borderBottomWidth: 1, borderColor: '#ccc', color: '#353535', marginLeft: 5, marginRight: 30}}>
+                      <View style={{flex: 4, justifyContent: 'space-between', alignItems: 'flex-start',
+                          borderBottomWidth: 1, borderColor: '#ccc', color: '#353535'}}>
                           <View style={{flex: 1, flexDirection: 'row'}}>
                               <View>
                               <Input
@@ -79,35 +81,34 @@ export default class LogIn extends Component {
                                   onChangeText={(password) => this.setState({ password })}
                               />
                               </View>
-                              <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end', marginRight: 10}}>
+                              <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
                                   <Image
-                                      style={{width: 27, height: 16}}
+                                      style={{width: 25, height: 15}}
                                       source={require('../../assets/images/show.png')}
                                   />
                               </View>
                           </View>
                       </View>
                   </View>
-                  <View style={{flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 60, marginRight: 30}}>
+                  <View style={{flex: 0.5, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'top'}}>
                       <View style={{flex: 1, alignItems: 'flex-end'}}>
                           <Text style={{color: '#0000ff', textDecorationLine: 'underline'}}>Glemt passord?</Text>
                       </View>
                   </View>
               </View>
-              <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
+              <View style={{flex: 0.6, alignItems: 'center', flexDirection: 'column'}}>
                  <View>
                     <Button
                       style={styles.button}
-                      onPress={() => this.loginUser(this.state.email, this.state.password)}
-                    >
-                      <Text style={{fontSize: 20}}>Logg inn</Text>
+                      onPress={() => this.loginUser(this.state.email, this.state.password)}>
+                      <Text style={{fontSize: 15}}>Logg inn</Text>
                     </Button>
                  </View>
                  <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
                     <View>
-                        <Text>Ingen konto?</Text>
+                        <Text>Ingen konto? </Text>
                     </View>
-                    <View style={{marginLeft: 5}}>
+                    <View>
                         <Text onPress={() => this.props.navigation.navigate('SignUp')} style={{color: '#0000ff', textDecorationLine: 'underline'}}>Registrer deg</Text>
                     </View>
                  </View>
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
       borderColor: '#000',
       borderWidth: 1,
       borderRadius: 30,
-      width: 250,
-      height: 50
+      width: wp('70%'),
+      height: hp('5.5%')
   }
 });
