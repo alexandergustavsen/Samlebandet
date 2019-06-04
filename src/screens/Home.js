@@ -60,6 +60,7 @@ export default class Home extends Component {
     componentDidMount() {
         const that = this;
         const userId = firebase.auth().currentUser.uid;
+        console.log(firebase.auth().currentUser);
         //console.log(userId);
         firebase.database().ref('/groups').on('value', function(snapshot) {
             //console.log(snapshot)
@@ -84,9 +85,6 @@ export default class Home extends Component {
                 if(groupDate === todaysDate) todayGroups.push(item)
                 if(groupDate === tomorrowsDate) tomorrowGroups.push(item)
             });
-
-            console.log(todayGroups)
-            console.log(tomorrowGroups)
 
             let groupsWithUser = groupArray.filter(group => {
                 const members = group.members //const { members } = group;  <- deconstruct
