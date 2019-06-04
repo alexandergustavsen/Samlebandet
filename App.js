@@ -24,10 +24,10 @@ const appStackNavigator = createStackNavigator({
 });
 
 const authStackNavigator = createStackNavigator({
-    SignUp: SignUp,
-    LogIn: LogIn,
-    FirstPage: FirstPage,
     CreateProfile: CreateProfile,
+    LogIn: LogIn,
+    SignUp: SignUp,
+    FirstPage: FirstPage,
     Interests: Interests,
     Tutorial: Tutorial,
 });
