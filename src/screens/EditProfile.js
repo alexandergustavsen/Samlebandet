@@ -232,7 +232,7 @@ export default class EditProfile extends Component {
                 <View style={{flex: 3, width: '100%'}}>
                     {this.state.selected === 'viewProfile' ? this.viewProfile() : this.editProfile()}
                 </View>
-                <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center'}}>
+                <View style={{flex: 0.5, justifyContent: 'flex-start', alignItems: 'center'}}>
                     <Button style={styles.button} onPress={() => this.changeData()}>
                         <Text style={{fontSize: 20, color: '#383838'}}>{this.state.btnText}</Text>
                     </Button>
