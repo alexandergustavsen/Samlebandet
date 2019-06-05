@@ -4,7 +4,7 @@ import * as firebase from 'firebase'; // 4.8.1
 class FirebaseChat {
     constructor() {
         this.init();
-        this.observeAuth();
+        //this.observeAuth();
     }
     
     init = () =>
@@ -16,7 +16,7 @@ class FirebaseChat {
             storageBucket: 'samlebandet.appspot.com',
             messagingSenderId: '693041379005'
         });
-
+    /*
     observeAuth = () =>
         firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
 
@@ -29,13 +29,31 @@ class FirebaseChat {
             }
         }
     };
-
+    */
+    groupId = '';
+    
     get uid() {
         return (firebase.auth().currentUser || {}).uid;
     }
 
+    get photo() {
+        return (firebase.auth().currentUser || {}).photoURL;
+    }
+
+    get name() {
+        return (firebase.auth().currentUser || {}).displayName;
+    }
+
     get ref() {
-        return firebase.database().ref('messages/');
+        return firebase.database().ref('messages/' + groupId);
+    }
+
+    get timestamp() {
+        return firebase.database.ServerValue.TIMESTAMP;
+    }
+
+    set ref(id) {
+        groupId = id;
     }
 
     parse = snapshot => {
@@ -56,9 +74,6 @@ class FirebaseChat {
             .limitToLast(20)
             .on('child_added', snapshot => callback(this.parse(snapshot)));
 
-    get timestamp() {
-        return firebase.database.ServerValue.TIMESTAMP;
-    }
     // send the message to the Backend
     send = messages => {
         for (let i = 0; i < messages.length; i++) {

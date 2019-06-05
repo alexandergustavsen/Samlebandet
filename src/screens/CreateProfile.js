@@ -32,6 +32,17 @@ export default class CreateProfile extends Component {
     };
 
     addProfile(firstName, lastName, school, retning, date){
+        const ref = firebase.storage().ref('path/to/image.jpg');
+        url = 
+        user.updateProfile({
+            displayName: this.firstname + ' ' + this.lastname,
+            photoURL: 'https://firebasestorage.googleapis.com/v0/b/samlebandet.appspot.com/o/ProfilePictures%2Favatar.jpg?alt=media&token=fe5b3c06-e5c0-4d2e-9cd9-1ce2fc9ca904'
+        }).then(function() {
+            console.log('success')
+        }).catch(function(error) {
+            console.log('failed')
+        });
+        
         user = firebase.auth().currentUser;
         firebase.database().ref('users/' + user.uid).set({
             firstName: firstName,
@@ -41,16 +52,6 @@ export default class CreateProfile extends Component {
             date: date,
             beskrivelse: 'Ingen beskrivelse',
         });
-        
-        const ref = firebase.storage().ref('path/to/image.jpg');
-        user.updateProfile({
-            displayName: this.firstname + ' ' + this.lastname,
-            photoURL: 'https://firebasestorage.googleapis.com/v0/b/samlebandet.appspot.com/o/ProfilePictures%2Favatar.jpg?alt=media&token=fe5b3c06-e5c0-4d2e-9cd9-1ce2fc9ca904'
-        }).then(function() {
-            console.log('success')
-          }).catch(function(error) {
-             console.log('failed')
-          });
         this.props.navigation.navigate('Interests')
     }
 

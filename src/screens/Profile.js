@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, StatusBar, View, ListView, TouchableOpacity, FlatList, TextInput, Image} from 'react-native';
+import {StyleSheet, StatusBar, View, ListView, TouchableOpacity, FlatList, TextInput, Image, ActivityIndicator} from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Item, Input } from 'native-base';
 import * as firebase from 'firebase'
 import FlashMessage from "react-native-flash-message";
@@ -121,6 +121,24 @@ export default class EditProfile extends Component {
             }
         //}
     };
+
+    renderloading = () => {
+        if (this.state.uploading) {
+          return (
+            <View
+              style={[
+                StyleSheet.absoluteFill,
+                {
+                  backgroundColor: 'rgba(0,0,0,0.4)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                },
+              ]}>
+              <ActivityIndicator color="#fff" animating size="large" />
+            </View>
+          );
+        }
+      };
 
     viewProfile = () => {
         //console.log(firebase.auth().currentUser)
@@ -249,6 +267,7 @@ export default class EditProfile extends Component {
         //console.log(firebase.auth().currentUser)
         return (
             <View style={styles.editProfileContainer}>
+            {this.renderloading()}
                 <View style={styles.items}>
                     <View style={{flex: 1.5, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', marginBottom: 50}}>
                         <View style={{flex: 1, justifyContent: 'flex-end'}}>

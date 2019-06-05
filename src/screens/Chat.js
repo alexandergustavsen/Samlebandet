@@ -2,18 +2,15 @@ import React from 'react';
 import FirebaseChat from '../database/FirebaseChat';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-
-/*type; Props = {
-    name?: string,
-};*/
-
 class Chat extends React.Component {
 
     constructor(props){
         super(props);
 
-        //let id = this.props.navigation.state.params.id;
-        //console.log('Chat.js groupId' + id)
+        this.state = {
+            groupId: this.props.navigation.state.params.id
+        };
+        //console.log('Chat.js groupId: ' + id)
     }
 
     static navigationOptions = ({ navigation }) => ({
@@ -24,12 +21,13 @@ class Chat extends React.Component {
         messages: [],
     };
 
+
     get user() {
+        //console.log(id)
         return {
-            // name: this.props.navigation.state.params.name,
             _id: FirebaseChat.shared.uid,
-            name: 'Martin',
-            //avatar: 'https://facebook.github.io/create-react-app/img/logo-og.png'
+            name: FirebaseChat.shared.name,
+            avatar: FirebaseChat.shared.photo,
         };
     }
 
@@ -44,6 +42,7 @@ class Chat extends React.Component {
     }
 
     componentDidMount() {
+        FirebaseChat.shared.ref = this.state.groupId;
         FirebaseChat.shared.on(message =>
             this.setState(previousState => ({
                 messages: GiftedChat.append(previousState.messages, message),

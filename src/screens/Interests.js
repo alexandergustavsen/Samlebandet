@@ -35,6 +35,10 @@ export default class Interests extends Component {
         })
     };
 
+    handleInterests(interest){
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -46,7 +50,7 @@ export default class Interests extends Component {
                         <View style={{flex: 1, justifyContent: 'center'}}>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
-                                    <TouchableOpacity onPress={this.state.utelivSelected === false ? ()=>{this.setState({utelivSelected: true})} : ()=>{this.setState({utelivSelected: false})}} style={this.state.utelivSelected === true ? styles.highlighted : styles.unHighlighted}>
+                                    <TouchableOpacity onPress={this.handleInterests()} style={this.state.utelivSelected === true ? styles.highlighted : styles.unHighlighted}>
                                         <Image
                                             style={{width: 80, height: 80}}
                                             source={require('../../assets/images/uteliv_sirkel.png')}/>
