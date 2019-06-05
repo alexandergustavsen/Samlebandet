@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
-import {View, Text, Image} from "react-native";
+import {View, Text, Image, ImageBackground} from "react-native";
 
 export default class LogoHeader extends Component {
 
     render() {
         return(
-            <View style={{flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                backgroundColor: '#00EDD6',
-                borderBottomLeftRadius: 2000,
-                borderBottomRightRadius: 2000,
-                width: 500,
-            }}>
+            <View style={{flex: 2.2}}>
                 <View>
-                    <Image
-                        style={{width: 90, height: 80}}
-                        source={require('../../assets/images/pictogram_logo.png')}
-                    />
-                </View>
-                <View>
-                    <Text style={{color: '#383838', fontSize: 30 }}>{this.props.title}</Text>
+                    <ImageBackground
+                        source={require('../../assets/images/header_picto.png')}
+                        style={{width: '100%', height: '100%'}}>
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 100}}>
+                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={{color: '#383838', fontSize: 30 }}>{this.props.title}</Text>
+                            </View>
+                        </View>
+                    </ImageBackground>
                 </View>
             </View>
         )

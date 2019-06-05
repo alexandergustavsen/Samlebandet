@@ -44,7 +44,7 @@ export default class LogIn extends Component {
       return (
         <View style={styles.container}>
             <LogoHeader title='Logg inn'/>
-           <View style={{flex: 3, justifyContent: 'space-around'}}>
+           <View style={{flex: 3, justifyContent: 'space-around', alignItems: 'center'}}>
               <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'flex-start', width: wp('85%')}}>
                   <View style={{flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', color: '#353535', paddingTop: 30}}>
                       <View style={{justifyContent: 'center', alignItems: 'flex-end'}}>
@@ -121,9 +121,7 @@ export default class LogIn extends Component {
   
 const styles = StyleSheet.create({
  container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
+      flex: 1
   },
   button: {
       justifyContent: 'center',
