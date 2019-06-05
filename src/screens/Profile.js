@@ -3,6 +3,7 @@ import {StyleSheet, StatusBar, View, ListView, TouchableOpacity, FlatList, TextI
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Item, Input } from 'native-base';
 import * as firebase from 'firebase'
 import FlashMessage from "react-native-flash-message";
+import { Constants, ImagePicker, Permissions } from 'expo';
 
 console.disableYellowBox = true;
 export default class EditProfile extends Component {
@@ -18,6 +19,9 @@ export default class EditProfile extends Component {
             retning: '',
             date: '',
             beskrivelse: '',
+
+            uploading: false,
+            avatar: firebase.auth().currentUser.photoURL
         }
     }
 
@@ -37,7 +41,10 @@ export default class EditProfile extends Component {
         })
     };
 
-    componentDidMount() {
+    async componentDidMount() {
+        await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        await Permissions.askAsync(Permissions.CAMERA);
+
         const that = this;
         userId = firebase.auth().currentUser.uid
         firebase.database().ref('/users/' + userId).on('value', function(snapshot) {
@@ -51,8 +58,42 @@ export default class EditProfile extends Component {
                 beskrivelse: data.beskrivelse,
             });
         });
-        //that.setState({avatar: firebase.auth().currentUser.photoUrl})
     }
+
+    pickImage = async () => {
+        let pickerResult = await ImagePicker.launchImageLibraryAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+        });
+    
+        this.handleImagePicked(pickerResult);
+    };
+
+    handleImagePicked = async pickerResult => {
+        try {
+          this.setState({ uploading: true });
+          if (!pickerResult.cancelled) {
+            uploadUrl = await uploadImageAsync(pickerResult.uri);
+            this.setState({ avatar: uploadUrl });
+            firebase.auth().currentUser.updateProfile({
+                photoURL: uploadUrl
+            }).then(function() {
+                console.log('success')
+                console.log(firebase.auth().currentUser)
+              }).catch(function(error) {
+                 console.log('failed')
+              });
+          }
+        } catch (error) {
+          console.log(error);
+          this.refs.modalFlash.showMessage({
+            message: "Noe gikk galt med opplastningen",
+            type: "danger",
+        });
+        } finally {
+          this.setState({ uploading: false });
+        }
+    };
 
     changeData = () => {
         /*if(this.state.beskrivelse == '' || this.state.retning == '' || this.state.school == ''){
@@ -83,6 +124,7 @@ export default class EditProfile extends Component {
 
     viewProfile = () => {
         //console.log(firebase.auth().currentUser)
+        //console.log(firebase.auth().currentUser)
         //console.log('photoUrl: ' + firebase.auth().currentUser.photoURL)
         return (
             <View style={styles.viewProfileContainer}>
@@ -91,7 +133,7 @@ export default class EditProfile extends Component {
                         <View style={{flex: 2, justifyContent: 'center'}}>
                             <Image
                                 style={{width: 130, height: 130, borderRadius: 65}}
-                                source={{uri: firebase.auth().currentUser.photoURL}}
+                                source={{uri: this.state.avatar}}
                             />
                         </View>
                         <View style={{flex: 0.4, justifyContent: 'center'}}>
@@ -204,6 +246,7 @@ export default class EditProfile extends Component {
     };
 
     editProfile = () => {
+        //console.log(firebase.auth().currentUser)
         return (
             <View style={styles.editProfileContainer}>
                 <View style={styles.items}>
@@ -211,11 +254,13 @@ export default class EditProfile extends Component {
                         <View style={{flex: 1, justifyContent: 'flex-end'}}>
                             <Image
                                 style={{width: 100, height: 100, borderRadius: 50}}
-                                source={{uri: firebase.auth().currentUser.photoURL}}
+                                source={{uri: this.state.avatar}}
                             />
                         </View>
                         <View style={{flex: 1, justifyContent: 'flex-end', marginTop: 40}}>
-                            <Button style={{
+                            <Button
+                            onPress={this.pickImage}
+                            style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 backgroundColor: '#fff',
@@ -367,3 +412,26 @@ const styles = StyleSheet.create({
         marginBottom: 30
     }
 });
+
+async function uploadImageAsync(uri) {
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob = await new Promise((resolve, reject) => {
+      const request = new XMLHttpRequest();
+      request.onload = function() {
+        resolve(request.response);
+      };
+      request.onerror = function(e) {
+        console.log(e);
+        reject(new TypeError('The network request failed'));
+      };
+      request.responseType = 'blob';
+      request.open('GET', uri, true);
+      request.send(null);
+    });
+    const userId = firebase.auth().currentUser.uid;
+    const ref = firebase.storage().ref('ProfilePictures/' + userId)
+    const snapshot = await ref.put(blob);
+    blob.close();
+  
+    return await snapshot.ref.getDownloadURL();
+  }

@@ -63,7 +63,7 @@ export default class PhotoTest extends React.Component {
 
         <StatusBar barStyle="default" />
         </View>
-    );
+      );
     }
 
     renderLoading = () => {

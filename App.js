@@ -18,7 +18,6 @@ const appStackNavigator = createStackNavigator({
     CreateGroup: CreateGroup,
     SelectedGroup: SelectedGroup,
     Chat: Chat
-
 });
 
 const authStackNavigator = createStackNavigator({
