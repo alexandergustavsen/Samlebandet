@@ -28,7 +28,7 @@ export default class LogIn extends Component {
 
     loginUser = (email, password) => {
         if(email == '' && password == ''){
-          firebase.auth().signInWithEmailAndPassword('boom@boom.no', '123123123');
+          firebase.auth().signInWithEmailAndPassword('knut@gmail.com', 'passordet');
           this.props.navigation.navigate('App')
         } else {
             try {
@@ -44,7 +44,7 @@ export default class LogIn extends Component {
       return (
         <View style={styles.container}>
             <LogoHeader title='Logg inn'/>
-           <View style={{flex: 3, justifyContent: 'space-around'}}>
+           <View style={{flex: 3, justifyContent: 'space-around', alignItems: 'center'}}>
               <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'flex-start', width: wp('85%')}}>
                   <View style={{flex: 0.2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', color: '#353535', paddingTop: 30}}>
                       <View style={{justifyContent: 'center', alignItems: 'flex-end'}}>
@@ -53,7 +53,7 @@ export default class LogIn extends Component {
                               source={require('../../assets/images/melding.png')}
                           />
                       </View>
-                      <View style={{flex: 4, justifyContent: 'space-around', alignItems: 'flex-start', borderBottomWidth: 1, borderColor: '#ccc'}}>
+                      <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc'}}>
                           <Input
                               placeholder='E-post'
                               autoCorrect={false}
@@ -72,7 +72,7 @@ export default class LogIn extends Component {
                       <View style={{flex: 4, justifyContent: 'space-between', alignItems: 'flex-start',
                           borderBottomWidth: 1, borderColor: '#ccc', color: '#353535'}}>
                           <View style={{flex: 1, flexDirection: 'row'}}>
-                              <View>
+                              <View style={{flex: 4, borderColor: '#ccc'}}>
                               <Input
                                   placeholder='Passord'
                                   secureTextEntry
@@ -121,9 +121,7 @@ export default class LogIn extends Component {
   
 const styles = StyleSheet.create({
  container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
+      flex: 1
   },
   button: {
       justifyContent: 'center',
