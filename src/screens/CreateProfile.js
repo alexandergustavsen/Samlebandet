@@ -48,7 +48,7 @@ export default class CreateProfile extends Component {
         return (
             <View style={styles.container}>
                 <LogoHeader title='Opprett profil'/>
-                <View style={{flex: 1, width: '85%'}}>
+                <View style={{flex: 1, width: '85%', justifyContent: 'flex-end', marginTop: 30}}>
                     <View style={{flex: 1}}>
                         <View style={styles.items}>
                             <View style={{flex: 1}}>
@@ -138,7 +138,7 @@ export default class CreateProfile extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 60}}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <Button style={styles.button} onPress={() => this.addProfile(
                             this.state.firstName,
                             this.state.lastName,
@@ -157,12 +157,11 @@ export default class CreateProfile extends Component {
 }
 const styles = StyleSheet.create({
     datePicker: {
-        width: 200,
-        marginTop: 20,
+        width: 200
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center'
 
     },
