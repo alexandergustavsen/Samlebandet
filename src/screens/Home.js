@@ -85,9 +85,6 @@ export default class Home extends Component {
                 if(groupDate === tomorrowsDate) tomorrowGroups.push(item)
             });
 
-            console.log(todayGroups)
-            console.log(tomorrowGroups)
-
             let groupsWithUser = groupArray.filter(group => {
                 const members = group.members //const { members } = group;  <- deconstruct
                 for (const key in members) {
@@ -154,35 +151,74 @@ export default class Home extends Component {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalView}>
-                        <Text style={{
-                            fontSize: 16,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            marginTop: 40
-                        }}>Gruppe</Text>
-                        <Text>{currentItem.item.groupTitle}</Text>
-                        <Text>{currentItem.item.groupTime}</Text>
-                        <Text>{currentItem.item.groupDesc}</Text>
-                        <Text>{currentItem.item.groupSize}</Text>
-                        <Text>{currentItem.item.groupPlace}</Text>
-                        <Text>{currentItem.item.groupCate}</Text>
-                        <Button
-                            style={{ marginTop: 10 }}
-                            full
-                            rounded
-                            primary
-                            onPress={() => this.joinGroup(currentItem.item.key)}
-                        >
-                            <Text style={{ color: 'white' }}>Bli med</Text>
-                        </Button>
+                        <View style={{flex: 1.5, flexDirection: 'column', backgroundColor: '#7ce3dc', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+                            <View style={{flex: 0.5, justifyContent: 'flex-end', alignItems: 'flex-end', width: '105%'}}>
+                                <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width: 50, height: 50, borderRadius: 25, backgroundColor: '#fff', marginBottom: -20}} onPress={()=> {this.setState({showMe: false})}}>
+                                    <Text style={{fontSize: 25}}>X</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{flex: 2, justifyContent: 'flex-start'}}>
+                                <Image
+                                    style={{width: 54, height: 50}}
+                                    source={require('../../assets/images/friluft.png')}
+                                />
+                            </View>
+                        </View>
+                        <View style={{flex: 4, justifyContent: 'center', alignItems: 'flex-start', width: '85%'}}>
 
-                        <TouchableOpacity onPress={()=>{
-                            this.setState({
-                                showMe:false
-                            })
-                        }}>
-                            <Text style={styles.closeText}>Close Modal</Text>
-                        </TouchableOpacity>
+                            <View style={{flex: 0.7, justifyContent: 'flex-end'}}>
+                                <Text style={{fontWeight: 'bold', fontSize: 18}}>{currentItem.item.groupTitle}</Text>
+                            </View>
+                            <View style={{flex: 0.5, justifyContent: 'flex-end'}}>
+                                <Text style={{fontSize: 15}}>{currentItem.item.groupDesc}</Text>
+                            </View>
+                            <View style={{flex: 0.7, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row'}}>
+                                <View>
+                                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>Sted:</Text>
+                                </View>
+                                <View>
+                                    <Text style={{marginLeft: 5, fontSize: 15}}>{currentItem.item.groupPlace}</Text>
+                                </View>
+                            </View>
+                            <View style={{flex: 0.7, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+                                <View>
+                                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>Tidspunkt:</Text>
+                                </View>
+                                <View>
+                                    <Text style={{marginLeft: 5, fontSize: 15}}>{currentItem.item.groupTime}</Text>
+                                </View>
+                            </View>
+                            <View style={{flex: 0.7, justifyContent: 'center', flexDirection: 'column'}}>
+                                <View>
+                                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>Medlemmer i gruppa:</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 7}}>
+                                    <View>
+                                        <Image
+                                            style={{width: 25, height: 25, marginRight: 7}}
+                                            source={require('../../assets/images/person1.png')}
+                                        />
+                                    </View>
+                                    <View>
+                                        <Image
+                                            style={{width: 25, height: 25, marginRight: 7}}
+                                            source={require('../../assets/images/person2.png')}
+                                        />
+                                    </View>
+                                    <View>
+                                        <Image
+                                            style={{width: 25, height: 25, marginRight: 7}}
+                                            source={require('../../assets/images/person3.png')}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{flex: 3, justifyContent: 'center', alignItems: 'center'}}>
+                            <Button style={styles.button} onPress={() => this.joinGroup(currentItem.item.key)}>
+                                <Text style={{fontSize: 17}}>Bli med</Text>
+                            </Button>
+                        </View>
                     </View>
                 </View>
             </Modal>
@@ -253,7 +289,8 @@ export default class Home extends Component {
     renderSlider({item, index}) {
         return (
             <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SelectedGroup', {
-                    name: item.name,
+                    firstName: item.firstName,
+                    lastName: item.lastName,
                     time: item.time,
                     desc: item.desc,
                     size: item.size,
@@ -271,7 +308,7 @@ export default class Home extends Component {
                                 height: 50,
                                 borderRadius: 25
                             }}
-                            source={require('../../assets/images/friluft.png')}
+                            source={require('../../assets/images/friluft_sirkel.png')}
                         />
                     </View>
                     <View style={{flex: 1.25, justifyContent: 'center', alignItems:'left', marginLeft: 10}}>
@@ -441,11 +478,10 @@ const styles = StyleSheet.create({
     },
     modalView: {
         backgroundColor: "#fff",
-        height: 500,
-        width: 350,
-        borderRadius: 25,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 500,
+        width: 350
     },
     modalContainer: {
         flex: 1,
@@ -489,5 +525,15 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    button: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor: '#000',
+        borderWidth: 2,
+        borderRadius: 30,
+        width: 250,
+        height: 45
     }
 });

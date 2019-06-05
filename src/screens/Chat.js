@@ -2,11 +2,19 @@ import React from 'react';
 import FirebaseChat from '../database/FirebaseChat';
 import { GiftedChat } from 'react-native-gifted-chat';
 
+
 /*type; Props = {
     name?: string,
 };*/
 
 class Chat extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        //let id = this.props.navigation.state.params.id;
+        //console.log('Chat.js groupId' + id)
+    }
 
     static navigationOptions = ({ navigation }) => ({
         title: (navigation.state.params || {}).name || 'Chat',
@@ -20,6 +28,8 @@ class Chat extends React.Component {
         return {
             // name: this.props.navigation.state.params.name,
             _id: FirebaseChat.shared.uid,
+            name: 'Martin',
+            //avatar: 'https://facebook.github.io/create-react-app/img/logo-og.png'
         };
     }
 
@@ -45,5 +55,6 @@ class Chat extends React.Component {
     }
 
 }
+
 
 export default Chat;

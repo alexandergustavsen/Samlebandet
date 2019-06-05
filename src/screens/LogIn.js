@@ -28,7 +28,7 @@ export default class LogIn extends Component {
 
     loginUser = (email, password) => {
         if(email == '' && password == ''){
-          firebase.auth().signInWithEmailAndPassword('gus@gmail.com', 'gusgusgus');
+          firebase.auth().signInWithEmailAndPassword('knut@gmail.com', 'passordet');
           this.props.navigation.navigate('App')
         } else {
             try {
@@ -53,7 +53,7 @@ export default class LogIn extends Component {
                               source={require('../../assets/images/melding.png')}
                           />
                       </View>
-                      <View style={{flex: 4, justifyContent: 'space-around', alignItems: 'flex-start', borderBottomWidth: 1, borderColor: '#ccc'}}>
+                      <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc'}}>
                           <Input
                               placeholder='E-post'
                               autoCorrect={false}
@@ -72,7 +72,7 @@ export default class LogIn extends Component {
                       <View style={{flex: 4, justifyContent: 'space-between', alignItems: 'flex-start',
                           borderBottomWidth: 1, borderColor: '#ccc', color: '#353535'}}>
                           <View style={{flex: 1, flexDirection: 'row'}}>
-                              <View>
+                              <View style={{flex: 4, borderColor: '#ccc'}}>
                               <Input
                                   placeholder='Passord'
                                   secureTextEntry

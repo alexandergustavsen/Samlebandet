@@ -49,6 +49,7 @@ export default class SelectedGroup extends Component {
 
     render() {
         return (
+<<<<<<< HEAD
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <View style={{flex: 3.5, justifyContent: 'flex-start', alignItems: 'center'}}>
                     <Image style={{width:420, height: 230}}
@@ -85,6 +86,34 @@ export default class SelectedGroup extends Component {
                         </Button>
                     </View>
                 </View>
+=======
+            <View>
+                <Text>{this.state.name}</Text>
+                <Text>{this.state.time}</Text>
+                <Text>{this.state.desc}</Text>
+                <Text>{this.state.size}</Text>
+                <Text>{this.state.place}</Text>
+                <Text>{this.state.cate}</Text>
+
+                <Button
+                style={{ marginTop: 10 }}
+                full
+                rounded
+                primary
+                onPress={() => this.props.navigation.navigate('Chat', {id: this.state.id})}
+                title='Chat'
+                ></Button>
+
+                <Button
+                style={{ marginTop: 10 }}
+                full
+                rounded
+                primary
+                onPress={() => this.leaveGroup()}
+                title='Forlat gruppe'
+                ></Button>
+
+>>>>>>> e5dbb23efabd27db4dd48842caa63d6d08ea8996
             </View>
         );
     }
