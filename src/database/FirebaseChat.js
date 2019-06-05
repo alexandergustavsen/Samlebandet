@@ -1,11 +1,12 @@
 import * as firebase from 'firebase'; // 4.8.1
 
+
 class FirebaseChat {
     constructor() {
         this.init();
         this.observeAuth();
     }
-
+    
     init = () =>
         firebase.initializeApp({
             apiKey: 'AIzaSyC472p6bon1WNU-l9uofXoeWp3sTppqJh0',
@@ -34,7 +35,7 @@ class FirebaseChat {
     }
 
     get ref() {
-        return firebase.database().ref('messages');
+        return firebase.database().ref('messages/');
     }
 
     parse = snapshot => {

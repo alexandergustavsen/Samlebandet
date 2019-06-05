@@ -51,7 +51,7 @@ export default class SelectedGroup extends Component {
                 full
                 rounded
                 primary
-                onPress={() => this.props.navigation.navigate('Chat')}
+                onPress={() => this.props.navigation.navigate('Chat', {id: this.state.id})}
                 title='Chat'
                 ></Button>
 

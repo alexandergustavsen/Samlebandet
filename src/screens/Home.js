@@ -85,9 +85,6 @@ export default class Home extends Component {
                 if(groupDate === tomorrowsDate) tomorrowGroups.push(item)
             });
 
-            console.log(todayGroups)
-            console.log(tomorrowGroups)
-
             let groupsWithUser = groupArray.filter(group => {
                 const members = group.members //const { members } = group;  <- deconstruct
                 for (const key in members) {
