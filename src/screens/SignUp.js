@@ -75,6 +75,7 @@ export default class SignUp extends Component {
                             </View>
                             <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc', justifyContent: 'flex-end'}}>
                                 <Input
+                                    placeholder='E-post'
                                     autoCorrect={false}
                                     autoCapitalize="none"
                                     onChangeText={(email) => this.setState({ email })}
@@ -91,6 +92,7 @@ export default class SignUp extends Component {
                             <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc', color: '#353535'}}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <Input
+                                        placeholder='Passord'
                                         secureTextEntry
                                         autoCorrect={false}
                                         autoCapitalize="none"
@@ -115,6 +117,7 @@ export default class SignUp extends Component {
                             <View style={{flex: 4, borderBottomWidth: 1, borderColor: '#ccc', color: '#353535'}}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <Input
+                                        placeholder='Gjenta passord'
                                         secureTextEntry
                                         autoCorrect={false}
                                         autoCapitalize="none"
