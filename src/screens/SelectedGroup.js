@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Text, View, StyleSheet, Button, Image} from "react-native";
+import {Text, View, StyleSheet, Image} from "react-native";
+import { Button } from 'native-base';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as firebase from 'firebase'
 
@@ -41,7 +42,7 @@ export default class SelectedGroup extends Component {
                     key = childSnapshot.key;
                     return true; // Cancel further enumeration.
                 });
-                console.log(key);
+                console.log(key)
             firebase.database().ref('/groups/' + that.state.id + '/members/' + key).remove()
         });
         this.props.navigation.navigate('Home');
@@ -49,40 +50,85 @@ export default class SelectedGroup extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{flex: 3.5, justifyContent: 'flex-start', alignItems: 'center'}}>
-                    <Image style={{width:420, height: 230}}
+            <View style={{flex: 3, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{flex: 1.2, justifyContent: 'flex-start', alignItems: 'center'}}>
+                    <Image style={{width:420, height: 240}}
                         source={require('../../assets/images/fest.png')}
                     />
                 </View>
-                <View style={{flex:2, justifyContent: 'space-around', alignItems: 'center', backgroundColor: 'red'}}>
-                    <View style={{flex:1, justifyContent: 'space-around', alignItems: 'flex-start', backgroundColor: 'red'}}>
-                        <Text>{this.state.name}</Text>
-                        <Text>{this.state.time}</Text>
-                        <Text>{this.state.desc}</Text>
-                        <Text>{this.state.size}</Text>
-                        <Text>{this.state.place}</Text>
-                        <Text>{this.state.cate}</Text>
+                <View style={{flex: 2, justifyContent: 'center', alignItems: 'flex-start', width: '75%'}}>
+                    <View style={{flex: 0.3, justifyContent: 'flex-end'}}>
+                        <View style={{justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'row'}}>
+                            <View>
+                                <Text style={{fontSize: 22, fontWeight: 'bold'}}>{this.state.name}</Text>
+                            </View>
+                            <View>
+                                <Image style={{width: 21, height: 21, marginLeft: 10}}
+                                    source={require('../../assets/images/friluft_sirkel.png')}/>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{flex: 0.1, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row'}}>
+                        <View>
+                            <Text style={{fontSize: 15}}>{this.state.cate}</Text>
+                        </View>
+                    </View>
+                    <View style={{flex: 0.13, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row'}}>
+                        <View>
+                            <Text style={{fontSize: 15}}>{this.state.desc}</Text>
+                        </View>
+                    </View>
+                    <View style={{flex: 0.2, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row'}}>
+                        <View>
+                            <Text style={{fontSize: 15, fontWeight: 'bold'}}>Tid:</Text>
+                        </View>
+                        <View>
+                            <Text style={{marginLeft: 5, fontSize: 15}}>{this.state.time}</Text>
+                        </View>
+                    </View>
+                    <View style={{flex: 0.13, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+                        <View>
+                            <Text style={{fontSize: 15, fontWeight: 'bold'}}>Sted:</Text>
+                        </View>
+                        <View>
+                            <Text style={{marginLeft: 5, fontSize: 15}}>{this.state.place}</Text>
+                        </View>
+                    </View>
+                    <View style={{flex: 0.13, justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column'}}>
+                        <View>
+                            <Text style={{fontSize: 15, fontWeight: 'bold'}}>Medlemmer i gruppa:</Text>
+                            <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
+                                <View style={{marginRight: 7}}>
+                                    <Image
+                                        style={{width: 25, height: 25}}
+                                        source={require('../../assets/images/person1.png')}
+                                    />
+                                </View>
+                                <View style={{marginRight: 7}}>
+                                    <Image
+                                        style={{width: 25, height: 25}}
+                                        source={require('../../assets/images/person2.png')}
+                                    />
+                                </View>
+                                <View style={{marginRight: 7}}>
+                                    <Image
+                                        style={{width: 25, height: 25}}
+                                        source={require('../../assets/images/person3.png')}
+                                    />
+                                </View>
+                            </View>
+                        </View>
                     </View>
                 </View>
-                <View style={{flex:3, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: 'red'}}>
-                    <View style={{flex:1, justifyContent: 'flex-end', alignItems: 'center', backgroundColor: 'red'}}>
-                        <Button style={{marginTop: 10}}
-                                full
-                                rounded
-                                primary
-                                onPress={() => this.props.navigation.navigate('Chat')}
-                                title='Chat'>
+                <View style={{flex: 2, flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}}>
+                    <View style={{flex:1, justifyContent: 'flex-end', alignItems: 'center'}}>
+                        <Button style={styles.button}
+                                onPress={() => this.props.navigation.navigate('Chat')}>
+                                <Text>Chat</Text>
                         </Button>
                     </View>
-                    <View style={{flex:1, justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Button style={{ marginTop: 10 }}
-                                full
-                                rounded
-                                primary
-                                onPress={() => this.leaveGroup()}
-                                title='Forlat gruppe'>
-                        </Button>
+                    <View style={{flex:1, justifyContent: 'space-between', alignItems: 'center', marginTop: 15}}>
+                        <Text onPress={() => this.leaveGroup()}>Forlat gruppe</Text>
                     </View>
                 </View>
             </View>
