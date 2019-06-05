@@ -210,10 +210,8 @@ export default class Home extends Component {
             style={styles.list}
             onPress={() => this.currentItemFunc(data)}
         >
-            <View style={{
-                flex: 1,
-                flexDirection: 'row'}}>
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'left', marginLeft: 20}}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flex: 1.5, justifyContent: 'center', alignItems: 'center'}}>
                     <Image
                         style={{
                             width: 120,
@@ -223,10 +221,10 @@ export default class Home extends Component {
                         source={require('../../assets/images/fest.png')}
                     />
                 </View>
-                <View style={{flex: 2, justifyContent: 'left', alignItems: 'left', marginLeft: 20, marginRight: 10}}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>{data.item.groupTitle}</Text>
-                    <Text style={{fontSize: 15}}>{data.item.groupPlace}</Text>
-                    <Text style={{fontSize: 15}}>{data.item.groupTime}</Text>
+                <View style={{flex: 2, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                    <Text style={{fontWeight: 'bold'}}>{data.item.groupTitle}</Text>
+                    <Text>{data.item.groupPlace}</Text>
+                    <Text>{data.item.groupTime}</Text>
                     {/*<Text>{data.item.groupSize}</Text>*/}
                     <View style={{flex: 1, flexDirection: 'row', marginTop: 7}}>
                         <View style={{marginRight: 7}}>
