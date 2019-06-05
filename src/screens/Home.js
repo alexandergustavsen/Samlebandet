@@ -60,7 +60,6 @@ export default class Home extends Component {
     componentDidMount() {
         const that = this;
         const userId = firebase.auth().currentUser.uid;
-        console.log(firebase.auth().currentUser);
         //console.log(userId);
         firebase.database().ref('/groups').on('value', function(snapshot) {
             //console.log(snapshot)

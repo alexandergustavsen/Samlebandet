@@ -6,7 +6,6 @@ import Home from './src/screens/Home'
 import CreateGroup from './src/screens/CreateGroup'
 import CreateProfile from './src/screens/CreateProfile'
 import Profile from './src/screens/Profile'
-import EditProfile from './src/screens/EditProfile'
 import Tutorial from './src/screens/Tutorial'
 import Interests from './src/screens/Interests'
 import Chat from './src/screens/Chat'
@@ -14,9 +13,8 @@ import SelectedGroup from './src/screens/SelectedGroup'
 import FirstPage from './src/screens/FirstPage'
 
 const appStackNavigator = createStackNavigator({
-    Profile: Profile,
     Home: Home,
-    EditProfile: EditProfile,
+    Profile: Profile,
     CreateGroup: CreateGroup,
     SelectedGroup: SelectedGroup,
     Chat: Chat
@@ -24,12 +22,12 @@ const appStackNavigator = createStackNavigator({
 });
 
 const authStackNavigator = createStackNavigator({
-    CreateProfile: CreateProfile,
     LogIn: LogIn,
     SignUp: SignUp,
-    FirstPage: FirstPage,
+    CreateProfile: CreateProfile,
     Interests: Interests,
     Tutorial: Tutorial,
+    FirstPage: FirstPage,
 });
 
 const switchNavigator = createSwitchNavigator({
