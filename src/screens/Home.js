@@ -117,6 +117,7 @@ export default class Home extends Component {
                 tomorrowGroups: tomorrowGroups
             })
         });
+
     }
 
     joinGroup = (key) => {
@@ -241,7 +242,33 @@ export default class Home extends Component {
         }
     }
 
-    renderItem = data =>
+    renderPhotos = data =>{
+        return(
+            <View style={{flex: 1, width: 50, justifyContent: 'center', alignItems: 'center', height: 50, backgroundColor: '#ff0000'}}>
+                <Text style={{fontSize: 20}}>{data.item.beskrivelse}</Text>
+            </View>
+        )
+    }
+
+    renderItem = data =>{
+    
+        memberArray = [];
+        for (const key in data.item.members) {
+            //console.log('eyo')
+            //console.log(data.item.members);
+            //console.log('key: ' + key)
+            if  (!data.item.members.hasOwnProperty(key)) continue;
+            firebase.database().ref('users/' + data.item.members[key]._id).on('value', function(snapshot) {
+                let item = snapshot.val();
+                item.key = snapshot.key;
+                //console.log(item)
+                memberArray.push(item);
+                console.log(memberArray)
+            })
+        }
+        //console.log(memberArray[0].beskrivelse);
+
+        return(
         <TouchableOpacity
             style={styles.list}
             onPress={() => this.currentItemFunc(data)}
@@ -262,7 +289,16 @@ export default class Home extends Component {
                     <Text>{data.item.groupPlace}</Text>
                     <Text>{data.item.groupTime}</Text>
                     {/*<Text>{data.item.groupSize}</Text>*/}
-                    <View style={{flex: 1, flexDirection: 'row', marginTop: 7}}>
+                    <View style={{flex: 1, flexDirection: 'row', backgroundColor: '#00ff00'}}>
+                        <FlatList
+                            data={this.memberArray}
+                            renderItem={item => this.renderPhotos(item)}
+                            keyExtractor={item => item.key}
+                            extra={this.state}
+                        /> 
+                    </View>
+
+                    {/*<View style={{flex: 1, flexDirection: 'row', marginTop: 7}}>
                         <View style={{marginRight: 7}}>
                             <Image
                                 style={{width: 25, height: 25}}
@@ -281,10 +317,12 @@ export default class Home extends Component {
                                 source={require('../../assets/images/person3.png')}
                             />
                         </View>
-                    </View>
+                    </View>*/}
                 </View>
             </View>
         </TouchableOpacity>
+        )
+}
 
     renderSlider({item, index}) {
         return (
@@ -452,7 +490,7 @@ export default class Home extends Component {
                         renderItem={item => this.renderItem(item)}
                         keyExtractor={item => item.key}
                         extra={this.state}
-                    />
+                    /> 
                 </View>
                 <View style={styles.container}>
                     {this.state.showMe === true ? this.modal() : null}

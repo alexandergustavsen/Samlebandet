@@ -129,7 +129,7 @@ export default class SelectedGroup extends Component {
                 <View style={{flex: 2, flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}}>
                     <View style={{flex:1, justifyContent: 'flex-end', alignItems: 'center'}}>
                         <Button style={styles.button}
-                                onPress={() => this.props.navigation.navigate('Chat', {id: this.state.id})}>
+                                onPress={() => this.props.navigation.navigate('Chat', {id: this.state.id}, {title: this.state.name})}>
                                 <Text>Chat</Text>
                         </Button>
                     </View>

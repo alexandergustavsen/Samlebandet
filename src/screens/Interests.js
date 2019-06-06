@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Button, View} from 'native-base';
+import * as firebase from 'firebase'
 
 export default class Interests extends Component {
 
@@ -35,8 +36,19 @@ export default class Interests extends Component {
         })
     };
 
-    handleInterests(interest){
-
+    uploadInterests(){
+        userId = firebase.auth().currentUser.uid;
+        firebase.database().ref('users/' + userId + '/interests').set({
+            uteliv: this.state.utelivSelected,
+            friluft: this.state.friluftSelected,
+            opplevelser: this.state.opplevelserSelected,
+            underholdning: this.state.underholdningSelected,
+            mat: this.state.matSelected,
+            trening: this.state.treningSelected,
+            hobby: this.state.hobbySelected,
+            diverse: this.state.diverseSelected
+        });
+        this.props.navigation.navigate('Tutorial')
     }
 
     render() {
@@ -50,7 +62,7 @@ export default class Interests extends Component {
                         <View style={{flex: 1, justifyContent: 'center'}}>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
-                                    <TouchableOpacity onPress={this.handleInterests()} style={this.state.utelivSelected === true ? styles.highlighted : styles.unHighlighted}>
+                                    <TouchableOpacity onPress={this.state.utelivSelected === false ? ()=>{this.setState({utelivSelected: true})} : ()=>{this.setState({utelivSelected: false})}} style={this.state.utelivSelected === true ? styles.highlighted : styles.unHighlighted}>
                                         <Image
                                             style={{width: 80, height: 80}}
                                             source={require('../../assets/images/uteliv_sirkel.png')}/>
@@ -156,7 +168,7 @@ export default class Interests extends Component {
                 </View>
 
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <Button style={styles.button}  onPress={() => this.props.navigation.navigate('Tutorial')}>
+                    <Button style={styles.button}  onPress={() => this.uploadInterests()}>
                         <Text style={{fontSize: 20}}>Registrer</Text>
                     </Button>
                 </View>

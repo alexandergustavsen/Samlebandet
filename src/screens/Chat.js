@@ -8,14 +8,27 @@ class Chat extends React.Component {
         super(props);
 
         this.state = {
-            groupId: this.props.navigation.state.params.id
+            groupId: this.props.navigation.state.params.id,
+            title: this.props.navigation.state.params.title,
         };
         //console.log('Chat.js groupId: ' + id)
     }
 
-    static navigationOptions = ({ navigation }) => ({
-        title: (navigation.state.params || {}).name || 'Chat',
-    });
+    static navigationOptions = {
+        //title: this.state.title,
+        headerTitleStyle: ({
+            color: '#383838',
+            fontWeight: 'normal',
+            fontSize: 20
+        }),
+        headerStyle: ({
+            backgroundColor: '#00EDD6',
+            marginLeft: 15,
+            marginRight: 15,
+            marginBottom: 5,
+            borderBottomWidth: 0
+        })
+    };
 
     state = {
         messages: [],

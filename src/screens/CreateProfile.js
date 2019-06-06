@@ -34,6 +34,7 @@ export default class CreateProfile extends Component {
     addProfile(firstName, lastName, school, retning, date){
         const ref = firebase.storage().ref('path/to/image.jpg');
         url = 'https://firebasestorage.googleapis.com/v0/b/samlebandet.appspot.com/o/ProfilePictures%2Favatar.jpg?alt=media&token=fe5b3c06-e5c0-4d2e-9cd9-1ce2fc9ca904'
+        user = firebase.auth().currentUser;
         user.updateProfile({
             displayName: this.firstname + ' ' + this.lastname,
             photoURL: url
@@ -43,7 +44,6 @@ export default class CreateProfile extends Component {
             console.log('failed')
         });
         
-        user = firebase.auth().currentUser;
         firebase.database().ref('users/' + user.uid).set({
             firstName: firstName,
             lastName: lastName,
@@ -75,7 +75,8 @@ export default class CreateProfile extends Component {
                                         autoCapitalize="none"
                                         onChangeText={(firstName) => this.setState({ firstName })}
                                     />
-                                </View>
+                                </View> 
+                                <Text></Text>
                             </View>
                             <View style={styles.items}>
                                 <View style={{flex: 1}}>
