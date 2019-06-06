@@ -134,9 +134,9 @@ export default class Home extends Component {
                     _id: userId
                 });
                 this.setState({
-                    activeIndex: this.state.activeIndex+1
+                    activeIndex: this.state.activeIndex+1,
+                    showMe: false
                 })
-
             }
         })
     };
