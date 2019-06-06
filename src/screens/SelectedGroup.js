@@ -20,6 +20,12 @@ export default class SelectedGroup extends Component {
     }
 
     static navigationOptions = {
+        title: 'Gruppe',
+        headerTitleStyle: ({
+            color: '#383838',
+            fontWeight: 'normal',
+            fontSize: 20
+        }),
         headerStyle: ({
             backgroundColor: '#00EDD6',
             marginLeft: 15,
@@ -63,7 +69,7 @@ export default class SelectedGroup extends Component {
                                 <Text style={{fontSize: 22, fontWeight: 'bold'}}>{this.state.name}</Text>
                             </View>
                             <View>
-                                <Image style={{width: 21, height: 21, marginLeft: 10}}
+                                <Image style={{width: 22, height: 22, marginLeft: 10}}
                                     source={require('../../assets/images/friluft_sirkel.png')}/>
                             </View>
                         </View>
