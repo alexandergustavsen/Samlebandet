@@ -267,10 +267,10 @@ export default class EditProfile extends Component {
         //console.log(firebase.auth().currentUser)
         return (
             <View style={styles.editProfileContainer}>
-            {this.renderloading()}
                 <View style={styles.items}>
                     <View style={{flex: 1.5, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', marginBottom: 50}}>
                         <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                            {this.renderloading()}
                             <Image
                                 style={{width: 100, height: 100, borderRadius: 50}}
                                 source={{uri: this.state.avatar}}

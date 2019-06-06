@@ -359,12 +359,10 @@ export default class Home extends Component {
                                 source={require('../../assets/images/person3.png')}
                             />
                         </View>
-                    </View>*/}
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
-        )
-}
 
     emptySlider() {
         return(
@@ -483,7 +481,7 @@ export default class Home extends Component {
                                 justifyContent: 'center',
                                 alignItems: 'center'
                         }}
-                            onPress={() => this.props.navigation.navigate('Chat')
+                            onPress={() => this.props.navigation.navigate('ChatList', {data: this.state.sliderData})
                             }>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                                 <View style={{justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', borderRadius: 50, width: 60, height: 60}}>

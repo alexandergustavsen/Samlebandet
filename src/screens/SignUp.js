@@ -48,7 +48,7 @@ export default class SignUp extends Component {
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }
         const doSomething = async () => {
-            await sleep(2000)
+            await sleep(500)
             try {
                 firebase.auth().signInWithEmailAndPassword(email, password)
                 this.props.navigation.navigate('CreateProfile')
