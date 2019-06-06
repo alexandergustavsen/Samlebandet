@@ -289,8 +289,7 @@ export default class Home extends Component {
     renderSlider({item, index}) {
         return (
             <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SelectedGroup', {
-                    firstName: item.firstName,
-                    lastName: item.lastName,
+                    name: item.name,
                     time: item.time,
                     desc: item.desc,
                     size: item.size,
