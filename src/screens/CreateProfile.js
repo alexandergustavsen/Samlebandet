@@ -36,14 +36,13 @@ export default class CreateProfile extends Component {
         url = 'https://firebasestorage.googleapis.com/v0/b/samlebandet.appspot.com/o/ProfilePictures%2Favatar.jpg?alt=media&token=fe5b3c06-e5c0-4d2e-9cd9-1ce2fc9ca904'
         user = firebase.auth().currentUser;
         user.updateProfile({
-            displayName: this.firstname + ' ' + this.lastname,
+            displayName: this.state.firstName + ' ' + this.state.lastName,
             photoURL: url
         }).then(function() {
             console.log('success')
         }).catch(function(error) {
             console.log('failed')
         });
-        
         firebase.database().ref('users/' + user.uid).set({
             firstName: firstName,
             lastName: lastName,
