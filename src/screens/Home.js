@@ -47,10 +47,13 @@ export default class Home extends Component {
             todaySelected: true,
             showMe: false,
             activeIndex: 0,
+            sliderData: [],
             todayGroups: [],
             tomorrowGroups: [],
-            carouselItems: [{name: 'Du har ingen grupper'},],
             currentItem: null,
+            phImage: '',
+            phTitle: '',
+            phText: '',
         };
         this.renderSlider = this.renderSlider.bind(this);
     }
@@ -107,12 +110,8 @@ export default class Home extends Component {
                     id: group._id,
                 }
             });
-            if (!groupsWithUser.length == 0) {
-                that.setState({
-                    carouselItems: groupsWithUser
-                })
-            }
             that.setState({
+                sliderData: groupsWithUser,
                 todayGroups: todayGroups,
                 tomorrowGroups: tomorrowGroups
             })
@@ -233,13 +232,92 @@ export default class Home extends Component {
     };
 
     todayTomorrow(){
-        //this.state.todaySelected === true ? return this.state.todayGroups : return this.state.tomorrowGroups
         if(this.state.todaySelected){
             return this.state.todayGroups
         } else {
             return this.state.tomorrowGroups
         }
     }
+
+    showStatus() {
+
+        let fullName = firebase.auth().currentUser.displayName;
+        let name = fullName.substring(0, fullName.indexOf(' '));
+
+        const phHome = [
+            {
+                phImage: require('../../assets/images/maane.png'),
+                phTitle: 'Kvelden er hva du gjør den til',
+                phText: 'Føler du deg chill eller vill?',
+                phText2: 'Se om noen føler det samme!'
+            },
+            {
+                phImage: require('../../assets/images/soloppnedgang.png'),
+                phTitle: 'God morgen, ' + name,
+                phText: 'Kickstart dagen med noe verdifullt',
+                phText2: 'for deg og andre.'
+            },
+            {
+                phImage: require('../../assets/images/sol.png'),
+                phTitle: 'Utforsk byen',
+                phText: 'Føler du for å finne på noe?',
+                phText2: 'Kanskje andre har lyst til det samme!'
+            },
+            {
+                phImage: require('../../assets/images/soloppnedgang.png'),
+                phTitle: 'Kvelden er hva du gjør den til',
+                phText: 'Føler du deg chill eller vill?',
+                phText2: 'Se om noen føler det samme!'
+            },
+            {
+                phImage: require('../../assets/images/aktiviteter.png'),
+                phTitle: 'Ingen grupper enda',
+                phText: 'Lyst til å finne på noe?',
+                phText2: 'Opprett gruppe nå.'
+            }
+        ];
+
+        let date = new Date();
+        let format = moment(date).format('MMMM, Do YYYY HH:mm');
+        let time = format.substring(format.lastIndexOf(' '), format.lastIndexOf(' ') + 3);
+
+        if (time.startsWith(0)) {
+            time = time.substring(1);
+            console.log(time)
+        }
+
+        let index = null;
+
+        if (time >= 0 && time < 6) {
+            index = 0;
+        } else if (time >= 6 && time < 12) {
+            index = 1;
+        } else if (time >= 12 && time < 18) {
+            index = 2
+        } else if (time >= 18 && time < 24) {
+            index = 3
+        } else {
+            index = 4
+        }
+
+        return (
+            <View style={{flex: 1, flexDirection: 'column', marginTop: 50}}>
+                <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
+                    <Image
+                        style={{flex: 1, width: 100, height: 100, resizeMode: 'contain'}}
+                        source={phHome[index].phImage}
+                    />
+                </View>
+                <View style={{flex: 2, justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+                    <Text style={{fontSize: 20, fontWeight: 'bold', color: '#343435'}}>{phHome[index].phTitle}</Text>
+                </View>
+                <View style={{flex: 2, justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+                    <Text style={{fontSize: 16, color: '#343435'}}>{phHome[index].phText} </Text>
+                    <Text style={{fontSize: 16, color: '#343435'}}>{phHome[index].phText2}</Text>
+                </View>
+            </View>
+        )
+    };
 
     renderItem = data =>
         <TouchableOpacity
@@ -261,7 +339,6 @@ export default class Home extends Component {
                     <Text style={{fontWeight: 'bold'}}>{data.item.groupTitle}</Text>
                     <Text>{data.item.groupPlace}</Text>
                     <Text>{data.item.groupTime}</Text>
-                    {/*<Text>{data.item.groupSize}</Text>*/}
                     <View style={{flex: 1, flexDirection: 'row', marginTop: 7}}>
                         <View style={{marginRight: 7}}>
                             <Image
@@ -285,6 +362,17 @@ export default class Home extends Component {
                 </View>
             </View>
         </TouchableOpacity>
+
+    emptySlider() {
+        return(
+            <View style={{marginLeft: 32}}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{fontSize: 15, color: '#343435'}}>Du har ingen grupper enda.</Text>
+                    <Text style={{fontSize: 15, color: '#343435'}}>La oss endre det!</Text>
+                </View>
+            </View>
+        )
+    }
 
     renderSlider({item, index}) {
         return (
@@ -330,11 +418,12 @@ export default class Home extends Component {
                     <View>
                         <Carousel
                             ref = { ref => this.carousel = ref }
-                            data={ this.state.carouselItems }
+                            data={ this.state.sliderData }
                             sliderWidth={250}
                             itemWidth={250}
                             renderItem={ this.renderSlider }
                             onSnapToItem={index => this.setState({activeIndex:index})}
+                            ListEmptyComponent={this.emptySlider()}
                         />
                     </View>
 
@@ -423,7 +512,6 @@ export default class Home extends Component {
                         <Text style={{fontSize: 20, fontWeight: 'bold', color: '#383838'}}>Finn en gruppe</Text>
                     </View>
                     <View style={{flexDirection: 'row', marginRight: 18}}>
-                        {/*HER TRENGER VI ET IKON*/}
                         <Text style={{color: '#383838'}}>Filtrer</Text>
                     </View>
                 </View>
@@ -452,6 +540,7 @@ export default class Home extends Component {
                         renderItem={item => this.renderItem(item)}
                         keyExtractor={item => item.key}
                         extra={this.state}
+                        ListEmptyComponent={this.showStatus()}
                     />
                 </View>
                 <View style={styles.container}>

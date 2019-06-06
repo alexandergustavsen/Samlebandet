@@ -21,12 +21,12 @@ const appStackNavigator = createStackNavigator({
 });
 
 const authStackNavigator = createStackNavigator({
+    FirstPage: FirstPage,
     LogIn: LogIn,
     SignUp: SignUp,
     CreateProfile: CreateProfile,
     Interests: Interests,
     Tutorial: Tutorial,
-    FirstPage: FirstPage,
 });
 
 const switchNavigator = createSwitchNavigator({

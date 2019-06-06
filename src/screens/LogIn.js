@@ -28,7 +28,7 @@ export default class LogIn extends Component {
 
     loginUser = (email, password) => {
         if(email == '' && password == ''){
-          firebase.auth().signInWithEmailAndPassword('knut@gmail.com', 'passordet');
+          firebase.auth().signInWithEmailAndPassword('trumpet@trumpet.no', '123123123');
           this.props.navigation.navigate('App')
         } else {
             try {
@@ -101,7 +101,7 @@ export default class LogIn extends Component {
                     <Button
                       style={styles.button}
                       onPress={() => this.loginUser(this.state.email, this.state.password)}>
-                      <Text style={{fontSize: 15}}>Logg inn</Text>
+                      <Text style={{fontSize: 20}}>Logg inn</Text>
                     </Button>
                  </View>
                  <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
@@ -128,9 +128,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#fff',
       borderColor: '#000',
-      borderWidth: 1,
+      borderWidth: 2,
       borderRadius: 30,
-      width: wp('70%'),
-      height: hp('5.5%')
+      width: 250,
+      height: 50
   }
 });

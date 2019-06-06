@@ -106,7 +106,7 @@ export default class CreateGroup extends Component {
           />
           <Text style={{fontSize: 15}}>Legg til bilde</Text>
         </View>
-        <View style={{flex: 6, borderTopWidth: 1.5, borderColor: '#bbb', marginLeft: 25, marginRight: 25, marginTop: 30}}>
+        <View style={{flex: 6, borderTopWidth: 1.5, borderColor: '#bbb', width: '85%', alignItems: 'center', marginTop: 30}}>
           <View style={styles.items}>
             <View style={{flex: 1}}>
               <Text style={{color: '#383838', fontWeight: 'bold'}}>Navn</Text>
@@ -251,21 +251,23 @@ export default class CreateGroup extends Component {
 
 const styles = StyleSheet.create({
   image: {
-    flex: 1,
-    backgroundColor: '#ddd',
-    justifyContent: 'center',
-    alignItems: 'center',
+      flex: 1,
+      backgroundColor: '#ddd',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%'
   },
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    flexDirection: 'column'
+      flex: 1,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column'
   },
   text: {
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center'
+      fontSize: 18,
+      color: 'white',
+      textAlign: 'center'
   },
   items: {
       flex: 0.3,

@@ -4,6 +4,7 @@ import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Rig
 import * as firebase from 'firebase'
 import FlashMessage from "react-native-flash-message";
 import { Constants, ImagePicker, Permissions } from 'expo';
+import {hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 
 console.disableYellowBox = true;
 export default class EditProfile extends Component {
@@ -146,8 +147,8 @@ export default class EditProfile extends Component {
         //console.log('photoUrl: ' + firebase.auth().currentUser.photoURL)
         return (
             <View style={styles.viewProfileContainer}>
-                <View style={{flex: 1, width: '85%'}}>
-                    <View style={{flex: 1.2, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1}}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{flex: 1.2, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                         <View style={{flex: 2, justifyContent: 'center'}}>
                             <Image
                                 style={{width: 130, height: 130, borderRadius: 65}}
@@ -166,8 +167,7 @@ export default class EditProfile extends Component {
                             </Button>
                         </View>
                     </View>
-
-                    <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderTopWidth: 1}}>
                         <View style={{flex: 0.25, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                             <View style={{flex: 0.15}}>
                                 <Image
@@ -218,7 +218,7 @@ export default class EditProfile extends Component {
                         </View>
                     </View>
 
-                    <View style={{flex: 0.65, flexDirection: 'column'}}>
+                    <View style={{flex: 0.65, flexDirection: 'column', alignItems: 'center'}}>
 
                         <View style={{flex: 0.2, flexDirection: 'row'}}>
                             <View style={{flex: 0.3}}>
@@ -237,20 +237,20 @@ export default class EditProfile extends Component {
                             </View>
                         </View>
 
-                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <View>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                            <View style={{flex: 1}}>
                                 <Image
                                     style={{width: 100, height: 100}}
                                     source={require('../../assets/images/friluft_sirkel.png')}
                                 />
                             </View>
-                            <View>
+                            <View style={{flex: 1}}>
                                 <Image
                                     style={{width: 100, height: 100}}
                                     source={require('../../assets/images/mat_sirkel.png')}
                                 />
                             </View>
-                            <View>
+                            <View style={{flex: 1}}>
                                 <Image
                                     style={{width: 100, height: 100}}
                                     source={require('../../assets/images/uteliv_sirkel.png')}
@@ -278,18 +278,9 @@ export default class EditProfile extends Component {
                         </View>
                         <View style={{flex: 1, justifyContent: 'flex-end', marginTop: 40}}>
                             <Button
-                            onPress={this.pickImage}
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                backgroundColor: '#fff',
-                                borderColor: '#000',
-                                borderWidth: 1,
-                                borderRadius: 8,
-                                width: 150,
-                                height: 25
-                            }}>
-                                <Text style={{margin: -5, fontSize: 14, color: '#383838'}}>Rediger bilde</Text>
+                                onPress={this.pickImage}
+                                style={styles.button2}>
+                                <Text style={{fontSize: 15, color: '#383838'}}>Rediger bilde</Text>
                             </Button>
                         </View>
                     </View>
@@ -346,8 +337,8 @@ export default class EditProfile extends Component {
                         />
                     </View>
                 </View>
-                <View>
-                    <Button style={styles.button} onPress={() => this.changeData()}>
+                <View style={{marginTop: 50}}>
+                    <Button style={styles.button3} onPress={() => this.changeData()}>
                             <Text style={{fontSize: 20, color: '#383838'}}>Ferdig</Text>
                     </Button>
                 </View>
@@ -365,9 +356,11 @@ export default class EditProfile extends Component {
 
     render() {
         return (
-            <View style={this.state.selected === 'viewProfile' ? styles.viewProfileContainer : styles.editProfileContainer}>
-                {this.state.selected === 'viewProfile' ? this.viewProfile() : this.editProfile()}
-                <FlashMessage ref="modalFlash" position="bottom"/>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={this.state.selected === 'viewProfile' ? styles.viewProfileContainer : styles.editProfileContainer}>
+                    {this.state.selected === 'viewProfile' ? this.viewProfile() : this.editProfile()}
+                    <FlashMessage ref="modalFlash" position="bottom"/>
+                </View>
             </View>
         );
     }
@@ -391,14 +384,16 @@ const styles = StyleSheet.create({
     viewProfileContainer: {
         flex: 1, 
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: '90%'
     },
     editProfileContainer: {
         flex: 1,
         backgroundColor: '#fff',
         justifyContent: 'center',
+        alignItems: 'center',
         flexDirection: 'column',
-        marginTop: 30
+        width: '90%'
     },
     items: {
         flex: 0.1,
@@ -406,9 +401,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderColor: '#ccc',
-        marginLeft: 25,
-        marginRight: 25
+        borderColor: '#ccc'
     },
     boldText: {
         fontWeight: 'bold',
@@ -429,6 +422,26 @@ const styles = StyleSheet.create({
         width: 175,
         height: 33,
         marginBottom: 30
+    },
+    button2: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor: '#000',
+        borderWidth: 1.5,
+        borderRadius: 30,
+        width: 175,
+        height: 33
+    },
+    button3: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor: '#000',
+        borderWidth: 2,
+        borderRadius: 30,
+        width: 250,
+        height: 50
     }
 });
 
