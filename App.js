@@ -11,13 +11,15 @@ import Interests from './src/screens/Interests'
 import Chat from './src/screens/Chat'
 import SelectedGroup from './src/screens/SelectedGroup'
 import FirstPage from './src/screens/FirstPage'
+import ChatList from "./src/screens/ChatList";
 
 const appStackNavigator = createStackNavigator({
     Home: Home,
     Profile: Profile,
     CreateGroup: CreateGroup,
     SelectedGroup: SelectedGroup,
-    Chat: Chat
+    Chat: Chat,
+    ChatList: ChatList
 });
 
 const authStackNavigator = createStackNavigator({
