@@ -1,10 +1,9 @@
-import * as firebase from 'firebase'; // 4.8.1
+import * as firebase from 'firebase';
 
 
 class FirebaseChat {
     constructor() {
         this.init();
-        //this.observeAuth();
     }
     
     init = () =>
@@ -16,20 +15,7 @@ class FirebaseChat {
             storageBucket: 'samlebandet.appspot.com',
             messagingSenderId: '693041379005'
         });
-    /*
-    observeAuth = () =>
-        firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
 
-    onAuthStateChanged = user => {
-        if (!user) {
-            try {
-                firebase.auth().signInAnonymously();
-            } catch ({ message }) {
-                alert(message);
-            }
-        }
-    };
-    */
     groupId = '';
     
     get uid() {
@@ -106,9 +92,7 @@ class FirebaseChat {
     };
 
     append = message => this.ref.push(message);
-    
 
-    // close the connection to the Backend
     off() {
         this.ref.off();
     }

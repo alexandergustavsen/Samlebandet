@@ -98,8 +98,8 @@ export default class CreateProfile extends Component {
                                 <View style={{flex: 2}}>
                                     <DatePicker
                                         style={styles.datePicker}
-                                        date={this.state.date} //initial date from state
-                                        mode="date" //The enum of date, datetime and time
+                                        date={this.state.date}
+                                        mode="date"
                                         placeholder="Velg dato"
                                         format="DD-MM-YYYY"
                                         minDate="01-01-1950"

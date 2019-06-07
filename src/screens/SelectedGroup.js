@@ -46,9 +46,8 @@ export default class SelectedGroup extends Component {
                 var key;
                 snapshot.forEach(function (childSnapshot) {
                     key = childSnapshot.key;
-                    return true; // Cancel further enumeration.
+                    return true;
                 });
-                console.log(key)
             firebase.database().ref('/groups/' + that.state.id + '/members/' + key).remove()
         });
         this.props.navigation.navigate('Home');

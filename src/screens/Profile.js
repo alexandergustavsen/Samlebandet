@@ -97,14 +97,6 @@ export default class EditProfile extends Component {
     };
 
     changeData = () => {
-        /*if(this.state.beskrivelse == '' || this.state.retning == '' || this.state.school == ''){
-            this.refs.modalFlash.showMessage({
-                message: "Ett eller flere felter er ikke fylt ut",
-                type: "danger",
-            });
-            console.log('cucked')
-        } else {*/
-
             if(this.state.selected == 'viewProfile'){
                 this.setState({ 
                     selected: 'editProfile',
@@ -142,9 +134,6 @@ export default class EditProfile extends Component {
       };
 
     viewProfile = () => {
-        //console.log(firebase.auth().currentUser)
-        //console.log(firebase.auth().currentUser)
-        //console.log('photoUrl: ' + firebase.auth().currentUser.photoURL)
         return (
             <View style={styles.viewProfileContainer}>
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -264,7 +253,6 @@ export default class EditProfile extends Component {
     };
 
     editProfile = () => {
-        //console.log(firebase.auth().currentUser)
         return (
             <View style={styles.editProfileContainer}>
                 <View style={styles.items}>
@@ -346,14 +334,6 @@ export default class EditProfile extends Component {
         )
     };
 
-    
-
-    /*
-    <Button style={styles.button} onPress={() => this.changeData()}>
-                        <Text style={{fontSize: 20, color: '#383838'}}>{this.state.btnText}</Text>
-                    </Button>
-    */
-
     render() {
         return (
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -365,20 +345,6 @@ export default class EditProfile extends Component {
         );
     }
 }
-/*
-const styles2 = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
-})
-*/
-
 
 const styles = StyleSheet.create({
     viewProfileContainer: {
@@ -446,7 +412,6 @@ const styles = StyleSheet.create({
 });
 
 async function uploadImageAsync(uri) {
-    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
     const blob = await new Promise((resolve, reject) => {
       const request = new XMLHttpRequest();
       request.onload = function() {

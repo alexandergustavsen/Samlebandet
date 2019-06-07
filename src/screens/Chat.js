@@ -11,11 +11,9 @@ class Chat extends React.Component {
             groupId: this.props.navigation.state.params.id,
             title: this.props.navigation.state.params.title,
         };
-        //console.log('Chat.js groupId: ' + id)
     }
 
     static navigationOptions = {
-        //title: this.state.title,
         headerTitleStyle: ({
             color: '#383838',
             fontWeight: 'normal',
@@ -36,7 +34,6 @@ class Chat extends React.Component {
 
 
     get user() {
-        //console.log(id)
         return {
             _id: FirebaseChat.shared.uid,
             name: FirebaseChat.shared.name,

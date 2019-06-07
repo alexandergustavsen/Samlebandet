@@ -170,7 +170,7 @@ export default class Home extends Component {
                             <View style={{flex: 0.7, justifyContent: 'flex-end'}}>
                                 <Text style={{fontWeight: 'bold', fontSize: 18}}>{currentItem.item.groupTitle}</Text>
                             </View>
-                            <View style={{flex: 0.5, justifyContent: 'flex-end'}}>
+                            <View style={{flex: 0.5, justifyContent: 'flex-end', textAlign: 'center'}}>
                                 <Text style={{fontSize: 15}}>{currentItem.item.groupDesc}</Text>
                             </View>
                             <View style={{flex: 0.7, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row'}}>
@@ -553,7 +553,6 @@ export default class Home extends Component {
         );
     }
 }
-//onPress={this.setState({todaySelected: true})}
 
 const styles = StyleSheet.create({
     container: {

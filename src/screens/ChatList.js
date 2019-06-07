@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {Image, Text, TouchableWithoutFeedback, View, StyleSheet, FlatList} from "react-native";
-import FirebaseChat from '../database/FirebaseChat';
-import * as firebase from 'firebase';
 
 export default class ChatList extends Component {
 
@@ -47,14 +45,6 @@ export default class ChatList extends Component {
     }
 
     renderItem = (data) => {
-        /*lastMessageText = '';
-        firebase.database().ref('messages/').child(data.item.id).orderByKey().limitToLast(1).on('child_added', function(snapshot) {
-            let item = snapshot.val();
-            lastMessageText = item.text;
-            console.log(item.text)
-        })
-        console.log('text: ' + lastMessageText)*/
-
         return(
             <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Chat', 
             {

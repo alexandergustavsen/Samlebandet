@@ -43,7 +43,6 @@ export default class SignUp extends Component {
             console.log(error.toString())
         }
 
-        //finn bedre løsning
         const sleep = (milliseconds) => {
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }

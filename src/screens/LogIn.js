@@ -28,21 +28,15 @@ export default class LogIn extends Component {
     };
 
     loginUser = (email, password) => {
-        if(email == '' && password == ''){
-          firebase.auth().signInWithEmailAndPassword('trumpet@trumpet.no', '123123123');
-          this.props.navigation.navigate('App')
-        } else {
-
-            try {
-                firebase.auth().signInWithEmailAndPassword(email, password);
-                this.props.navigation.navigate('App')
-            } catch (error) {
-                this.refs.modalFlash.showMessage({
-                    message: error,
-                    type: "danger",
-                });
-                console.log('caught error')
-            }
+        try {
+            firebase.auth().signInWithEmailAndPassword(email, password);
+            this.props.navigation.navigate('App')
+        } catch (error) {
+            this.refs.modalFlash.showMessage({
+                message: error,
+                type: "danger",
+            });
+            console.log('caught error')
         }
     };
 
