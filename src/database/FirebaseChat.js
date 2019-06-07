@@ -34,21 +34,20 @@ class FirebaseChat {
         return firebase.database().ref('messages/' + groupId);
     }
 
-    get ref2() {
-        return firebase.database().ref('groups/' + groupId);
-    }
+
 
     setLastMessage(groupId){
 
-        lastMessage = {};
+        lastMessage = '';
         firebase.database().ref('messages/').child(groupId).orderByKey().limitToLast(1).on('child_added', function(snapshot) {
             let item = snapshot.val();
-            lastMessage = item;
+            lastMessage = item.text
         })
 
         firebase.database().ref('groups/' + groupId).update({
             lastMessage: lastMessage
         })
+        console.log(lastMessage)
     }
 
 

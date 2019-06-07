@@ -64,7 +64,7 @@ export default class ChatList extends Component {
                                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>{data.item.name}</Text>
                                 </View>
                                 <View style={{flex: 1}}>
-                                    <Text style={{fontSize: 18}}>{data.item.lastMessage.text}</Text>
+                                    <Text style={{fontSize: 18}}>{data.item.lastMessage}</Text>
                                 </View>
                             </View>
                     </View>

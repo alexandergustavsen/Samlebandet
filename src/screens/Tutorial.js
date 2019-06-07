@@ -12,7 +12,7 @@ const slides = [
     {
         key: 'somethun-dos',
         title: 'Avtal tid og sted',
-        text: 'Snakk ed gruppemedlemmene\ni en felles chat',
+        text: 'Snakk med gruppemedlemmene\ni en felles chat',
         image: require('../../assets/images/chat_sirkel.png'),
     },
     {
@@ -27,7 +27,7 @@ export default class Tutorial extends Component {
 
     static navigationOptions = ({navigation}) => ({
         headerRight: (
-            <Text onPress={() => navigation.navigate('Home')} style={{color: '#fff', fontSize: 20}}>Skip</Text>
+            <Text onPress={() => navigation.navigate('Home')} style={{color: '#000', fontSize: 20}}>Skip</Text>
         ),
         headerStyle: ({
             backgroundColor: '#00EDD6',
