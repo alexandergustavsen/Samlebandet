@@ -48,6 +48,24 @@ class FirebaseChat {
         return firebase.database().ref('messages/' + groupId);
     }
 
+    get ref2() {
+        return firebase.database().ref('groups/' + groupId);
+    }
+
+    setLastMessage(groupId){
+
+        lastMessage = {};
+        firebase.database().ref('messages/').child(groupId).orderByKey().limitToLast(1).on('child_added', function(snapshot) {
+            let item = snapshot.val();
+            lastMessage = item;
+        })
+
+        firebase.database().ref('groups/' + groupId).update({
+            lastMessage: lastMessage
+        })
+    }
+
+
     get timestamp() {
         return firebase.database.ServerValue.TIMESTAMP;
     }
@@ -88,6 +106,7 @@ class FirebaseChat {
     };
 
     append = message => this.ref.push(message);
+    
 
     // close the connection to the Backend
     off() {

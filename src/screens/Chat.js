@@ -45,6 +45,7 @@ class Chat extends React.Component {
     }
 
     render() {
+        FirebaseChat.shared.setLastMessage(this.state.groupId)
         return (
             <GiftedChat
                 messages={this.state.messages}

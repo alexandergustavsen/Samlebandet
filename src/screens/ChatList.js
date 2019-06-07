@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Image, Text, TouchableOpacity, View, StyleSheet, FlatList} from "react-native";
-
+import {Image, Text, TouchableWithoutFeedback, View, StyleSheet, FlatList} from "react-native";
+import FirebaseChat from '../database/FirebaseChat';
+import * as firebase from 'firebase';
 
 export default class ChatList extends Component {
 
@@ -46,20 +47,39 @@ export default class ChatList extends Component {
     }
 
     renderItem = (data) => {
+        /*lastMessageText = '';
+        firebase.database().ref('messages/').child(data.item.id).orderByKey().limitToLast(1).on('child_added', function(snapshot) {
+            let item = snapshot.val();
+            lastMessageText = item.text;
+            console.log(item.text)
+        })
+        console.log('text: ' + lastMessageText)*/
+
         return(
-            <View style={{justifyContent: 'center', alignItems: 'center', borderBottomWidth: 0.5, marginLeft: 25, marginRight: 25, marginTop: 20, paddingBottom: 10}}>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                        <View style={{flex: 1, alignItems: 'center'}}>
-                            <Image
-                                style={{width: 60, height: 60, borderRadius: 30}}
-                                source={require('../../assets/images/fest.png')}
-                            />
-                        </View>
-                        <View style={{flex: 4, marginLeft: 10}}>
-                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{data.item.name}</Text>
-                        </View>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Chat', 
+            {
+                id: data.item.id, 
+                title: data.item.name
+            })}>
+                <View style={{justifyContent: 'center', alignItems: 'center', borderBottomWidth: 0.5, marginLeft: 25, marginRight: 25, marginTop: 20, paddingBottom: 10}}>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                            <View style={{flex: 1, alignItems: 'center'}}>
+                                <Image
+                                    style={{width: 60, height: 60, borderRadius: 30}}
+                                    source={require('../../assets/images/fest.png')}
+                                />
+                            </View>
+                            <View style={{flex: 4, flexDirection: 'column', marginLeft: 10}}>
+                                <View style={{flex: 1}}>
+                                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>{data.item.name}</Text>
+                                </View>
+                                <View style={{flex: 1}}>
+                                    <Text style={{fontSize: 18}}>{data.item.lastMessage.text}</Text>
+                                </View>
+                            </View>
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         )
     };
 

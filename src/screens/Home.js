@@ -108,6 +108,7 @@ export default class Home extends Component {
                     place: group.groupPlace,
                     cate: group.groupCate,
                     id: group._id,
+                    lastMessage: group.lastMessage,
                 }
             });
             that.setState({
