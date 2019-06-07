@@ -4,6 +4,7 @@ import { Container, Content, Header, Form, Input, Item, Button, Label, AsyncStor
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as firebase from 'firebase';
 import LogoHeader from "../component/LogoHeader";
+import FlashMessage from "react-native-flash-message";
 
 export default class LogIn extends Component {
 
@@ -31,11 +32,16 @@ export default class LogIn extends Component {
           firebase.auth().signInWithEmailAndPassword('trumpet@trumpet.no', '123123123');
           this.props.navigation.navigate('App')
         } else {
+
             try {
                 firebase.auth().signInWithEmailAndPassword(email, password);
                 this.props.navigation.navigate('App')
             } catch (error) {
-                console.log(error.toString())
+                this.refs.modalFlash.showMessage({
+                    message: error,
+                    type: "danger",
+                });
+                console.log('caught error')
             }
         }
     };
@@ -114,6 +120,7 @@ export default class LogIn extends Component {
                  </View>
               </View>
            </View>
+           <FlashMessage ref="modalFlash" position="bottom"/>
         </View>
       );
     }

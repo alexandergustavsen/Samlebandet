@@ -79,7 +79,7 @@ export default class CreateGroup extends Component {
       groupCate: cate,
       adminId: userId,
     });
-    lastMessage = {'text': 'Skriv en melding! :)',}
+    lastMessage = {'text': 'Ingen meldinger.',}
     firebase.database().ref('groups/').child(key).update({
       lastMessage: lastMessage
     })
