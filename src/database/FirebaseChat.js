@@ -8,12 +8,12 @@ class FirebaseChat {
     
     init = () =>
         firebase.initializeApp({
-            apiKey: 'AIzaSyC472p6bon1WNU-l9uofXoeWp3sTppqJh0',
-            authDomain: 'samlebandet.firebaseapp.com',
-            databaseURL: 'https://samlebandet.firebaseio.com',
-            projectId: 'samlebandet',
-            storageBucket: 'samlebandet.appspot.com',
-            messagingSenderId: '693041379005'
+            apiKey: "YOUR-UNIQUE-CREDENTIALS",
+            authDomain: "YOUR-PROJECT-NAME.firebaseapp.com",
+            databaseURL: "https://YOUR-PROJECT-NAME.firebaseio.com",
+            projectId: "YOUR-UNIQUE-PROJECT-NAME",
+            storageBucket: "YOUR-UNIQUE-URL",
+            messagingSenderId: "YOUR-UNIQUE-CREDENTIALS"
         });
 
     groupId = '';
