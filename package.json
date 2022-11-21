@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.1",
-    "expo": "^32.0.6",
+    "expo": "^46.0.14",
     "firebase": "^6.0.2",
-    "moment": "^2.23.0",
+    "moment": "^2.29.4",
     "native-base": "^2.8.2",
     "prop-types": "latest",
     "react": "16.5.0",
